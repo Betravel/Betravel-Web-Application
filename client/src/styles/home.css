@@ -11,7 +11,7 @@ form {
   text-align: center;
   font-size: 30px;
   color: #387ead;
-  width:"100%"
+  width: "100%";
 }
 
 .card {
@@ -21,6 +21,6 @@ form {
   align-self: center;
 }
 
-.button{
+.button {
   color: blue;
-} 
+}
