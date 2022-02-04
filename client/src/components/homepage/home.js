@@ -1,8 +1,8 @@
 import React from "react";
-import SearchForm from "./SearchForm/SearchForm";
+import SearchForm from "../SearchForm/SearchForm";
 
-import "../styles/home.css";
-import Card from "./UI/Card";
+import "./home.css";
+import Card from "../UI/Card";
 
 function Home() {
   return (
