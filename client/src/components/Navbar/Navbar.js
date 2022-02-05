@@ -1,7 +1,9 @@
 import React from "react";
-import Logo from "../assets/betravellogo.jpg";
+import Logo from "../../assets/betravellogo.jpg";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
+import "./Navbar.css";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 
 function Navbar() {
   return (
@@ -14,6 +16,14 @@ function Navbar() {
         <Link to="/about"> About </Link>
         <Link to="/contact"> Contact </Link>
         <Link to="/profil"> Profil </Link>
+        <Link to="/SignUp"> Sign up  </Link>
+        <div className="socialMedia">
+          <Link to="">
+            {" "}
+            <FacebookIcon />
+            <InstagramIcon />
+          </Link>
+        </div>
       </div>
     </div>
   );
