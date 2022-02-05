@@ -1,0 +1,90 @@
+.Search {
+  background-color: transparent;
+  padding: 5rem;
+  margin: 2rem auto;
+  width: 50rem;
+  max-width: 95%;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.Search button {
+  font: inherit;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border: 1px solid #07002a;
+  background-color: #07002a;
+  color: white;
+  border-radius: 12px;
+  margin-right: 1rem;
+}
+
+.Search button:hover,
+.Search button:active {
+  background-color: white;
+  border-color: white;
+  color: #07002a;
+}
+
+.Search button.alternative {
+  color: #220131;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.Search button.alternative:hover,
+.Search button.alternative:active {
+  background-color: #ddb3f8;
+}
+
+.Search__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.Search__control label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: white;
+}
+
+.Search__control1 label {
+  font-weight: bold;
+  color: white;
+}
+
+.Search__control input {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 20rem;
+  max-width: 100%;
+}
+
+.Search__control1 input {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 42rem;
+  max-width: 100%;
+}
+
+.Search__control1 select {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 42rem;
+  max-width: 100%;
+}
+
+.Search__actions {
+  text-align: right;
+}
