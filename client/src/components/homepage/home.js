@@ -3,16 +3,21 @@ import SearchForm from "../SearchForm/SearchForm";
 
 import "./home.css";
 import Card from "../UI/Card";
+import Seach from "../Search/Search";
 
 function Home() {
   return (
-    <div>
-      <Card className="home">
-        <div className="headerContainer">
-          <SearchForm />
+    <Card className="home">
+      <br/> 
+      <div className="container">
+        <div className="row">
+          <div className="col-5">
+            <Seach />
+          </div>
         </div>
-      </Card>
-    </div>
+      </div>
+      <br/>
+    </Card>
   );
 }
 

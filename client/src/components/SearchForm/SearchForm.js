@@ -95,6 +95,7 @@ function SearchForm() {
           <button type="submit">Search</button>
         </div>
       </form>
+      <br/>
     </div>
   );
 }
