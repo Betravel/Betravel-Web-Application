@@ -21,6 +21,7 @@ const SignIn = () => {
 
   const login = (e) => {
     e.preventDefault();
+    console.log(loginInfo)
     axios
       .post("http://localhost:8000/api/login", loginInfo, {
         withCredentials: true,
@@ -60,6 +61,7 @@ const SignIn = () => {
             className="form-control"
             onChange={loginChangeHandler}
             id="email"
+            name="email"
             required
           />
         </div>
@@ -86,6 +88,7 @@ const SignIn = () => {
             className="form-control"
             onChange={loginChangeHandler}
             id="password"
+            name="password"
             required
           />
         </div>
