@@ -22,34 +22,34 @@ function SearchFormDemo() {
   };
 
   const AddAdultes = () => {
-    setAdultes(Adultes+1);
+    setAdultes(Adultes + 1);
   };
 
   const ReduceAdultes = () => {
-    if(Adultes>1){
-      setAdultes(Adultes-1)
+    if (Adultes > 1) {
+      setAdultes(Adultes - 1);
     }
-  }
+  };
 
   const AddEnfants = () => {
-    setEnfants(Enfants+1);
+    setEnfants(Enfants + 1);
   };
 
   const ReduceEnfants = () => {
-    if(Enfants>0){
-      setEnfants(Enfants-1)
+    if (Enfants > 0) {
+      setEnfants(Enfants - 1);
     }
-  }
+  };
 
   const AddChambres = () => {
-    setChambres(Chambres+1);
+    setChambres(Chambres + 1);
   };
 
   const ReduceChambres = () => {
-    if(Chambres>1){
-      setChambres(Chambres-1)
+    if (Chambres > 1) {
+      setChambres(Chambres - 1);
     }
-  }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();

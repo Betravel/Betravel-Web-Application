@@ -16,7 +16,7 @@ function Navbar() {
         <Link to="/about"> About </Link>
         <Link to="/contact"> Contact </Link>
         <Link to="/profil"> Profil </Link>
-        <Link to="/SignUp"> Sign Up  </Link>
+        <Link to="/SignUp"> Sign Up </Link>
         <Link to="/SignIn"> Sign In </Link>
         <div className="socialMedia">
           <Link to="">
