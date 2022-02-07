@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./SearchFormDemo.css";
+import "./SearchFormHotel.css";
 
-function SearchFormDemo() {
+function SearchFormHotel() {
   const [Destination, setDestination] = useState("");
   const [Checkin, setCheckin] = useState("");
   const [Checkout, setCheckout] = useState("");
@@ -109,6 +109,7 @@ function SearchFormDemo() {
             className="form-select"
             id="destination"
             style={{ textAlign: "center" }}
+            required
           >
             <option value="">Choisir votre destination ...</option>
             <option value="Hammamet">Hammamet</option>
@@ -152,9 +153,10 @@ function SearchFormDemo() {
             onChange={CheckinChangeHandler}
             id="checkin"
             style={{ textAlign: "center" }}
+            required
           />
         </div>
-        <label className="form-label" htmlFor="checkin">
+        <label className="form-label" htmlFor="checkout">
           Check out
         </label>
 
@@ -188,6 +190,8 @@ function SearchFormDemo() {
             value={Checkout}
             onChange={CheckoutChangeHandler}
             style={{ textAlign: "center" }}
+            id="checkout"
+            required
           />
         </div>
 
@@ -293,6 +297,7 @@ function SearchFormDemo() {
                 </button>
               </div>
             </div>
+            {Enfants>0 ? () => {} : ""}
             <div className="col-12">
               <label className="form-label">Chambres</label>
               <div className="input-group mb-3">
@@ -354,4 +359,4 @@ function SearchFormDemo() {
   );
 }
 
-export default SearchFormDemo;
+export default SearchFormHotel;

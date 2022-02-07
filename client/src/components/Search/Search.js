@@ -1,5 +1,5 @@
 import CommingSoon from "./CommingSoon/CommingSoon";
-import SearchFormDemo from "./SearchForm/SearchFormDemo";
+import SearchFormHotel from "./SearchForm/SearchFormHotel";
 
 function Search() {
   return (
@@ -30,7 +30,7 @@ function Search() {
             aria-controls="nav-home"
             aria-selected="true"
           >
-            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-hotel-hotel-kiranshastry-lineal-kiranshastry.png" />
+            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-hotel-hotel-kiranshastry-lineal-kiranshastry.png" alt="" />
             <br />
             Hotels
           </button>
@@ -44,7 +44,7 @@ function Search() {
             aria-controls="nav-profile"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/64/000000/external-airplane-travel-itim2101-lineal-itim2101-1.png" />
+            <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/64/000000/external-airplane-travel-itim2101-lineal-itim2101-1.png" alt="" />
             <br />
             Avion
           </button>
@@ -58,7 +58,7 @@ function Search() {
             aria-controls="nav-contact"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-ship-advertising-kiranshastry-lineal-kiranshastry.png" />
+            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-ship-advertising-kiranshastry-lineal-kiranshastry.png" alt="" />
             <br />
             Bateau
           </button>
@@ -72,7 +72,7 @@ function Search() {
           role="tabpanel"
           aria-labelledby="nav-home-tab"
         >
-          <SearchFormDemo />
+          <SearchFormHotel />
         </div>
         <div
           className="tab-pane fade"
