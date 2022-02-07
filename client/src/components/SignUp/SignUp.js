@@ -4,19 +4,18 @@ import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-
   const history = useNavigate();
 
   const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [confim, setconfirm] = useState("");
+  const [confim, setconfim] = useState("");
 
   const [errors, setErrors] = useState({
     username: "",
     email: "",
     password: "",
-    confirm: "",
+    confim: "",
   });
 
   const onSubmitHandler = (e) => {
@@ -26,6 +25,7 @@ const SignUp = () => {
         username,
         email,
         password,
+        confirm: confim,
       })
       .then((res) => {
         console.log(res);
@@ -39,7 +39,6 @@ const SignUp = () => {
       .catch((err) => console.log(err));
   };
 
-  
   return (
     <div className="Register">
       <form onSubmit={onSubmitHandler}>
@@ -100,7 +99,7 @@ const SignUp = () => {
           <br />
           <input
             type="password"
-            onChange={(e) => setconfirm(e.target.value)}
+            onChange={(e) => setconfim(e.target.value)}
             value={confim}
             className="form-control"
             name="confim"

@@ -101,11 +101,11 @@
   }
 }
 
-.socialMedia svg {
+.updateIcon svg {
   color: white;
   margin: 20px;
   height: 10%;
-  width: 10%;
+  width: 20%;
   cursor: pointer;
 }
 
