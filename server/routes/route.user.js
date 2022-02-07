@@ -9,4 +9,6 @@ module.exports = (app) => {
     authenticate,
     UserController.getLoggedInUser
   );
+  app.get("/api/user/:id", UserController.getUserById);
+  app.get("/api/people", UserController.getAllPeople);
 };
