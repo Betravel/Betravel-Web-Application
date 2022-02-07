@@ -1,5 +1,5 @@
 import CommingSoon from "./CommingSoon/CommingSoon";
-import SearchFormDemo from "./SearchForm/SearchFormDemo";
+import SearchFormHotel from "./SearchForm/SearchFormHotel";
 
 function Search() {
   return (
@@ -22,43 +22,43 @@ function Search() {
         >
           <button
             className="nav-link active"
-            id="nav-home-tab"
+            id="nav-hotel-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-home"
+            data-bs-target="#nav-hotel"
             type="button"
             role="tab"
-            aria-controls="nav-home"
+            aria-controls="nav-hotel"
             aria-selected="true"
           >
-            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-hotel-hotel-kiranshastry-lineal-kiranshastry.png" />
+            <img src="https://img.icons8.com/metro/26/000000/4-star-hotel.png" alt=""/>
             <br />
             Hotels
           </button>
           <button
             className="nav-link"
-            id="nav-profile-tab"
+            id="nav-avion-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
+            data-bs-target="#nav-avion"
             type="button"
             role="tab"
-            aria-controls="nav-profile"
+            aria-controls="nav-avion"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/64/000000/external-airplane-travel-itim2101-lineal-itim2101-1.png" />
+            <img src="https://img.icons8.com/external-gradak-royyan-wijaya/24/000000/external-airport-gradak-travel-gradak-royyan-wijaya-6.png" alt=""/>
             <br />
             Avion
           </button>
           <button
             className="nav-link"
-            id="nav-contact-tab"
+            id="nav-bateau-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-contact"
+            data-bs-target="#nav-bateau"
             type="button"
             role="tab"
-            aria-controls="nav-contact"
+            aria-controls="nav-bateau"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-ship-advertising-kiranshastry-lineal-kiranshastry.png" />
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/cruise-ship.png" alt=""/>
             <br />
             Bateau
           </button>
@@ -68,25 +68,25 @@ function Search() {
       <div className="tab-content" id="nav-tabContent">
         <div
           className="tab-pane fade show active"
-          id="nav-home"
+          id="nav-hotel"
           role="tabpanel"
-          aria-labelledby="nav-home-tab"
+          aria-labelledby="nav-hotel-tab"
         >
-          <SearchFormDemo />
+          <SearchFormHotel />
         </div>
         <div
           className="tab-pane fade"
-          id="nav-profile"
+          id="nav-avion"
           role="tabpanel"
-          aria-labelledby="nav-profile-tab"
+          aria-labelledby="nav-avion-tab"
         >
           <CommingSoon />
         </div>
         <div
           className="tab-pane fade"
-          id="nav-contact"
+          id="nav-bateau"
           role="tabpanel"
-          aria-labelledby="nav-contact-tab"
+          aria-labelledby="nav-bateau-tab"
         >
           <CommingSoon />
         </div>

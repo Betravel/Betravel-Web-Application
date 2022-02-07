@@ -1,6 +1,4 @@
 import React from "react";
-import SearchForm from "../SearchForm/SearchForm";
-
 import "./home.css";
 import Card from "../UI/Card";
 import Seach from "../Search/Search";
@@ -11,7 +9,7 @@ function Home() {
       <br />
       <div className="container">
         <div className="row">
-          <div className="col-5">
+          <div className="col-sm-12 col-md-8 col-xl-5">
             <Seach />
           </div>
         </div>
