@@ -4,7 +4,6 @@ import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-
   const history = useNavigate();
 
   const [username, setusername] = useState("");
@@ -18,7 +17,7 @@ const SignUp = () => {
     password: "",
     confim: "",
   });
-  
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     axios
@@ -26,7 +25,7 @@ const SignUp = () => {
         username,
         email,
         password,
-        "confirm":confim,
+        confirm: confim,
       })
       .then((res) => {
         console.log(res);
@@ -40,7 +39,6 @@ const SignUp = () => {
       .catch((err) => console.log(err));
   };
 
-  
   return (
     <div className="Register">
       <form onSubmit={onSubmitHandler}>
