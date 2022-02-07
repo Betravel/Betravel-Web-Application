@@ -1,6 +1,6 @@
 .Search {
   background-color: transparent;
-  padding: 1rem;
+  padding: 5rem;
   margin: 2rem auto;
   width: 50rem;
   max-width: 95%;
@@ -56,7 +56,6 @@
 .Search__control1 label {
   font-weight: bold;
   color: white;
-  
 }
 
 .Search__control input {
