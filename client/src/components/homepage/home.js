@@ -8,7 +8,7 @@ import Seach from "../Search/Search";
 function Home() {
   return (
     <Card className="home">
-      <br/> 
+      <br />
       <div className="container">
         <div className="row">
           <div className="col-5">
@@ -16,7 +16,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <br/>
+      <br />
     </Card>
   );
 }
