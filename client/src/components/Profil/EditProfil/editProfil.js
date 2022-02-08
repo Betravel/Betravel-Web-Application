@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
+import { useNavigate } from "react-router-dom";
 
 function EditProfil() {
-  const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: 0,
-  });
+  const history = useNavigate();
+
+  const [user, setUser] = useState(
+    JSON.parse(sessionStorage.getItem("loggeduser"))
+  );
 
   const UserChangeHandler = (e) => {
     setUser({
@@ -18,16 +18,19 @@ function EditProfil() {
     });
   };
 
-  useEffect(() => {
+  //Update
+  const updateUser = (e) => {
+    e.preventDefault();
     axios
-      .get("http://localhost:8000/api/users/getloggedinuser", {
-        withCredentials: true,
-      })
+      .put("http://localhost:8000/api/user/" + user._id, user)
       .then((res) => {
-        setUser(res.data);
+        console.log(res);
+        sessionStorage.setItem("loggeduser", JSON.stringify(user));
+        history("/profil");
       })
       .catch((err) => console.error(err));
-  });
+  };
+  console.log("user", user);
 
   return (
     <div class=" container">
@@ -48,7 +51,7 @@ function EditProfil() {
                     />
                   </div>
                   <div class="updateIcon">
-                    <button>
+                    <button onClick={updateUser} className="btn">
                       <CheckCircleOutlineSharpIcon />
                     </button>
                   </div>
@@ -66,8 +69,10 @@ function EditProfil() {
                         type="text"
                         className="form-control"
                         id="username"
+                        name="firstname"
                         value={user.firstname}
                         style={{ textAlign: "center" }}
+                        onChange={UserChangeHandler}
                         required
                       />
                     </div>
@@ -77,8 +82,10 @@ function EditProfil() {
                         type="text"
                         className="form-control"
                         id="username"
+                        name="lastname"
                         value={user.lastname}
                         style={{ textAlign: "center" }}
+                        onChange={UserChangeHandler}
                         required
                       />
                     </div>
@@ -91,6 +98,7 @@ function EditProfil() {
                         type="number"
                         className="form-control"
                         id="username"
+                        name="phone"
                         value={user.phone}
                         style={{ textAlign: "center" }}
                         onChange={UserChangeHandler}
@@ -103,8 +111,10 @@ function EditProfil() {
                         type="email"
                         className="form-control"
                         id="username"
+                        name="email"
                         value={user.email}
                         style={{ textAlign: "center" }}
+                        onChange={UserChangeHandler}
                         required
                       />
                     </div>
