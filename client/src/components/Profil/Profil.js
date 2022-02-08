@@ -18,7 +18,7 @@ function Profil() {
       })
       .catch((err) => console.error(err));
   });
-  console.log(user);
+
   return (
     <div class=" container">
       <br />
@@ -38,7 +38,7 @@ function Profil() {
                     />
                   </div>
                   <div class="updateIcon">
-                    <Link to="editprofil">
+                    <Link to="/editprofil">
                       <ModeEditOutlineSharpIcon />
                     </Link>
                   </div>
@@ -52,18 +52,18 @@ function Profil() {
                   <div class="row">
                     <div class="col-sm-6">
                       <p class="m-b-10 f-w-600">FirstName</p>
-                      <h6 class="text-muted f-w-400">{user.username}</h6>
+                      <h6 class="text-muted f-w-400">{user.firstname}</h6>
                     </div>
                     <div class="col-sm-6">
                       <p class="m-b-10 f-w-600">LastName</p>
-                      <h6 class="text-muted f-w-400">{user.username}</h6>
+                      <h6 class="text-muted f-w-400">{user.lastname}</h6>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-sm-6">
                       <p class="m-b-10 f-w-600">Phone number</p>
-                      <h6 class="text-muted f-w-400">12345678</h6>
+                      <h6 class="text-muted f-w-400">{user.phone}</h6>
                     </div>
                     <div class="col-sm-6">
                       <p class="m-b-10 f-w-600">Email</p>

@@ -60,3 +60,11 @@ module.exports.getAllPeople = (request, response) => {
     .then((users) => response.json(users))
     .catch((err) => response.json(err));
 };
+
+module.exports.updateUser = (request, response) => {
+  User.findOneAndUpdate({ _id: request.params.id }, request.body, {
+    new: true,
+  })
+    .then((updatedUser) => response.json(updatedUser))
+    .catch((err) => response.json(err));
+};

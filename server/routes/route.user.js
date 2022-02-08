@@ -10,5 +10,5 @@ module.exports = (app) => {
     UserController.getLoggedInUser
   );
   app.get("/api/user/:id", UserController.getUserById);
-  app.get("/api/people", UserController.getAllPeople);
-};
+  app.put("/api/user/:id",  UserController.updateUser);
+}
