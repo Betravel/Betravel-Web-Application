@@ -30,6 +30,8 @@ const SignIn = () => {
         console.log("LOGGGIN IN RESPONSE", res);
         if (res.data.msg === "success!") {
           history("/");
+          sessionStorage.setItem("log",true);
+          window.location.reload(false);
         }
       })
       .catch((err) => console.log(err));
@@ -62,6 +64,7 @@ const SignIn = () => {
             onChange={loginChangeHandler}
             id="email"
             name="email"
+            placeholder="Email"
             required
           />
         </div>
@@ -89,6 +92,7 @@ const SignIn = () => {
             onChange={loginChangeHandler}
             id="password"
             name="password"
+            placeholder="Password"
             required
           />
         </div>
