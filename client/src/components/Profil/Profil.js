@@ -17,7 +17,7 @@ function Profil() {
         setUser(res.data);
       })
       .catch((err) => console.error(err));
-  });
+  },[]);
 
   return (
     <div class=" container">
