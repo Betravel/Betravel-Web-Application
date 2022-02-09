@@ -9,7 +9,6 @@ require("./config/config.mongoose");
 app.use(express.json());
 app.use(cookies());
 app.use(express.urlencoded({ extended: true }));
-
 require("./routes/route.user")(app);
 
 app.listen(8000, () => {
