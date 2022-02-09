@@ -21,7 +21,7 @@ const SignIn = () => {
 
   const login = (e) => {
     e.preventDefault();
-    console.log(loginInfo)
+    console.log(loginInfo);
     axios
       .post("http://localhost:8000/api/login", loginInfo, {
         withCredentials: true,
@@ -29,6 +29,14 @@ const SignIn = () => {
       .then((res) => {
         console.log("LOGGGIN IN RESPONSE", res);
         if (res.data.msg === "success!") {
+          axios
+            .get("http://localhost:8000/api/users/getloggedinuser", {
+              withCredentials: true,
+            })
+            .then((res) => {
+              sessionStorage.setItem("loggeduser", JSON.stringify(res.data));
+            })
+            .catch((err) => console.error(err));
           history("/");
           sessionStorage.setItem("log",true);
           window.location.reload(false);
@@ -41,7 +49,7 @@ const SignIn = () => {
     <Card className="Login">
       <form onSubmit={login}>
         <h1>Log In </h1>
-        <br/>
+        <br />
         <label htmlFor="email" className="form-label">
           Email
         </label>
