@@ -38,7 +38,7 @@ const SignIn = () => {
             })
             .catch((err) => console.error(err));
           history("/");
-          sessionStorage.setItem("log",true);
+          sessionStorage.setItem("log", true);
           window.location.reload(false);
         }
       })
