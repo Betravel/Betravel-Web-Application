@@ -43,8 +43,20 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.getLoggedInUser = (req, res) => {
-  const decodedJWT = jwt.decode(req.cookies.usertoken, { complete: true });
+  const decodedJWT = jwt.decode(req.cookies.usertoken , { complete: true });
   User.findById(decodedJWT.payload._id)
     .then((user) => res.json(user))
     .catch((err) => res.json(err));
+};
+
+module.exports.getUserById = (request, response) => {
+  User.findOne({ _id: request.params.id })
+    .then((user) => response.json(user))
+    .catch((err) => response.json(err));
+};
+
+module.exports.getAllPeople = (request, response) => {
+  User.find({})
+    .then((users) => response.json(users))
+    .catch((err) => response.json(err));
 };
