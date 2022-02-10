@@ -15,7 +15,7 @@ function Contact() {
     message,
     type: "sent",
   };
-  
+
   return (
     <Card>
       <div className="container">
