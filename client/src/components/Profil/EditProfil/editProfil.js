@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 function EditProfil() {
   const history = useNavigate();
+  if (sessionStorage.getItem("log")) {
+  } else {
+    history("/SignIn");
+  }
 
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("loggeduser"))

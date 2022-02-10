@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema(
     phone: {
       type: Number,
       required: [true, "phone number is required"],
-      length:[8,"phone number must be exactly 8 numbers"]
+      length: [8, "phone number must be exactly 8 numbers"],
     },
     email: {
       type: String,
@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Password must be 8 characters or longer"],
+    },
+
+    confirmed: {
+      type: Boolean,
+      required: [true],
     },
   },
   { timestamps: true }
