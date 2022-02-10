@@ -104,7 +104,7 @@ const SignUp = () => {
             </svg>
           </span>
           <input
-            type="number"
+            type="tel"
             className="form-control"
             onChange={(e) => setphone(e.target.value)}
             id="phone"
