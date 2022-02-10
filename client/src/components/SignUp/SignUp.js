@@ -24,21 +24,36 @@ const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/register", {
-        firstname,
-        lastname,
-        phone,
-        email,
-        password,
-        confirm: confim,
-      })
+      .get("http://localhost:8000/api/users/" + email)
       .then((res) => {
-        console.log(res);
-        if (res.data.errors) {
-          setErrors(res.data.errors);
+        if (res.data === null) {
+          axios
+            .post("http://localhost:8000/api/register", {
+              firstname,
+              lastname,
+              phone,
+              email,
+              password,
+              confirm: confim,
+              confirmed: false,
+            })
+            .then((res) => {
+              console.log(res);
+              if (res.data.errors) {
+                setErrors(res.data.errors);
+              } else {
+                axios
+                  .post("http://localhost:8000/send", { email })
+                  .then((res) => console.log(res))
+                  .catch((err) => console.log(err));
+                console.log("success!");
+                alert("confirm your account , link sent by mail !");
+                history("/SignIn");
+              }
+            })
+            .catch((err) => console.log(err));
         } else {
-          console.log("success!");
-          history("/");
+          alert(" Email already exist !!");
         }
       })
       .catch((err) => console.log(err));
