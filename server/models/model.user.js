@@ -67,4 +67,19 @@ UserSchema.pre("save", function (next) {
     });
 });
 
+UserSchema.pre("updateOne", { document: false, query: true }, function (next) {
+  bcrypt
+    .hash(this.options.password, 10)
+    .then((hash) => {
+      this._update.password = hash;
+      next();
+    })
+    .catch((err) => {
+      console.log(
+        "ereuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuueeerrrr",
+        err
+      );
+    });
+});
+
 module.exports = mongoose.model("User", UserSchema);

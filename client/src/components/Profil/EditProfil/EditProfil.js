@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function EditProfil() {
   const history = useNavigate();
+
   if (sessionStorage.getItem("log")) {
   } else {
     history("/SignIn");
@@ -14,6 +15,9 @@ function EditProfil() {
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("loggeduser"))
   );
+  const [password, setpassword] = useState("");
+  const [confim, setconfim] = useState("");
+  const [error, seterror] = useState(false);
 
   const UserChangeHandler = (e) => {
     setUser({
@@ -25,14 +29,39 @@ function EditProfil() {
   //Update
   const updateUser = (e) => {
     e.preventDefault();
-    axios
-      .put("http://localhost:8000/api/user/" + user._id, user)
-      .then((res) => {
-        console.log(res);
-        sessionStorage.setItem("loggeduser", JSON.stringify(user));
-        history("/profil");
-      })
-      .catch((err) => console.error(err));
+    if (password === confim) {
+      if (password === "") {
+        axios
+          .put("http://localhost:8000/api/user/" + user._id, user)
+          .then((res) => {
+            console.log(res);
+            sessionStorage.setItem("loggeduser", JSON.stringify(user));
+            history("/profil");
+          })
+          .catch((err) => console.error(err));
+      } else {
+        user.password = password;
+        axios
+          .put("http://localhost:8000/api/ekhdem", user)
+          .then((response) => {
+            console.log(response);
+            axios
+              .get("http://localhost:8000/api/user/" + user._id)
+              .then((response) => {
+                console.log(response.data);
+                sessionStorage.setItem(
+                  "loggeduser",
+                  JSON.stringify(response.data)
+                );
+              })
+              .catch((err) => console.log(err));
+            history("/profil");
+          })
+          .catch((err) => console.log(err));
+      }
+    } else {
+      seterror(true);
+    }
   };
   console.log("user", user);
 
@@ -65,7 +94,7 @@ function EditProfil() {
               <div className="col-sm-8">
                 <div className="card-block">
                   <h2 className="m-b-20 p-b-5 b-b-default f-w-600">Profil</h2>
-
+                  <br />
                   <div className="row">
                     <div className="col-sm-6">
                       <p className="m-b-10 f-w-600">FirstName</p>
@@ -94,7 +123,7 @@ function EditProfil() {
                       />
                     </div>
                   </div>
-
+                  <br />
                   <div className="row">
                     <div className="col-sm-6">
                       <p className="m-b-10 f-w-600">Phone number</p>
@@ -121,6 +150,45 @@ function EditProfil() {
                         onChange={UserChangeHandler}
                         required
                       />
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <h6 className="text-danger">Optional*:</h6>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <p className="m-b-10 f-w-600">Password</p>
+                      <input
+                        type="password"
+                        className="form-control"
+                        onChange={(e) => setpassword(e.target.value)}
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        style={{ textAlign: "center" }}
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <p className="m-b-10 f-w-600">Confirm Password</p>
+                      <input
+                        type="password"
+                        className="form-control"
+                        onChange={(e) => setconfim(e.target.value)}
+                        id="confim"
+                        name="confim"
+                        placeholder="Confirm Password"
+                        style={{ textAlign: "center" }}
+                        required
+                      />
+                      {error ? (
+                        <p className="text-danger">Doesn't match </p>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                 </div>
