@@ -9,7 +9,8 @@ function ConfirmPassword() {
   const [error, seterror] = useState(false);
   let { id } = useParams();
   const history = useNavigate();
-  const login = (e) => {
+
+  const Confirmpass = (e) => {
     e.preventDefault();
 
     if (password === confim) {
@@ -33,7 +34,7 @@ function ConfirmPassword() {
   };
   return (
     <Card className="Login">
-      <form onSubmit={login}>
+      <form onSubmit={Confirmpass}>
         {" "}
         <h3>Enter your new Password </h3>
         <label htmlFor="password" className="form-label">

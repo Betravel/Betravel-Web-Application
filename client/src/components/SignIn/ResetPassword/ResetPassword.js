@@ -5,7 +5,7 @@ import axios from "axios";
 function ResetPassword() {
   const [email, setemail] = useState("");
 
-  const login = (e) => {
+  const Resetpass = (e) => {
     e.preventDefault();
     axios
       .get("http://localhost:8000/api/users/" + email)
@@ -28,7 +28,7 @@ function ResetPassword() {
   };
   return (
     <Card className="Login">
-      <form onSubmit={login}>
+      <form onSubmit={Resetpass}>
         {" "}
         <h3>Find your account </h3>
         <label htmlFor="email" className="form-label">
