@@ -6,7 +6,9 @@ import Card from "../UI/Card";
 
 const SignUp = () => {
   const history = useNavigate();
-
+  if (sessionStorage.getItem("log")) {
+    history("/");
+  }
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [phone, setphone] = useState(0);
@@ -36,6 +38,7 @@ const SignUp = () => {
               password,
               confirm: confim,
               confirmed: false,
+              type: "user",
             })
             .then((res) => {
               console.log(res);
@@ -43,9 +46,22 @@ const SignUp = () => {
                 setErrors(res.data.errors);
               } else {
                 axios
-                  .post("http://localhost:8000/send", { email })
-                  .then((res) => console.log(res))
+                  .get("http://localhost:8000/api/users/" + email)
+                  .then((res) => {
+                    var user = res.data;
+                    axios
+                      .post("http://localhost:8000/send", {
+                        email,
+                        msg:
+                          '<a href="http://localhost:3000/confirmed/' +
+                          user._id.toString() +
+                          '"> Confirm your account here ! </a>',
+                      })
+                      .then((res) => console.log(res))
+                      .catch((err) => console.log(err));
+                  })
                   .catch((err) => console.log(err));
+
                 console.log("success!");
                 alert("confirm your account , link sent by mail !");
                 history("/SignIn");

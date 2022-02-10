@@ -8,7 +8,7 @@ import Profil from "./components/Profil/Profil";
 import EditProfil from "./components/Profil/EditProfil/EditProfil";
 import Contact from "./components/Contact/Contact";
 import Confirmed from "./components/SignUp/Confirm/Confirmed";
-
+import DashBoard from "./components/DashBoard/DashBoard";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/Dashboard" element={<DashBoard />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
