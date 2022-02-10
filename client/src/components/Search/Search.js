@@ -30,7 +30,10 @@ function Search() {
             aria-controls="nav-hotel"
             aria-selected="true"
           >
-            <img src="https://img.icons8.com/metro/26/000000/4-star-hotel.png" alt=""/>
+            <img
+              src="https://img.icons8.com/metro/26/000000/4-star-hotel.png"
+              alt=""
+            />
             <br />
             Hotels
           </button>
@@ -44,7 +47,10 @@ function Search() {
             aria-controls="nav-avion"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/external-gradak-royyan-wijaya/24/000000/external-airport-gradak-travel-gradak-royyan-wijaya-6.png" alt=""/>
+            <img
+              src="https://img.icons8.com/external-gradak-royyan-wijaya/24/000000/external-airport-gradak-travel-gradak-royyan-wijaya-6.png"
+              alt=""
+            />
             <br />
             Avion
           </button>
@@ -58,7 +64,10 @@ function Search() {
             aria-controls="nav-bateau"
             aria-selected="false"
           >
-            <img src="https://img.icons8.com/ios-glyphs/30/000000/cruise-ship.png" alt=""/>
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/000000/cruise-ship.png"
+              alt=""
+            />
             <br />
             Bateau
           </button>

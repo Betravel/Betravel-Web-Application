@@ -2,12 +2,16 @@
 import { useState, useEffect } from "react";
 import "./Profil.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModeEditOutlineSharpIcon from "@mui/icons-material/ModeEditOutlineSharp";
 
 function Profil() {
+  const history = useNavigate();
+  if (sessionStorage.getItem("log")) {
+  } else {
+    history("/SignIn");
+  }
   const [user, setUser] = useState({});
-
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/users/getloggedinuser", {
@@ -17,7 +21,7 @@ function Profil() {
         setUser(res.data);
       })
       .catch((err) => console.error(err));
-  },[]);
+  }, []);
 
   return (
     <div class=" container">

@@ -297,7 +297,7 @@ function SearchFormHotel() {
                 </button>
               </div>
             </div>
-            {Enfants>0 ? () => {} : ""}
+            {Enfants > 0 ? () => {} : ""}
             <div className="col-12">
               <label className="form-label">Chambres</label>
               <div className="input-group mb-3">

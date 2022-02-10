@@ -7,37 +7,51 @@ import Card from "../UI/Card";
 const SignIn = () => {
   const history = useNavigate();
 
-  const [loginInfo, setLoginInfo] = useState({
-    email: "",
-    password: "",
-  });
-
-  const loginChangeHandler = (e) => {
-    setLoginInfo({
-      ...loginInfo,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [erroremail, seterroremail] = useState("");
+  const [errorpassword, seterrorpassword] = useState("");
 
   const login = (e) => {
     e.preventDefault();
+    var loginInfo = { email, password };
     console.log(loginInfo);
     axios
-      .post("http://localhost:8000/api/login", loginInfo, {
-        withCredentials: true,
-      })
+      .get("http://localhost:8000/api/users/" + email)
       .then((res) => {
-        console.log("LOGGGIN IN RESPONSE", res);
-        if (res.data.msg === "success!") {
-          axios
-            .get("http://localhost:8000/api/users/getloggedinuser", {
-              withCredentials: true,
-            })
-            .then((res) => {
-              sessionStorage.setItem("loggeduser", JSON.stringify(res.data));
-            })
-            .catch((err) => console.error(err));
-          history("/");
+        if (res.data !== null) {
+          if (res.data.confirmed) {
+            axios
+              .post("http://localhost:8000/api/login", loginInfo, {
+                withCredentials: true,
+              })
+              .then((res) => {
+                console.log("LOGGGIN IN RESPONSE", res);
+                if (res.data.msg === "success!") {
+                  axios
+                    .get("http://localhost:8000/api/users/getloggedinuser", {
+                      withCredentials: true,
+                    })
+                    .then((res) => {
+                      sessionStorage.setItem(
+                        "loggeduser",
+                        JSON.stringify(res.data)
+                      );
+                    })
+                    .catch((err) => console.error(err));
+                  history("/");
+                  sessionStorage.setItem("log", true);
+                  window.location.reload(false);
+                } else {
+                  seterrorpassword("password incorrect");
+                }
+              })
+              .catch((err) => console.log(err));
+          } else {
+            seterroremail("not confirmed");
+          }
+        } else {
+          seterroremail("not found");
         }
       })
       .catch((err) => console.log(err));
@@ -67,13 +81,14 @@ const SignIn = () => {
           <input
             type="email"
             className="form-control"
-            onChange={loginChangeHandler}
+            onChange={(e) => setemail(e.target.value)}
             id="email"
             name="email"
+            placeholder="Email"
             required
           />
         </div>
-        {/* {errors.email? <p className="text-danger">{errors.email.message}</p>: ""} */}
+        {erroremail !== "" ? <p className="text-danger">{erroremail}</p> : ""}
         <label htmlFor="password" className="form-label">
           Password
         </label>
@@ -94,14 +109,19 @@ const SignIn = () => {
           <input
             type="password"
             className="form-control"
-            onChange={loginChangeHandler}
+            onChange={(e) => setpassword(e.target.value)}
             id="password"
             name="password"
+            placeholder="Password"
             required
           />
         </div>
 
-        {/* {errors.password? <p className="text-danger">{errors.password.message}</p>: ""} */}
+        {errorpassword !== "" ? (
+          <p className="text-danger">{errorpassword}</p>
+        ) : (
+          ""
+        )}
 
         <br />
         <div>
