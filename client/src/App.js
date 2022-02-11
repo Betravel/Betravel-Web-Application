@@ -12,7 +12,6 @@ import DashBoard from "./components/DashBoard/DashBoard";
 import ResetPassword from "./components/SignIn/ResetPassword/ResetPassword";
 import ConfirmPassword from "./components/SignIn/ResetPassword/ConfirmPassword";
 
-
 function App() {
   return (
     <div className="App">
