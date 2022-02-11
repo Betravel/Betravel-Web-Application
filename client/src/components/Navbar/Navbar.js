@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../assets/betravel.png";
-import {  Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import FacebookIcon from "@mui/icons-material/Facebook";
 // import InstagramIcon from "@mui/icons-material/Instagram";
@@ -84,12 +84,23 @@ function Navbar() {
               </button>
               {sessionStorage.getItem("log") ? (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <Link to="/profil" className="dropdown-item">
-                      {" "}
-                      Profil{" "}
-                    </Link>
-                  </li>
+                  {JSON.parse(sessionStorage.getItem("loggeduser")).type ===
+                  "user" ? (
+                    <li>
+                      <Link to="/profil" className="dropdown-item">
+                        {" "}
+                        My Profil{" "}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to="/dashboard" className="dropdown-item">
+                        {" "}
+                        DashBoard{" "}
+                      </Link>
+                    </li>
+                  )}
+
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
