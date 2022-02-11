@@ -75,7 +75,7 @@ module.exports.updateUser = (request, response) => {
     .catch((err) => response.json(err));
 };
 
-module.exports.updateUserEmail = (request, response) => {
+module.exports.updateUserPassword = (request, response) => {
   var user = new User(request.body);
   User.findOne({ _id: user._id })
     .then((res) => {

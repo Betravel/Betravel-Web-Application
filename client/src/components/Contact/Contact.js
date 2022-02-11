@@ -13,6 +13,7 @@ function Contact() {
 
   const send = (e) => {
     e.preventDefault();
+    var sjt = "Contact Request";
     var msg =
       "<h1> You have recived a message from " +
       firstname +
@@ -29,13 +30,13 @@ function Contact() {
       .post("http://localhost:8000/send", {
         email,
         msg,
+        sjt,
       })
       .then((res) => {
-        console.log(res);
         alert("Message Sent!");
         history("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("Error Server"));
   };
 
   return (

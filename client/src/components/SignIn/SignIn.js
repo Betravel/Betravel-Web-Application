@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
 import Card from "../UI/Card";
 
-const SignIn = () => {
+function SignIn () {
   const history = useNavigate();
-  if (sessionStorage.getItem("log")===true) {
-    history("/");
-  }
+  useEffect(() => {
+    if (sessionStorage.getItem("log")) {
+      history("/Profil");
+    }
+  });
+  
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [erroremail, seterroremail] = useState("");
@@ -17,7 +20,6 @@ const SignIn = () => {
   const login = (e) => {
     e.preventDefault();
     var loginInfo = { email, password };
-    console.log(loginInfo);
     axios
       .get("http://localhost:8000/api/users/" + email)
       .then((res) => {
@@ -48,7 +50,7 @@ const SignIn = () => {
                   seterrorpassword("password incorrect");
                 }
               })
-              .catch((err) => console.log(err));
+              .catch((err) => alert("Error Server"));
           } else {
             seterroremail("not confirmed");
           }
@@ -56,7 +58,7 @@ const SignIn = () => {
           seterroremail("not found");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("Error Server"));
   };
 
   return (
@@ -87,6 +89,7 @@ const SignIn = () => {
             id="email"
             name="email"
             placeholder="Email"
+            style={{ textAlign: "center" }}
             required
           />
         </div>
@@ -112,6 +115,7 @@ const SignIn = () => {
             type="password"
             className="form-control"
             onChange={(e) => setpassword(e.target.value)}
+            style={{ textAlign: "center" }}
             id="password"
             name="password"
             placeholder="Password"
