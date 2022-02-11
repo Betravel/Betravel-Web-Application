@@ -12,13 +12,11 @@ module.exports.sendmail = (req, res) => {
 
   User.findOne({ email: req.body.email })
     .then((user) => {
-      console.log(user._id.toString());
 
       var mailOptions = {
         from: "testb8835@gmail.com",
         to: req.body.email,
-        subject: "Sending Email using Node.js",
-        // text: "That was easy!",
+        subject: req.body.sjt,
         html: req.body.msg,
       };
 
