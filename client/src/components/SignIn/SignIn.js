@@ -118,17 +118,18 @@ const SignIn = () => {
             required
           />
         </div>
-
         {errorpassword !== "" ? (
           <p className="text-danger">{errorpassword}</p>
         ) : (
           ""
         )}
-
         <br />
         <div>
           <button type="submit">Log IN </button>
         </div>
+        <br />
+        <a href="/Restpass">Forgot your password ?</a>
+        <br /> <br />
       </form>
     </Card>
   );
