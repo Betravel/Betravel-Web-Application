@@ -84,7 +84,11 @@ function EditProfil() {
                     />
                   </div>
                   <div className="updateIcon">
-                    <button onClick={updateUser} className="btn" style={{color:"white"}}>
+                    <button
+                      onClick={updateUser}
+                      className="btn"
+                      style={{ color: "white" }}
+                    >
                       <CheckCircleOutlineSharpIcon />
                     </button>
                   </div>
