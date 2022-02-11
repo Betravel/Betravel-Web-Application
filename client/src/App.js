@@ -8,7 +8,8 @@ import Profil from "./components/Profil/Profil";
 import EditProfil from "./components/Profil/EditProfil/EditProfil";
 import Contact from "./components/Contact/Contact";
 import Confirmed from "./components/SignUp/Confirm/Confirmed";
-
+import ResetPassword from "./components/SignIn/ResetPassword/ResetPassword";
+import ConfirmPassword from "./components/SignIn/ResetPassword/ConfirmPassword";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/editprofil" element={<EditProfil />} />
+          <Route path="/Restpass" element={<ResetPassword />} />
+          <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
         </Routes>
       </Router>
     </div>
