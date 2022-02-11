@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
 import Card from "../UI/Card";
 
-const SignUp = () => {
+function SignUp() {
   const history = useNavigate();
-  if (sessionStorage.getItem("log")) {
-    history("/");
-  }
+  useEffect(() => {
+    if (sessionStorage.getItem("log")) {
+      history("/Profil");
+    }
+  });
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [phone, setphone] = useState(0);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [confim, setconfim] = useState("");
-
   const [errors, setErrors] = useState({
     username: "",
     email: "",
@@ -41,7 +42,6 @@ const SignUp = () => {
               type: "user",
             })
             .then((res) => {
-              console.log(res);
               if (res.data.errors) {
                 setErrors(res.data.errors);
               } else {
@@ -56,23 +56,23 @@ const SignUp = () => {
                           '<a href="http://localhost:3000/confirmed/' +
                           user._id.toString() +
                           '"> Confirm your account here ! </a>',
+                        sjt: "Confirm your account",
                       })
-                      .then((res) => console.log(res))
-                      .catch((err) => console.log(err));
+                      .then((res) => {
+                        alert("Confirm your account , link sent by mail !");
+                        history("/SignIn");
+                      })
+                      .catch((err) => alert("Error Server"));
                   })
-                  .catch((err) => console.log(err));
-
-                console.log("success!");
-                alert("confirm your account , link sent by mail !");
-                history("/SignIn");
+                  .catch((err) => alert("Error Server"));
               }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => alert("Error Server"));
         } else {
           alert(" Email already exist !!");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("Error Server"));
   };
 
   return (
@@ -140,6 +140,7 @@ const SignUp = () => {
             onChange={(e) => setphone(e.target.value)}
             id="phone"
             placeholder="Phone Number"
+            pattern="[0-9]{8}"
             required
           />
         </div>
@@ -242,5 +243,5 @@ const SignUp = () => {
       </form>
     </Card>
   );
-};
+}
 export default SignUp;

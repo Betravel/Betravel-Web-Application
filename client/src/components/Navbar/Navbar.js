@@ -2,10 +2,6 @@ import React from "react";
 import Logo from "../../assets/betravel.png";
 import { Link, useNavigate } from "react-router-dom";
 
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import InstagramIcon from "@mui/icons-material/Instagram";
-// import ReorderSharpIcon from "@mui/icons-material/ReorderSharp";
-
 function Navbar() {
   const history = useNavigate();
 
@@ -54,7 +50,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/about"
+                to="/AboutUs"
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
               >
@@ -87,7 +83,7 @@ function Navbar() {
                   {JSON.parse(sessionStorage.getItem("loggeduser")).type ===
                   "user" ? (
                     <li>
-                      <Link to="/profil" className="dropdown-item">
+                      <Link to="/Profil" className="dropdown-item">
                         {" "}
                         My Profil{" "}
                       </Link>

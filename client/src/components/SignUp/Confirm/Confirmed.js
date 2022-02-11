@@ -19,26 +19,26 @@ function Confirmed() {
           axios
             .put("http://localhost:8000/api/user/" + user._id, user)
             .then((res) => {
-              console.log(res);
               history("/SignIn");
               alert("Email Confirmed ! 🥳 ");
               axios
                 .post("http://localhost:8000/send", {
                   email: user.email,
-                  msg: "<h1 style={{'color':'blue'}}>Welcome to BeTravel !<h1/>",
+                  msg: "<h1>Welcome to BeTravel !<h1/>",
+                  sjt: "Account Confirmed",
                 })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+                .then((res) => {})
+                .catch((err) => alert("Error Server"));
             })
-            .catch((err) => console.error(err));
+            .catch((err) => alert("Error Server"));
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => alert("Error Server"));
   }, [history, id]);
 
   return (
     <Card>
-      <h1>Email Confirmed</h1>
+      <h1>Email Confirmed </h1>
     </Card>
   );
 }

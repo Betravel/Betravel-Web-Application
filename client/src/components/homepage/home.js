@@ -5,17 +5,21 @@ import Seach from "../Search/Search";
 
 function Home() {
   return (
-    <Card className="home">
-      <br />
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-12 col-md-8 col-xl-5">
-            <Seach />
+    <div className="container-fluid">
+      <div className="row">
+        <Card className="home">
+          <br />
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12 col-md-8 col-xl-5">
+                <Seach />
+              </div>
+            </div>
           </div>
-        </div>
+          <br />
+        </Card>
       </div>
-      <br />
-    </Card>
+    </div>
   );
 }
 

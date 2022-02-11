@@ -34,36 +34,32 @@ function EditProfil() {
         axios
           .put("http://localhost:8000/api/user/" + user._id, user)
           .then((res) => {
-            console.log(res);
             sessionStorage.setItem("loggeduser", JSON.stringify(user));
-            history("/profil");
+            history("/Profil");
           })
           .catch((err) => console.error(err));
       } else {
         user.password = password;
         axios
-          .put("http://localhost:8000/api/ekhdem", user)
+          .put("http://localhost:8000/api/user/update", user)
           .then((response) => {
-            console.log(response);
             axios
               .get("http://localhost:8000/api/user/" + user._id)
               .then((response) => {
-                console.log(response.data);
                 sessionStorage.setItem(
                   "loggeduser",
                   JSON.stringify(response.data)
                 );
               })
-              .catch((err) => console.log(err));
-            history("/profil");
+              .catch((err) => alert("Error Server"));
+            history("/Profil");
           })
-          .catch((err) => console.log(err));
+          .catch((err) => alert("Error Server"));
       }
     } else {
       seterror(true);
     }
   };
-  console.log("user", user);
 
   return (
     <div className=" container">
@@ -101,7 +97,7 @@ function EditProfil() {
                       <input
                         type="text"
                         className="form-control"
-                        id="username"
+                        id="firstname"
                         name="firstname"
                         value={user.firstname}
                         style={{ textAlign: "center" }}
@@ -114,7 +110,7 @@ function EditProfil() {
                       <input
                         type="text"
                         className="form-control"
-                        id="username"
+                        id="lastname"
                         name="lastname"
                         value={user.lastname}
                         style={{ textAlign: "center" }}
@@ -128,12 +124,13 @@ function EditProfil() {
                     <div className="col-sm-6">
                       <p className="m-b-10 f-w-600">Phone number</p>
                       <input
-                        type="number"
+                        type="tel"
                         className="form-control"
-                        id="username"
+                        id="phone"
                         name="phone"
                         value={user.phone}
                         style={{ textAlign: "center" }}
+                        pattern="[0-9]{8}"
                         onChange={UserChangeHandler}
                         required
                       />
@@ -143,7 +140,7 @@ function EditProfil() {
                       <input
                         type="email"
                         className="form-control"
-                        id="username"
+                        id="email"
                         name="email"
                         value={user.email}
                         style={{ textAlign: "center" }}
