@@ -11,15 +11,27 @@ function Confirmed() {
       .get("http://localhost:8000/api/user/" + id)
       .then((res) => {
         var user = res.data;
-        user.confirmed = true;
-        axios
-          .put("http://localhost:8000/api/user/" + user._id, user)
-          .then((res) => {
-            console.log(res);
-            history("/SignIn");
-            alert("Email Confirmed ! 🥳 ");
-          })
-          .catch((err) => console.error(err));
+        if (user.confirmed) {
+          alert("Account already confirmed !");
+          history("/SignIn");
+        } else {
+          user.confirmed = true;
+          axios
+            .put("http://localhost:8000/api/user/" + user._id, user)
+            .then((res) => {
+              console.log(res);
+              history("/SignIn");
+              alert("Email Confirmed ! 🥳 ");
+              axios
+                .post("http://localhost:8000/send", {
+                  email: user.email,
+                  msg: "<h1 style={{'color':'blue'}}>Welcome to BeTravel !<h1/>",
+                })
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+            })
+            .catch((err) => console.error(err));
+        }
       })
       .catch((err) => console.error(err));
   }, [history, id]);

@@ -1,19 +1,41 @@
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../UI/Card";
 
 function Contact() {
+  const history = useNavigate();
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [phone, setphone] = useState(0);
   const [email, setemail] = useState("");
   const [message, setmessage] = useState("");
-  const res = {
-    firstname,
-    lastname,
-    email,
-    phone,
-    message,
-    type: "sent",
+
+  const send = (e) => {
+    e.preventDefault();
+    var msg =
+      "<h1> You have recived a message from " +
+      firstname +
+      " " +
+      lastname +
+      " (" +
+      email +
+      " , " +
+      phone +
+      " ) </h1><p>" +
+      message +
+      "</p>";
+    axios
+      .post("http://localhost:8000/send", {
+        email,
+        msg,
+      })
+      .then((res) => {
+        console.log(res);
+        alert("Message Sent!");
+        history("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -62,7 +84,7 @@ function Contact() {
           <br />
           <div className="col-md-6">
             <div className="container">
-              <form className="row g-3">
+              <form className="row g-3" onSubmit={send}>
                 <div className="col-md-6">
                   <label htmlFor="firstname" className="form-label">
                     Firstname

@@ -6,7 +6,9 @@ import Card from "../UI/Card";
 
 const SignIn = () => {
   const history = useNavigate();
-
+  if (sessionStorage.getItem("log")===true) {
+    history("/");
+  }
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [erroremail, seterroremail] = useState("");
