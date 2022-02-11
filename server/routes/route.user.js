@@ -12,5 +12,6 @@ module.exports = (app) => {
   app.get("/api/user/:id", UserController.getUserById);
   app.get("/api/users/:email", UserController.getUserByEmail);
   app.put("/api/user/:id", UserController.updateUser);
+  app.put("/api/ekhdem", UserController.updateUserEmail);
   app.post("/send", EmailController.sendmail);
 };
