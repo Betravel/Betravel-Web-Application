@@ -1,29 +1,38 @@
 import Card from "../../UI/Card";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
   const [email, setemail] = useState("");
+  const history = useNavigate();
 
   const Resetpass = (e) => {
     e.preventDefault();
     axios
       .get("http://localhost:8000/api/users/" + email)
       .then((res) => {
-        console.log(res);
         if (res.data === null) {
           alert("email not correct !!");
         } else {
           axios
-            .post("http://localhost:8000/send", { email })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-          console.log("success!");
-          alert("Check your email to continue !!");
+            .post("http://localhost:8000/send", {
+              email,
+              msg:
+                '<a href="http://localhost:3000/Confirmpass/' +
+                res._id.toString() +
+                '"> Reset your password here ! </a>',
+              sjt: "Reset Password",
+            })
+            .then((res) => {
+              alert("Check your email to continue !!");
+              history("/SignIn");
+            })
+            .catch((err) => alert("Error Server"));
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert("Error Server");
       });
   };
   return (
