@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../assets/betravel.png";
-import {  Link, useNavigate } from "react-router-dom";
-
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import InstagramIcon from "@mui/icons-material/Instagram";
-// import ReorderSharpIcon from "@mui/icons-material/ReorderSharp";
-
+import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
+  const [navbar, setNavbar] = useState(false);
 
   const logout = () => {
     sessionStorage.clear();
@@ -15,10 +12,28 @@ function Navbar() {
     history("/");
     window.location.reload(false);
   };
+
+  const changeBackground = () => {
+    if ((window.scrollY >= 66) || (window.innerWidth<991)) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+  useEffect(() => {
+    changeBackground();
+    console.log(window.innerWidth);
+    // adding the event when scroll change background
+    window.addEventListener("scroll", changeBackground);
+  });
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light "
-      style={{ backgroundColor: "#07002a" }}
+      className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
+      style={
+        navbar
+          ? { backgroundColor: "#000B18" }
+          : { backgroundColor: "transparent" }
+      }
     >
       <div className="container-fluid">
         <div className="col-lg-6">
@@ -54,7 +69,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/about"
+                to="/AboutUs"
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
               >
@@ -84,12 +99,23 @@ function Navbar() {
               </button>
               {sessionStorage.getItem("log") ? (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <Link to="/profil" className="dropdown-item">
-                      {" "}
-                      Profil{" "}
-                    </Link>
-                  </li>
+                  {JSON.parse(sessionStorage.getItem("loggeduser")).type ===
+                  "user" ? (
+                    <li>
+                      <Link to="/Profil" className="dropdown-item">
+                        {" "}
+                        My Profil{" "}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to="/dashboard" className="dropdown-item">
+                        {" "}
+                        DashBoard{" "}
+                      </Link>
+                    </li>
+                  )}
+
                   <li>
                     <hr className="dropdown-divider" />
                   </li>

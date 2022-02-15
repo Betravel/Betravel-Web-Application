@@ -12,17 +12,12 @@ module.exports.sendmail = (req, res) => {
 
   User.findOne({ email: req.body.email })
     .then((user) => {
-      console.log(user._id.toString());
 
       var mailOptions = {
         from: "testb8835@gmail.com",
         to: req.body.email,
-        subject: "Sending Email using Node.js",
-        text: "That was easy!",
-        html:
-          '<h2>Welcome to BeTravel ! </h2> <a href="http://localhost:3000/confirmed/' +
-          user._id.toString() +
-          '"> Click ici ! </a>',
+        subject: req.body.sjt,
+        html: req.body.msg,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {

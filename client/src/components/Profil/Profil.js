@@ -41,9 +41,9 @@ function Profil() {
                       alt="User-Profile-Image"
                     />
                   </div>
-                  <div className="updateIcon">
-                    <Link to="/editprofil">
-                      <ModeEditOutlineSharpIcon />
+                  <div className="updateIcon" >
+                    <Link to="/Profil/Edit">
+                      <ModeEditOutlineSharpIcon style={{color:"white"}}/>
                     </Link>
                   </div>
                 </div>

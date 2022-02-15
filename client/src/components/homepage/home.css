@@ -1,7 +1,26 @@
-.home {
-  background-color: #387ead;
-  background-image: url(../../assets/Seguia_mod1.png);
+.row1 {
+  background: url("../../assets/banner.jpg");
+  min-height: auto;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  background-color: #c1ab96;
+}
+.row2 {
+  position: relative;
+  z-index: 100;
+  justify-content: end;
+  padding-top: 300px;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 2px;
+  color: rgb(12, 10, 26);
+}
+
+.row3 {
+  font-weight: bolder;
+  font-style: italic;
+  font-size: large;
 }

@@ -20,14 +20,13 @@ function ConfirmPassword() {
           var user = response.data;
           user.password = password;
           axios
-            .put("http://localhost:8000/api/ekhdem", user)
+            .put("http://localhost:8000/api/user/update", user)
             .then((response) => {
-              console.log(response);
               history("/SignIn");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => alert("Error Server"));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert("Error Server"));
     } else {
       seterror(true);
     }

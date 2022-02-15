@@ -1,7 +1,7 @@
 .Register {
   background-color: transparent;
   padding: 1rem;
-  margin: 2rem auto;
+  margin: auto;
   width: 50rem;
   max-width: 95%;
   border-radius: 12px;
@@ -13,9 +13,21 @@
   font: inherit;
   cursor: pointer;
   padding: 1rem 2rem;
-  border: 1px solid #07002a;
-  background-color: #07002a;
+  border: 1px solid #061824;
+  background-color: #061824;
   color: white;
   border-radius: 12px;
   margin-right: 1rem;
+}
+
+.Register label {
+  color: white;
+}
+
+.Register1 {
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
