@@ -1,8 +1,7 @@
 import React from "react";
 import "./home.css";
-// import Card from "../UI/Card";
 import SearchFormHotel from "../Search/SearchForm/SearchFormHotel";
-import img from "../../assets/Image.jpg";
+import Promos from "../PromosHotel/Promos";
 
 function Home() {
   return (
@@ -58,79 +57,7 @@ function Home() {
         </div>
       </div>
       <div className="row">
-        <div className="container">
-          <div className="row">
-            <h1
-              style={{
-                color: "#2a211c",
-              }}
-            >
-              Best deals{" "}
-            </h1>
-          </div>
-          <div className="row">
-            <div className="col-4">
-              <div className="card">
-                <img src={img} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">Hotel 1</h5>
-                  <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <a href="/" className="btn btn-primary">
-                    Go somewhere
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-4">
-              <div className="card">
-                <img src={img} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">Hotel 2</h5>
-                  <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <a href="/" className="btn btn-primary">
-                    Go somewhere
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-4">
-              <div className="card">
-                <img src={img} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">Hotel 3</h5>
-                  <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <a href="/" className="btn btn-primary">
-                    Go somewhere
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <button
-              className="btn btn-light"
-              style={{
-                fontWeight: "bolder",
-                fontSize: "30px",
-                " textdecoration": "underline",
-              }}
-            >
-              {" "}
-              see more...
-            </button>
-          </div>
-        </div>
+        <Promos />
       </div>
     </div>
   );
