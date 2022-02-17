@@ -11,6 +11,7 @@ function Profil() {
   } else {
     history("/SignIn");
   }
+  
   const [user, setUser] = useState({});
   useEffect(() => {
     axios

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../assets/betravel.png";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
+  const [navbar, setNavbar] = useState(false);
+  const location = useLocation();  
 
   const logout = () => {
     sessionStorage.clear();
@@ -11,10 +13,27 @@ function Navbar() {
     history("/");
     window.location.reload(false);
   };
+
+  const changeBackground = () => {
+    if (window.scrollY >= 66 || window.innerWidth < 991 || location.pathname ==="/dashboard") {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+  useEffect(() => {
+    changeBackground();
+    window.addEventListener("scroll", changeBackground);
+    
+  });
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light "
-      style={{ backgroundColor: "#07002a" }}
+      className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
+      style={
+        navbar
+          ? { backgroundColor: "#000B18" }
+          : { backgroundColor: "transparent" }
+      }
     >
       <div className="container-fluid">
         <div className="col-lg-6">
