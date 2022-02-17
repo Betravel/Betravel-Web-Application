@@ -18,12 +18,29 @@ function UsersOverview() {
       0
     )} 0%, ${alpha(theme.palette.info.dark, 0.24)} 100%)`,
   }));
-  const [users, setusers] = useState({});
+  const [users, setusers] = useState([]);
+  const [newusers, setnewusers] = useState(0);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/users/all")
       .then((res) => {
         setusers(res.data);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth(); //January is 0 so need to add 1 to make it 1!
+        var yyyy = today.getFullYear();
+        var i = 0;
+        res.data.forEach((user) => {
+          var d = new Date(user.createdAt);
+          if (
+            d.getDate() === dd &&
+            d.getMonth() === mm &&
+            d.getFullYear() === yyyy
+          ) {
+            i += 1;
+          }
+        });
+        setnewusers(i);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -56,7 +73,7 @@ function UsersOverview() {
         </IconWrapperStyle>
         <h5 className="card-title">{users.length}</h5>
         <h6 className="card-subtitle mb-2 text-muted">Users</h6>
-        <p className="card-text ">+32 today</p>
+        <p className="card-text ">+{newusers} today</p>
       </div>
     </div>
   );

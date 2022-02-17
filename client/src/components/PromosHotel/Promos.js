@@ -15,7 +15,7 @@ function Promos() {
         setHotels(res.data);
       })
       .catch((err) => console.error(err));
-  }, [hotels]);
+  }, []);
 
   var settings = {
     dots: true,
@@ -61,7 +61,7 @@ function Promos() {
                       <p>4 Days - 3 Nights</p>
                     </div>
                     <h1>{hotel.price}</h1>
-                    <Link to ="/Hotel/Detail">
+                    <Link to="/Hotel/Detail">
                       <button className="btn button"> show details</button>
                     </Link>
                   </div>

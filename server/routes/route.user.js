@@ -19,5 +19,4 @@ module.exports = (app) => {
   app.post("/send", EmailController.sendmail);
 
   //hotel
-  app.get("/api/hotels",HotelController.getAllHotels );
 };
