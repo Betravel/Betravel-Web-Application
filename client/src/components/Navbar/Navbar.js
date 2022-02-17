@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/betravel.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
   const [navbar, setNavbar] = useState(false);
+  const location = useLocation();  
 
   const logout = () => {
     sessionStorage.clear();
@@ -14,7 +15,7 @@ function Navbar() {
   };
 
   const changeBackground = () => {
-    if ((window.scrollY >= 66) || (window.innerWidth<991)) {
+    if (window.scrollY >= 66 || window.innerWidth < 991 || location.pathname ==="/dashboard") {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -22,9 +23,8 @@ function Navbar() {
   };
   useEffect(() => {
     changeBackground();
-    console.log(window.innerWidth);
-    // adding the event when scroll change background
     window.addEventListener("scroll", changeBackground);
+    
   });
   return (
     <nav

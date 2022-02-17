@@ -11,6 +11,7 @@ module.exports = (app) => {
     authenticate,
     UserController.getLoggedInUser
   );
+  app.get("/api/users/all",UserController.getAllPeople);
   app.get("/api/user/:id", UserController.getUserById);
   app.get("/api/users/:email", UserController.getUserByEmail);
   app.put("/api/user/:id", UserController.updateUser);
