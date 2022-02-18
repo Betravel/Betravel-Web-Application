@@ -5,7 +5,7 @@ import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
   const [navbar, setNavbar] = useState(false);
-  const location = useLocation();  
+  const location = useLocation();
 
   const logout = () => {
     sessionStorage.clear();
@@ -15,7 +15,11 @@ function Navbar() {
   };
 
   const changeBackground = () => {
-    if (window.scrollY >= 66 || window.innerWidth < 991 || location.pathname ==="/dashboard") {
+    if (
+      window.scrollY >= 66 ||
+      window.innerWidth < 991 ||
+      location.pathname === "/Dashboard"
+    ) {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -24,7 +28,6 @@ function Navbar() {
   useEffect(() => {
     changeBackground();
     window.addEventListener("scroll", changeBackground);
-    
   });
   return (
     <nav
@@ -79,7 +82,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/contact"
+                to="/Contact"
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
               >
@@ -109,7 +112,7 @@ function Navbar() {
                     </li>
                   ) : (
                     <li>
-                      <Link to="/dashboard" className="dropdown-item">
+                      <Link to="/Dashboard" className="dropdown-item">
                         {" "}
                         DashBoard{" "}
                       </Link>
