@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cookies());
 app.use(express.urlencoded({ extended: true }));
 require("./routes/route.user")(app);
+require("./routes/route.hotel")(app);
 
 app.listen(8000, () => {
   console.log("Listening at Port 8000");
