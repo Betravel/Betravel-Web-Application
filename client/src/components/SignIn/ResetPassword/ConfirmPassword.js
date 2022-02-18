@@ -1,7 +1,7 @@
 import Card from "../../UI/Card";
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function ConfirmPassword() {
   const [password, setpassword] = useState("");
@@ -12,7 +12,7 @@ function ConfirmPassword() {
 
   const Confirmpass = (e) => {
     e.preventDefault();
-
+    
     if (password === confim) {
       axios
         .get("http://localhost:8000/api/user/" + id)

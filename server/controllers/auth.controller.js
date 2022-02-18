@@ -1,7 +1,7 @@
-const User = require("../models/model.user");
+const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { secret } = require("../config/jwt");
+const { secret } = require("../config/jwt.config");
 
 module.exports.register = (req, res) => {
   const user = new User(req.body);
@@ -49,33 +49,7 @@ module.exports.getLoggedInUser = (req, res) => {
     .catch((err) => res.json(err));
 };
 
-module.exports.getUserById = (request, response) => {
-  User.findOne({ _id: request.params.id })
-    .then((user) => response.json(user))
-    .catch((err) => response.json(err));
-};
-
-module.exports.getUserByEmail = (request, response) => {
-  User.findOne({ email: request.params.email })
-    .then((user) => response.json(user))
-    .catch((err) => response.json(err));
-};
-
-module.exports.getAllPeople = (request, response) => {
-  User.find({})
-    .then((users) => response.json(users))
-    .catch((err) => response.json(err));
-};
-
-module.exports.updateUser = (request, response) => {
-  User.findOneAndUpdate({ _id: request.params.id }, request.body, {
-    new: true,
-  })
-    .then((updatedUser) => response.json(updatedUser))
-    .catch((err) => response.json(err));
-};
-
-module.exports.updateUserPassword = (request, response) => {
+module.exports.updatePassword = (request, response) => {
   var user = new User(request.body);
   User.findOne({ _id: user._id })
     .then((res) => {
@@ -85,4 +59,9 @@ module.exports.updateUserPassword = (request, response) => {
         .catch((err) => response.json(err));
     })
     .catch((err) => response.json(err));
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie("usertoken");
+  res.sendStatus(200);
 };

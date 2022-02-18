@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
-import Card from "../UI/Card";
 
 function SignUp() {
   const history = useNavigate();
