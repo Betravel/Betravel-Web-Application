@@ -13,13 +13,13 @@ import ResetPassword from "./components/SignIn/ResetPassword/ResetPassword";
 import ConfirmPassword from "./components/SignIn/ResetPassword/ConfirmPassword";
 import AboutUs from "./components/AboutUs/AboutUs";
 import DetailHotel from "./components/Hotels/DetailHotel";
+import ListeHotel from "./components/Hotels/ListeHotel";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Navbar />
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/AboutUs" element={<AboutUs />} />
@@ -33,6 +33,7 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Hotel/Detail" element={<DetailHotel />} />
+          <Route path="/Hotel/Liste" element={<ListeHotel />} />
         </Routes>
       </Router>
     </div>
