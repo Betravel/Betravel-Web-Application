@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../../assets/betravel.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Logo from "../../assets/betravel.png";
 import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
@@ -9,7 +9,6 @@ function Navbar() {
 
   const logout = () => {
     sessionStorage.clear();
-
     history("/");
     window.location.reload(false);
   };

@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/homepage/home";
@@ -14,6 +13,7 @@ import ConfirmPassword from "./components/SignIn/ResetPassword/ConfirmPassword";
 import AboutUs from "./components/AboutUs/AboutUs";
 import DetailHotel from "./components/Hotels/DetailHotel";
 import ListeHotel from "./components/Hotels/ListeHotel";
+import "./App.css";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
