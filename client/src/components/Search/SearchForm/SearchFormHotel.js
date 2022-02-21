@@ -1,13 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SearchFormHotel.css";
+import TextField from '@mui/material/TextField';
+import DateRangePicker from '@mui/lab/DateRangePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Box from '@mui/material/Box';
 
 function SearchFormHotel() {
+  const history = useNavigate();
+  localStorage.clear();
   const [Destination, setDestination] = useState("");
   const [Checkin, setCheckin] = useState("");
   const [Checkout, setCheckout] = useState("");
   const [Adultes, setAdultes] = useState(1);
   const [Enfants, setEnfants] = useState(0);
   const [Chambres, setChambres] = useState(1);
+  const [value, setValue] = useState([null, null]);
 
   const DestinationChangeHandler = (event) => {
     setDestination(event.target.value);
@@ -56,13 +65,15 @@ function SearchFormHotel() {
 
     const Search = {
       destination: Destination,
-      checkin: new Date(Checkin),
-      checkout: new Date(Checkout),
+      checkin: Checkin,
+      checkout: Checkout,
       adultes: Adultes,
       enfants: Enfants,
       chambres: Chambres,
     };
     console.log(Search);
+    localStorage.setItem("search", JSON.stringify(Search));
+    history("/Hotel/Liste");
   };
   var today = new Date();
   var dd = today.getDate();
@@ -84,7 +95,11 @@ function SearchFormHotel() {
           <div className="container">
             <div className="row">
               <div className="col-6">
-                <label className="form-label" htmlFor="destination" style={{"fontweight":"bold" , "color" : "#43352c"}}>
+                <label
+                  className="form-label"
+                  htmlFor="destination"
+                  style={{ fontweight: "bold", color: "#43352c" }}
+                >
                   Destination
                 </label>
                 <div className="input-group mb-3">
@@ -119,10 +134,14 @@ function SearchFormHotel() {
                     <option value="Mahdia">Mahdia</option>
                   </select>
                 </div>
-                <div className="container">
+                {/* <div className="container">
                   <div className="row">
                     <div className="col-6">
-                      <label className="form-label" htmlFor="checkin" style={{"fontweight":"bold" , "color" : "#43352c"}}>
+                      <label
+                        className="form-label"
+                        htmlFor="checkin"
+                        style={{ fontweight: "bold", color: "#43352c" }}
+                      >
                         Check in
                       </label>
                       <div className="input-group mb-3">
@@ -161,7 +180,11 @@ function SearchFormHotel() {
                       </div>
                     </div>
                     <div className="col-6">
-                      <label className="form-label" htmlFor="checkout" style={{"fontweight":"bold" , "color" : "#43352c"}}>
+                      <label
+                        className="form-label"
+                        htmlFor="checkout"
+                        style={{ fontweight: "bold", color: "#43352c" }}
+                      >
                         Check out
                       </label>
 
@@ -201,13 +224,35 @@ function SearchFormHotel() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DateRangePicker
+        startText="Check-in"
+        endText="Check-out"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={(startProps, endProps) => (
+          <React.Fragment>
+            <TextField {...startProps} />
+            <Box sx={{ mx: 2 }}> to </Box>
+            <TextField {...endProps} />
+          </React.Fragment>
+        )}
+      />
+    </LocalizationProvider>
               </div>
               <div className="col-6">
                 <div className="container">
                   <div className="row">
                     <div className="col-4">
-                      <label className="form-label" style={{"fontweight":"bold" , "color" : "#43352c"}}>Adultes</label>
+                      <label
+                        className="form-label"
+                        style={{ fontweight: "bold", color: "#43352c" }}
+                      >
+                        Adultes
+                      </label>
                       <div className="input-group mb-3">
                         <button
                           className="btn btn-outline-secondary"
@@ -257,7 +302,12 @@ function SearchFormHotel() {
                       </div>
                     </div>
                     <div className="col-4">
-                      <label className="form-label" style={{"fontweight":"bold" , "color" : "#43352c"}}>Enfants</label>
+                      <label
+                        className="form-label"
+                        style={{ fontweight: "bold", color: "#43352c" }}
+                      >
+                        Enfants
+                      </label>
                       <div className="input-group mb-3">
                         <button
                           className="btn btn-outline-secondary"
@@ -308,7 +358,12 @@ function SearchFormHotel() {
                     </div>
                     {Enfants > 0 ? () => {} : ""}
                     <div className="col-4">
-                      <label className="form-label" style={{"fontweight":"bold" , "color" : "#43352c"}}>Chambres</label>
+                      <label
+                        className="form-label"
+                        style={{ fontweight: "bold", color: "#43352c" }}
+                      >
+                        Chambres
+                      </label>
                       <div className="input-group mb-3">
                         <button
                           className="btn btn-outline-secondary"
