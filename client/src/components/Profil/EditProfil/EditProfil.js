@@ -1,22 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import axios from "axios";
 
 function EditProfil() {
   const history = useNavigate();
-  if (sessionStorage.getItem("log")) {
-  } else {
-    history("/SignIn");
-  }
 
-  const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("loggeduser"))
-  );
+  const [user, setUser] = useState({});
   const [password, setpassword] = useState("");
   const [confim, setconfim] = useState("");
   const [error, seterror] = useState(false);
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users/getloggedinuser", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
   const UserChangeHandler = (e) => {
     setUser({
       ...user,
@@ -32,7 +35,6 @@ function EditProfil() {
         axios
           .put("http://localhost:8000/api/user/" + user._id, user)
           .then((res) => {
-            sessionStorage.setItem("loggeduser", JSON.stringify(user));
             history("/Profil");
           })
           .catch((err) => console.error(err));
@@ -41,15 +43,6 @@ function EditProfil() {
         axios
           .put("http://localhost:8000/api/user/update", user)
           .then((response) => {
-            axios
-              .get("http://localhost:8000/api/user/" + user._id)
-              .then((response) => {
-                sessionStorage.setItem(
-                  "loggeduser",
-                  JSON.stringify(response.data)
-                );
-              })
-              .catch((err) => alert("Error Server"));
             history("/Profil");
           })
           .catch((err) => alert("Error Server"));
@@ -163,6 +156,7 @@ function EditProfil() {
                       <input
                         type="password"
                         className="form-control"
+                        value={password}
                         onChange={(e) => setpassword(e.target.value)}
                         id="password"
                         name="password"
@@ -176,6 +170,7 @@ function EditProfil() {
                       <input
                         type="password"
                         className="form-control"
+                        value={confim}
                         onChange={(e) => setconfim(e.target.value)}
                         id="confim"
                         name="confim"

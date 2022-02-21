@@ -2,7 +2,7 @@ import PromosOverview from "./Overviews/PromosOverview";
 import ReservationsOverview from "./Overviews/ReservationOverview";
 import UsersOverview from "./Overviews/UsersOverview";
 import ListUsers from "./UsersAdmin/ListUsers";
-import ListHotel from "./HotelAdmin/ListHotel";
+import ListHotels from "./HotelAdmin/ListHotels";
 import DetailUser from "./UsersAdmin/DetailUser";
 function DashBoard() {
   return (
@@ -39,7 +39,7 @@ function DashBoard() {
           <h1>Add/Update hotel</h1>
         </div>
         <div className="col-6">
-          <ListHotel />
+          <ListHotels />
         </div>
       </div>
     </div>
