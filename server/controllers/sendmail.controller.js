@@ -15,13 +15,28 @@ module.exports.sendmail = (req, res) => {
 
   User.findOne({ email: req.body.email })
     .then((user) => {
+      var file = "";
+      var paths = "";
+      var topic = "";
+      if (req.body.type === "welcome") {
+        file = "../views/welcome.ejs";
+        paths = "confirmed";
+        topic = "Welcome to BeTravel";
+      } else if (req.body.type === "reset") {
+        file = "../views/reset.ejs";
+        paths = "Confirmpass";
+        topic = "Reset Password";
+      }
       ejs
-        .renderFile(path.join(__dirname, "../views/welcome.ejs"))
+        .renderFile(path.join(__dirname, file), {
+          name: user.firstname + " " + user.lastname,
+          link: "http://localhost:3000/" + paths + "/" + user._id.toString(),
+        })
         .then((resultat) => {
           var mailOptions = {
             from: "testb8835@gmail.com",
             to: req.body.email,
-            subject: "BN NUIT 😘",
+            subject: topic,
             html: resultat,
           };
 

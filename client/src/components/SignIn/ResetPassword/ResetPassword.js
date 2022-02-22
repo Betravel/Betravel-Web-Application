@@ -18,11 +18,7 @@ function ResetPassword() {
           axios
             .post("http://localhost:8000/send", {
               email,
-              msg:
-                '<a href="http://localhost:3000/Confirmpass/' +
-                res._id.toString() +
-                '"> Reset your password here ! </a>',
-              sjt: "Reset Password",
+              type: "reset",
             })
             .then((res) => {
               alert("Check your email to continue !!");
