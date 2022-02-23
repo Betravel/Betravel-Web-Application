@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/betravel.png";
@@ -6,11 +7,18 @@ function Navbar() {
   const history = useNavigate();
   const [navbar, setNavbar] = useState(false);
   const location = useLocation();
+  const [user, setUser] = useState();
 
   const logout = () => {
-    sessionStorage.clear();
-    history("/");
-    window.location.reload(false);
+    axios
+      .get("http://localhost:8000/api/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        history("/");
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   const changeBackground = () => {
@@ -25,9 +33,17 @@ function Navbar() {
     }
   };
   useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users/getloggedinuser", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => console.error(err));
     changeBackground();
     window.addEventListener("scroll", changeBackground);
-  });
+  }, []);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
@@ -99,10 +115,9 @@ function Navbar() {
               >
                 Profil
               </button>
-              {sessionStorage.getItem("log") ? (
+              {user ? (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {JSON.parse(sessionStorage.getItem("loggeduser")).type ===
-                  "user" ? (
+                  {user.type === "user" ? (
                     <li>
                       <Link to="/Profil" className="dropdown-item">
                         {" "}

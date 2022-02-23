@@ -12,6 +12,7 @@ app.use(
 app.use(express.json());
 app.use(cookies());
 app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
 // MongoDB config
 require("./config/mongoose.config");

@@ -31,19 +31,7 @@ function SignIn() {
               .then((res) => {
                 console.log("LOGGGIN IN RESPONSE", res);
                 if (res.data.msg === "success!") {
-                  axios
-                    .get("http://localhost:8000/api/users/getloggedinuser", {
-                      withCredentials: true,
-                    })
-                    .then((res) => {
-                      sessionStorage.setItem(
-                        "loggeduser",
-                        JSON.stringify(res.data)
-                      );
-                    })
-                    .catch((err) => console.error(err));
                   history("/");
-                  sessionStorage.setItem("log", true);
                   window.location.reload(false);
                 } else {
                   seterrorpassword("password incorrect");
