@@ -1,12 +1,10 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useState } from "react";
-import axios from "axios";
-import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import { useNavigate } from "react-router-dom";
+import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
+import axios from "axios";
 
 function EditProfil() {
   const history = useNavigate();
-
   if (sessionStorage.getItem("log")) {
   } else {
     history("/SignIn");
@@ -76,11 +74,15 @@ function EditProfil() {
                     <img
                       src="https://img.icons8.com/bubbles/100/000000/user.png"
                       className="img-radius"
-                      alt="User-Profile-Image"
+                      alt="User-Profile"
                     />
                   </div>
                   <div className="updateIcon">
-                    <button onClick={updateUser} className="btn" style={{color:"white"}}>
+                    <button
+                      onClick={updateUser}
+                      className="btn"
+                      style={{ color: "white" }}
+                    >
                       <CheckCircleOutlineSharpIcon />
                     </button>
                   </div>

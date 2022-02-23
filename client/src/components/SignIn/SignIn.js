@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
-import Card from "../UI/Card";
 import img from "../../assets/img.png";
 function SignIn() {
   const history = useNavigate();
@@ -139,7 +138,7 @@ function SignIn() {
                 )}
                 <br />
                 <div>
-                  <button type="submit">Log IN </button>
+                  <button type="submit">Log In </button>
                 </div>
                 <br />
                 <a href="/Restpass" style={{ color: "black" }}>
