@@ -25,5 +25,3 @@ module.exports.updateUser = (request, response) => {
     .then((updatedUser) => response.json(updatedUser))
     .catch((err) => response.json(err));
 };
-
-
