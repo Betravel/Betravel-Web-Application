@@ -1,6 +1,4 @@
 function UpdateHotel() {
-  return <div>
-      
-  </div>;
+  return <div></div>;
 }
 export default UpdateHotel;
