@@ -6,7 +6,7 @@ import "./Profil.css";
 
 function Profil() {
   const history = useNavigate();
-  
+
   const [user, setUser] = useState({});
   useEffect(() => {
     axios
@@ -17,7 +17,6 @@ function Profil() {
         setUser(res.data);
       })
       .catch((err) => console.error(err));
-    
   }, []);
 
   return (
