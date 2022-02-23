@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
-import Card from "../UI/Card";
 
 function SignUp() {
   const history = useNavigate();
@@ -46,23 +45,13 @@ function SignUp() {
                 setErrors(res.data.errors);
               } else {
                 axios
-                  .get("http://localhost:8000/api/users/" + email)
+                  .post("http://localhost:8000/send", {
+                    email,
+                    type: "welcome",
+                  })
                   .then((res) => {
-                    var user = res.data;
-                    axios
-                      .post("http://localhost:8000/send", {
-                        email,
-                        msg:
-                          '<a href="http://localhost:3000/confirmed/' +
-                          user._id.toString() +
-                          '"> Confirm your account here ! </a>',
-                        sjt: "Confirm your account",
-                      })
-                      .then((res) => {
-                        alert("Confirm your account , link sent by mail !");
-                        history("/SignIn");
-                      })
-                      .catch((err) => alert("Error Server"));
+                    alert("Confirm your account , link sent by mail !");
+                    history("/SignIn");
                   })
                   .catch((err) => alert("Error Server"));
               }

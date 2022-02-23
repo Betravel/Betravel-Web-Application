@@ -15,8 +15,6 @@ function Home() {
             <br />
             <br />
             <br />
-            <br />
-            <br />
             <SearchFormHotel />
           </div>
         </div>

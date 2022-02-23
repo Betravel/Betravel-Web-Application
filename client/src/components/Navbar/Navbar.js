@@ -1,31 +1,49 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/betravel.png";
-import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 function Navbar() {
   const history = useNavigate();
   const [navbar, setNavbar] = useState(false);
+  const location = useLocation();
+  const [user, setUser] = useState();
 
   const logout = () => {
-    sessionStorage.clear();
-
-    history("/");
-    window.location.reload(false);
+    axios
+      .get("http://localhost:8000/api/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        history("/");
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   const changeBackground = () => {
-    if ((window.scrollY >= 66) || (window.innerWidth<991)) {
+    if (
+      window.scrollY >= 66 ||
+      window.innerWidth < 991 ||
+      location.pathname === "/Dashboard"
+    ) {
       setNavbar(true);
     } else {
       setNavbar(false);
     }
   };
   useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users/getloggedinuser", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => console.error(err));
     changeBackground();
-    console.log(window.innerWidth);
-    // adding the event when scroll change background
     window.addEventListener("scroll", changeBackground);
-  });
+  }, []);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
@@ -79,7 +97,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/contact"
+                to="/Contact"
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
               >
@@ -97,10 +115,9 @@ function Navbar() {
               >
                 Profil
               </button>
-              {sessionStorage.getItem("log") ? (
+              {user ? (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {JSON.parse(sessionStorage.getItem("loggeduser")).type ===
-                  "user" ? (
+                  {user.type === "user" ? (
                     <li>
                       <Link to="/Profil" className="dropdown-item">
                         {" "}
@@ -109,7 +126,7 @@ function Navbar() {
                     </li>
                   ) : (
                     <li>
-                      <Link to="/dashboard" className="dropdown-item">
+                      <Link to="/Dashboard" className="dropdown-item">
                         {" "}
                         DashBoard{" "}
                       </Link>

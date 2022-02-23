@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import img from "../../assets/Djerba-Plaza.webp";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
+import axios from "axios";
+
 function Promos() {
   const [hotels, setHotels] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/hotels")
+      .get("http://localhost:8000/api/hotels/all")
       .then((res) => {
         setHotels(res.data);
       })
       .catch((err) => console.error(err));
-  }, [hotels]);
+  }, []);
 
   var settings = {
     dots: true,
@@ -60,8 +61,8 @@ function Promos() {
 
                       <p>4 Days - 3 Nights</p>
                     </div>
-                    <h1>{hotel.price}</h1>
-                    <Link to ="/Hotel/Detail">
+                    <h1>{hotel.price.prix} DT</h1>
+                    <Link to="/Hotel/Detail">
                       <button className="btn button"> show details</button>
                     </Link>
                   </div>
