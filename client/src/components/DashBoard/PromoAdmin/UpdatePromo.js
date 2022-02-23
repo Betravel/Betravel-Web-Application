@@ -1,7 +1,5 @@
-function UpdatePromo(){
-return <div>
-
-</div>;
+function UpdatePromo() {
+  return <div></div>;
 }
 
 export default UpdatePromo;
