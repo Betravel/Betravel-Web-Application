@@ -1,16 +1,11 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useState, useEffect } from "react";
-import "./Profil.css";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ModeEditOutlineSharpIcon from "@mui/icons-material/ModeEditOutlineSharp";
+import axios from "axios";
+import "./Profil.css";
 
 function Profil() {
   const history = useNavigate();
-  if (sessionStorage.getItem("log")) {
-  } else {
-    history("/SignIn");
-  }
   
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -22,6 +17,7 @@ function Profil() {
         setUser(res.data);
       })
       .catch((err) => console.error(err));
+    
   }, []);
 
   return (
@@ -39,7 +35,7 @@ function Profil() {
                     <img
                       src="https://img.icons8.com/bubbles/100/000000/user.png"
                       className="img-radius"
-                      alt="User-Profile-Image"
+                      alt="User-Profile"
                     />
                   </div>
                   <div className="updateIcon" >

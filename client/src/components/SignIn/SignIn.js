@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SignIn.css";
 import { useNavigate } from "react-router-dom";
-import Card from "../UI/Card";
 import img from "../../assets/img.png";
 function SignIn() {
   const history = useNavigate();
@@ -32,19 +31,7 @@ function SignIn() {
               .then((res) => {
                 console.log("LOGGGIN IN RESPONSE", res);
                 if (res.data.msg === "success!") {
-                  axios
-                    .get("http://localhost:8000/api/users/getloggedinuser", {
-                      withCredentials: true,
-                    })
-                    .then((res) => {
-                      sessionStorage.setItem(
-                        "loggeduser",
-                        JSON.stringify(res.data)
-                      );
-                    })
-                    .catch((err) => console.error(err));
                   history("/");
-                  sessionStorage.setItem("log", true);
                   window.location.reload(false);
                 } else {
                   seterrorpassword("password incorrect");
@@ -139,7 +126,7 @@ function SignIn() {
                 )}
                 <br />
                 <div>
-                  <button type="submit">Log IN </button>
+                  <button type="submit">Log In </button>
                 </div>
                 <br />
                 <a href="/Restpass" style={{ color: "black" }}>

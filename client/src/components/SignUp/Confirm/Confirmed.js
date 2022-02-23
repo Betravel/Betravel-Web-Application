@@ -21,14 +21,6 @@ function Confirmed() {
             .then((res) => {
               history("/SignIn");
               alert("Email Confirmed ! 🥳 ");
-              axios
-                .post("http://localhost:8000/send", {
-                  email: user.email,
-                  msg: "<h1>Welcome to BeTravel !<h1/>",
-                  sjt: "Account Confirmed",
-                })
-                .then((res) => {})
-                .catch((err) => alert("Error Server"));
             })
             .catch((err) => alert("Error Server"));
         }
