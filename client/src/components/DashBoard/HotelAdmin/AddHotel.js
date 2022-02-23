@@ -1,13 +1,13 @@
 function AddHotel() {
-  return <div>
+  return (
+    <div>
       <div className="container">
         <div className="row">
-          <form>
-            
-          </form>
+          <form></form>
         </div>
       </div>
-  </div>;
+    </div>
+  );
 }
 
 export default AddHotel;
