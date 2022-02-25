@@ -20,6 +20,9 @@ const HotelSchema = new mongoose.Schema(
     promo: {
       type: JSON,
     },
+    images: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );
