@@ -49,7 +49,7 @@ UserSchema.virtual("confirm")
   .get(() => this.confirm)
   .set((value) => (this.confirm = value));
 
-//use the virtual field for confirm password to make sure it matches up with password--> 
+//use the virtual field for confirm password to make sure it matches up with password-->
 //we are adding a validation for the confirm password virtual field
 UserSchema.pre("validate", function (next) {
   if (this.password !== this.confirm) {
