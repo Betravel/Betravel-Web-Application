@@ -6,10 +6,6 @@ import "./Profil.css";
 
 function Profil() {
   const history = useNavigate();
-  if (sessionStorage.getItem("log")) {
-  } else {
-    history("/SignIn");
-  }
   
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -21,6 +17,7 @@ function Profil() {
         setUser(res.data);
       })
       .catch((err) => console.error(err));
+    
   }, []);
 
   return (

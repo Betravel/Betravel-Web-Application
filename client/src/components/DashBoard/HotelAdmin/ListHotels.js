@@ -12,7 +12,7 @@ function renderRating(params) {
   return <Rating readOnly value={params.value} />;
 }
 
-function ListHotel() {
+function ListHotels() {
   const cols = [
     { field: "name", headerName: "Name", width: "200" },
     {
@@ -54,4 +54,4 @@ function ListHotel() {
   );
 }
 
-export default ListHotel;
+export default ListHotels;
