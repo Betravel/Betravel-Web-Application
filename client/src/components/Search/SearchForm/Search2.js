@@ -120,7 +120,7 @@ function Search2() {
                 fullWidth
                 id="outlined-select-currency"
                 select
-                label="Select"
+                label="Destination"
                 value={Destination}
                 onChange={DestinationChangeHandler}
               >

@@ -4,6 +4,7 @@ import UsersOverview from "./Overviews/UsersOverview";
 import ListUsers from "./UsersAdmin/ListUsers";
 import ListHotels from "./HotelAdmin/ListHotels";
 import DetailUser from "./UsersAdmin/DetailUser";
+import NavHotel from "./HotelAdmin/NavHotel";
 function DashBoard() {
   return (
     <div className="container-fluid" style={{ marginTop: "120px" }}>
@@ -36,7 +37,7 @@ function DashBoard() {
       </div>
       <div className="row">
         <div className="col-6">
-          <h1>Add/Update hotel</h1>
+          <NavHotel/>
         </div>
         <div className="col-6">
           <ListHotels />
