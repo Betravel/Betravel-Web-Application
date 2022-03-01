@@ -1,10 +1,7 @@
-import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Rating from "@mui/material/Rating";
-import { Button } from "@mui/material";
+
+import AddHotel from "./AddHotel";
 function NavHotel() {
-  const destination = [{ label: "Hammamet" }];
+  
   return (
     <div className="container">
       <br />
@@ -64,67 +61,7 @@ function NavHotel() {
           role="tabpanel"
           aria-labelledby="nav-add-tab"
         >
-          <h4>Add hotel</h4>
-          <div className="row">
-            <div className="col-6">
-              <TextField
-                id="outlined-basic"
-                label="Name"
-                variant="outlined"
-                fullWidth
-              />
-            </div>
-            <div className="col-6">
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={destination}
-                sx={{ width: "auto" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Location" fullWidth />
-                )}
-              />
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col-12">
-              <TextField
-                id="outlined-basic"
-                label="Description"
-                variant="outlined"
-                multiline
-                rows={3}
-                style={{ width: "100%" }}
-              />
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col-6">
-              <TextField
-                id="outlined-basic"
-                label="Price"
-                variant="outlined"
-                fullWidth
-              />
-            </div>
-            <div className="col-6">
-              <Rating name="size-medium" defaultValue={1} />
-            </div>
-          </div>
-          <div className="row">
-            <input
-              id="filled-search"
-              label="image"
-              type="file"
-              multiple
-              variant="filled"
-            />
-          </div>
-          
-
-          <button className="btn btn-primary">Add</button>
+          <AddHotel />
         </div>
         <div
           className="tab-pane fade"

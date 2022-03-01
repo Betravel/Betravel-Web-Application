@@ -1,5 +1,17 @@
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+import Box from "@mui/material/Box";
+import i from "../../assets/h1.jpg";
+import i2 from "../../assets/h2.jpg";
+import i5 from "../../assets/h2.jpg";
+import i4 from "../../assets/h4.jpg";
+import i3 from "../../assets/h7.jpg";
+import i6 from "../../assets/h6.jpg";
+import i7 from "../../assets/h7.jpg";
+import i8 from "../../assets/h8.jpg";
+import Rating from "@mui/material/Rating";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -13,86 +25,137 @@ function srcset(image, size, rows = 1, cols = 1) {
 function DetailHotel() {
   const itemData = [
     {
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+      img: i,
       title: "Breakfast",
       rows: 2,
       cols: 2,
     },
     {
-      img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+      img: i2,
       title: "Burger",
     },
     {
-      img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+      img: i3,
       title: "Camera",
     },
     {
-      img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+      img: i4,
       title: "Coffee",
       cols: 2,
     },
     {
-      img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+      img: i5,
       title: "Hats",
       cols: 2,
     },
     {
-      img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+      img: i6,
       title: "Honey",
       author: "@arwinneil",
       rows: 2,
       cols: 2,
     },
     {
-      img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+      img: i7,
       title: "Basketball",
     },
     {
-      img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+      img: i8,
       title: "Fern",
     },
-    {
-      img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-      title: "Mushrooms",
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-      title: "Tomato basil",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-      title: "Sea star",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-      title: "Bike",
-      cols: 2,
-    },
   ];
+  // var id = "6218bde9dcc29a5ce15285ab";
+  // const [hotel, setHotel] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8000/api/hotel/" + id)
+  //     .then((res) => {
+  //       setHotel(res.data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [hotel, id]);
+
   return (
-    <div style={{ marginTop: "120px" }}>
-      <ImageList
-        sx={{ width: 700, height: 600 }}
-        variant="quilted"
-        cols={4}
-        rowHeight={121}
-      >
-        {itemData.map((item) => (
-          <ImageListItem
-            key={item.img}
-            cols={item.cols || 1}
-            rows={item.rows || 1}
+    <div className="container-fluid">
+      <br />
+      <br />
+      <div className="row">
+        <h1>
+          {" "}
+          Hotel Name <Rating name="size-medium" defaultValue={3} readOnly />
+        </h1>
+      </div>
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-4">
+          <Box
+            sx={{
+              width: 700,
+              height: 600,
+            }}
           >
-            <img
-              {...srcset(item.img, 121, item.rows, item.cols)}
-              alt={item.title}
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+            <div style={{ marginTop: "120px" }}>
+              <ImageList
+                sx={{ width: 700, height: 600 }}
+                variant="quilted"
+                cols={4}
+                rowHeight={121}
+              >
+                {itemData.map((item) => (
+                  <ImageListItem
+                    key={item.img}
+                    cols={item.cols || 1}
+                    rows={item.rows || 1}
+                  >
+                    <img
+                      {...srcset(item.img, 121, item.rows, item.cols)}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </div>
+          </Box>
+          <div className="col-3"></div>
+        </div>
+      </div>
+      <div className="row">
+        <h3 aligntext="right">Description</h3>
+        <p>hotel description</p>
+      </div>
+      <div className="row">
+        <h3 aligntext="right">Options</h3>
+        <h6>
+          {" "}
+          * Free wifi &nbsp; 
+          <img
+            src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/24/000000/external-wifi-network-and-cloud-computing-flatart-icons-solid-flatarticons.png"
+            alt=""
+          />{" "}
+        </h6>
+        <h6>
+          {" "}
+          * Pool &nbsp;  
+          <img
+            src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/24/000000/external-pool-surfing-jumpicon-glyph-jumpicon-glyph-ayub-irawan.png"
+            alt=""
+          />
+        </h6>
+
+        <h6>
+          {" "}
+          * Restaurant &nbsp;  
+          <img
+            src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
+            alt=""
+          />
+        </h6>
+      </div>
+
+      <div className="row">
+        <h3 aligntext="right">Availablity</h3>
+      </div>
     </div>
   );
 }
