@@ -6,7 +6,7 @@ const HotelSchema = new mongoose.Schema(
       type: String,
     },
     rating: {
-      type: String,
+      type: Number,
     },
     location: {
       type: String,
@@ -18,7 +18,7 @@ const HotelSchema = new mongoose.Schema(
       type: JSON,
     },
     promo: {
-      type: JSON,
+      type: Number,
     },
     images: {
       type: Array,

@@ -15,6 +15,7 @@
     "@mui/styled-engine-sc": "^5.4.2",
     "@mui/x-data-grid": "^5.5.1",
     "@mui/x-data-grid-generator": "^5.5.1",
+    "@react-spring/web": "^9.4.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
