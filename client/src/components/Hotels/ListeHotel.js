@@ -46,7 +46,7 @@ function ListeHotel() {
                       <img source={hotel.images[0]} className="sliderimg" alt="" />
                       <img source={hotel.images[1]} className="sliderimg" alt="" />
                     </AliceCarousel>
-                    {/* <img src={img} class="img-fluid rounded-start" alt="..." /> */}
+                    {/* <img src={img} className="img-fluid rounded-start" alt="..." /> */}
                   </div>
                   <div className="col-8">
                     {" "}
@@ -136,7 +136,13 @@ function ListeHotel() {
                             </h6>
                             <h6>32% off</h6>
                           </div>
+
                           <button className="btn btn-primary">Show Details </button>
+
+                          <button className="btn btn-primary">
+                            Show Details{" "}
+                          </button>
+
                         </div>
                       </div>
                     </div>

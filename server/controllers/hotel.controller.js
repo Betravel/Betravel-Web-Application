@@ -10,8 +10,12 @@ module.exports.getDestinations = (request, response) => {
   Hotel.find({})
     .then((hotels) => {
       var listdestinations = new Set();
+      let res = new Array();
       hotels.forEach((hotel) => listdestinations.add(hotel.location));
-      response.json({ listdestinations: Array.from(listdestinations) });
+      listdestinations.forEach((dest) =>
+        res.push({ label: dest, value: dest })
+      );
+      response.json(res);
     })
     .catch((err) => response.json(err));
 };
@@ -34,6 +38,7 @@ module.exports.setHotel = (req, res) => {
     imgs.push(url + "/public/" + file.filename);
   }
   imgs.forEach((img) => hotel.images.push(img));
+  hotel.price = JSON.parse(hotel.price);
   hotel
     .save()
     .then((result) => res.json(result))

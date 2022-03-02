@@ -3,23 +3,23 @@ function DetailUser() {
     <div>
       <h1>Detail User</h1>
 
-      <div class="form-floating mb-3">
+      <div className="form-floating mb-3">
         <input
           type="email"
-          class="form-control"
+          className="form-control"
           id="floatingInput"
           placeholder="name@example.com"
         />
-        <label for="floatingInput">Email address</label>
+        <label htmlFor="floatingInput">Email address</label>
       </div>
-      <div class="form-floating">
+      <div className="form-floating">
         <input
           type="password"
-          class="form-control"
+          className="form-control"
           id="floatingPassword"
           placeholder="Password"
         />
-        <label for="floatingPassword">Password</label>
+        <label htmlFor="floatingPassword">Password</label>
       </div>
     </div>
   );

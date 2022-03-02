@@ -18,7 +18,7 @@ const HotelSchema = new mongoose.Schema(
       type: JSON,
     },
     promo: {
-      type: JSON,
+      type: Number,
     },
     images: {
       type: Array,

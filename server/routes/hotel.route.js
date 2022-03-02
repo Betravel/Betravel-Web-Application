@@ -1,6 +1,6 @@
 const HotelController = require("../controllers/hotel.controller");
 const multer = require("multer");
-const uuidv4 = require("uuidv4");
+
 
 const DIR = "./public/";
 const storage = multer.diskStorage({
@@ -9,7 +9,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const fileName = file.originalname.toLowerCase().split(" ").join("-");
+
     cb(null, fileName);
+
   },
 });
 
