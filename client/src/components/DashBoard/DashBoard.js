@@ -37,7 +37,7 @@ function DashBoard() {
       </div>
       <div className="row">
         <div className="col-6">
-          <NavHotel/>
+          <NavHotel />
         </div>
         <div className="col-6">
           <ListHotels />
