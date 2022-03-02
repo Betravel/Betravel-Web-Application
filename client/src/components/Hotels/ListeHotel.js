@@ -36,8 +36,8 @@ function ListeHotel() {
         {/*---------------------------------------------------------------------------------*/}
         <div className="col-8">
           {hotels.map((hotel, index) => (
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div className="row">
                   <div
                     className="col-4"
@@ -49,7 +49,7 @@ function ListeHotel() {
                       <img src={img2} className="sliderimg" alt="" />
                       <img src={img3} className="sliderimg" alt="" />
                     </AliceCarousel>
-                    {/* <img src={img} class="img-fluid rounded-start" alt="..." /> */}
+                    {/* <img src={img} className="img-fluid rounded-start" alt="..." /> */}
                   </div>
                   <div className="col-8">
                     {" "}
@@ -139,7 +139,9 @@ function ListeHotel() {
                             </h6>
                             <h6>32% off</h6>
                           </div>
-                          <button class="btn btn-primary">Show Details </button>
+                          <button className="btn btn-primary">
+                            Show Details{" "}
+                          </button>
                         </div>
                       </div>
                     </div>
