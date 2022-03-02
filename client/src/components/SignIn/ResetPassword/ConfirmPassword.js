@@ -12,7 +12,7 @@ function ConfirmPassword() {
 
   const Confirmpass = (e) => {
     e.preventDefault();
-    
+
     if (password === confim) {
       axios
         .get("http://localhost:8000/api/user/" + id)
