@@ -120,7 +120,7 @@ function Search2() {
                 fullWidth
                 id="outlined-select-currency"
                 select
-                label="Select"
+                label="Destination"
                 value={Destination}
                 onChange={DestinationChangeHandler}
               >
@@ -164,7 +164,7 @@ function Search2() {
                 <Fab size="small" aria-label="add" onClick={AddAdultes}>
                   <AddIcon />
                 </Fab>
-                <Fab disabled variant="extended">
+                <Fab disabled variant="extended" style={{ color: "black" }}>
                   {Adultes}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceAdultes}>
@@ -184,7 +184,7 @@ function Search2() {
                 <Fab size="small" aria-label="add" onClick={AddEnfants}>
                   <AddIcon />
                 </Fab>
-                <Fab disabled variant="extended">
+                <Fab disabled variant="extended" style={{ color: "black" }}>
                   {Enfants}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceEnfants}>
@@ -205,7 +205,7 @@ function Search2() {
                 <Fab size="small" aria-label="add" onClick={AddChambres}>
                   <AddIcon />
                 </Fab>
-                <Fab disabled variant="extended">
+                <Fab disabled variant="extended" style={{ color: "black" }}>
                   {Chambres}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceChambres}>
