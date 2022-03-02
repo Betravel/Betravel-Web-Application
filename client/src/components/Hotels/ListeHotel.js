@@ -43,8 +43,16 @@ function ListeHotel() {
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
                     <AliceCarousel autoPlay autoPlayInterval="3000">
-                      <img source={hotel.images[0]} className="sliderimg" alt="" />
-                      <img source={hotel.images[1]} className="sliderimg" alt="" />
+                      <img
+                        source={hotel.images[0]}
+                        className="sliderimg"
+                        alt=""
+                      />
+                      <img
+                        source={hotel.images[1]}
+                        className="sliderimg"
+                        alt=""
+                      />
                     </AliceCarousel>
                     {/* <img src={img} className="img-fluid rounded-start" alt="..." /> */}
                   </div>
@@ -131,18 +139,19 @@ function ListeHotel() {
                         <div>
                           <h3>1,300 DT</h3>
                           <div>
-                            <h6 style={{ "textdecoration": "line-through" }}>
+                            <h6 style={{ textdecoration: "line-through" }}>
                               1,999 DT
                             </h6>
                             <h6>32% off</h6>
                           </div>
 
-                          <button className="btn btn-primary">Show Details </button>
-
                           <button className="btn btn-primary">
                             Show Details{" "}
                           </button>
 
+                          <button className="btn btn-primary">
+                            Show Details{" "}
+                          </button>
                         </div>
                       </div>
                     </div>
