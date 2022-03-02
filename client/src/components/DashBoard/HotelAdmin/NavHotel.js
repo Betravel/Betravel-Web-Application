@@ -1,9 +1,3 @@
-
-
-import AddHotel from "./AddHotel";
-function NavHotel() {
-  
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -14,6 +8,9 @@ import Rating from "@mui/material/Rating";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
+import AddHotel from "./AddHotel";
+
 function NavHotel() {
   const [name, setname] = useState("");
   const [locations, setlocations] = useState([]);
@@ -199,7 +196,6 @@ function NavHotel() {
           role="tabpanel"
           aria-labelledby="nav-add-tab"
         >
-
           <AddHotel />
 
           <h4>Add hotel</h4>
@@ -640,7 +636,6 @@ function NavHotel() {
               Add
             </button>
           </form>
-
         </div>
         <div
           className="tab-pane fade"
