@@ -6,11 +6,12 @@ import img2 from "../../assets/banner.jpg";
 import img3 from "../../assets/img.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import Search2 from "../Search/SearchForm/Search2.js";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./ListeHotel.css";
 import Search2 from "../Search/SearchForm/Search2";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 function ListeHotel() {
   const [hotels, setHotels] = useState([]);
@@ -26,14 +27,12 @@ function ListeHotel() {
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <div className="row">
-        {/*---------------------------------------------------------------------------------*/}
         <div className="col-4">
           {" "}
           <div className="hotel">
             <Search2 />
           </div>
         </div>
-        {/*---------------------------------------------------------------------------------*/}
         <div className="col-8">
           {hotels.map((hotel, index) => (
             <div className="card">
@@ -44,10 +43,8 @@ function ListeHotel() {
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
                     <AliceCarousel autoPlay autoPlayInterval="3000">
-                      <img src={img} className="sliderimg" alt="" />
-                      <img src={img1} className="sliderimg" alt="" />
-                      <img src={img2} className="sliderimg" alt="" />
-                      <img src={img3} className="sliderimg" alt="" />
+                      <img source={hotel.images[0]} className="sliderimg" alt="" />
+                      <img source={hotel.images[1]} className="sliderimg" alt="" />
                     </AliceCarousel>
                     {/* <img src={img} className="img-fluid rounded-start" alt="..." /> */}
                   </div>
@@ -134,14 +131,18 @@ function ListeHotel() {
                         <div>
                           <h3>1,300 DT</h3>
                           <div>
-                            <h6 style={{ "text-decoration": "line-through" }}>
+                            <h6 style={{ "textdecoration": "line-through" }}>
                               1,999 DT
                             </h6>
                             <h6>32% off</h6>
                           </div>
+
+                          <button className="btn btn-primary">Show Details </button>
+
                           <button className="btn btn-primary">
                             Show Details{" "}
                           </button>
+
                         </div>
                       </div>
                     </div>
@@ -150,6 +151,9 @@ function ListeHotel() {
               </div>
             </div>
           ))}
+          <Stack spacing={2} alignItems="center">
+            <Pagination count={5} />
+          </Stack>
         </div>
       </div>
     </div>

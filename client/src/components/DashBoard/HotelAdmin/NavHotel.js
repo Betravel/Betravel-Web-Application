@@ -1,3 +1,9 @@
+
+
+import AddHotel from "./AddHotel";
+function NavHotel() {
+  
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -133,6 +139,7 @@ function NavHotel() {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+
   return (
     <div className="container">
       <br />
@@ -192,6 +199,9 @@ function NavHotel() {
           role="tabpanel"
           aria-labelledby="nav-add-tab"
         >
+
+          <AddHotel />
+
           <h4>Add hotel</h4>
           <form onSubmit={onsubmitform}>
             <div className="row">
@@ -630,6 +640,7 @@ function NavHotel() {
               Add
             </button>
           </form>
+
         </div>
         <div
           className="tab-pane fade"

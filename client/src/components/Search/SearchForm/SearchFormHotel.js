@@ -168,7 +168,11 @@ function SearchFormHotel() {
                         <Fab size="small" aria-label="add" onClick={AddAdultes}>
                           <AddIcon />
                         </Fab>
-                        <Fab disabled variant="extended">
+                        <Fab
+                          disabled
+                          variant="extended"
+                          style={{ color: "black" }}
+                        >
                           {Adultes}
                         </Fab>
                         <Fab
@@ -191,7 +195,11 @@ function SearchFormHotel() {
                         <Fab size="small" aria-label="add" onClick={AddEnfants}>
                           <AddIcon />
                         </Fab>
-                        <Fab disabled variant="extended">
+                        <Fab
+                          disabled
+                          variant="extended"
+                          style={{ color: "black" }}
+                        >
                           {Enfants}
                         </Fab>
                         <Fab
@@ -219,7 +227,11 @@ function SearchFormHotel() {
                         >
                           <AddIcon />
                         </Fab>
-                        <Fab disabled variant="extended">
+                        <Fab
+                          disabled
+                          variant="extended"
+                          style={{ color: "black" }}
+                        >
                           {Chambres}
                         </Fab>
                         <Fab
