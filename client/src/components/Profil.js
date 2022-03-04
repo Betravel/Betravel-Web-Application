@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ModeEditOutlineSharpIcon from "@mui/icons-material/ModeEditOutlineSharp";
 import axios from "axios";
 import "../css/Profil.css";
 
 function Profil() {
-  const history = useNavigate();
-
   const [user, setUser] = useState({});
   useEffect(() => {
     axios
@@ -20,7 +18,7 @@ function Profil() {
   }, []);
 
   return (
-    <div className=" container">
+    <div className=" container" style={{ marginTop: "100px" }}>
       <br />
       <br />
       <div className="row">

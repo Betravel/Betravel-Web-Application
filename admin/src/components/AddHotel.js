@@ -1,7 +1,7 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
-import "./AddHotel.css";
+import "../css/AddHotel.css";
 function AddHotel() {
   const destination = [{ label: "Hammamet" }];
   return (

@@ -196,8 +196,6 @@ function NavHotel() {
           role="tabpanel"
           aria-labelledby="nav-add-tab"
         >
-          <AddHotel />
-
           <h4>Add hotel</h4>
           <form onSubmit={onsubmitform}>
             <div className="row">

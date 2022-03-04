@@ -1,18 +1,13 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import img from "../assets/Djerba-Plaza.webp";
-import img1 from "../assets/travel.jpg";
-import img2 from "../assets/banner.jpg";
-import img3 from "../assets/img.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-import "../css/ListeHotel.css";
 import Search2 from "./Search2";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
+import Rating from "@mui/material/Rating";
+import loc from "../assets/icons8-place-marker.gif";
 function ListeHotel() {
   const [hotels, setHotels] = useState([]);
   useEffect(() => {
@@ -22,7 +17,7 @@ function ListeHotel() {
         setHotels(res.data);
       })
       .catch((err) => console.error(err));
-  }, [hotels]);
+  }, []);
 
   return (
     <div className="container" style={{ marginTop: "100px" }}>
@@ -42,46 +37,22 @@ function ListeHotel() {
                     className="col-4"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
-                    <AliceCarousel autoPlay autoPlayInterval="3000">
-                      <img
-                        source={hotel.images[0]}
-                        className="sliderimg"
-                        alt=""
-                      />
-                      <img
-                        source={hotel.images[1]}
-                        className="sliderimg"
-                        alt=""
-                      />
-                    </AliceCarousel>
-                    {/* <img src={img} className="img-fluid rounded-start" alt="..." /> */}
+                    {hotel.images.map((image) => (
+                      <img src={image.toString("base64")} alt="" />
+                    ))}
                   </div>
                   <div className="col-8">
                     {" "}
                     <h3>
-                      {hotel.name}
-                      <img
-                        src="https://img.icons8.com/fluency/25/000000/star.png"
-                        alt=""
-                      />
-                      <img
-                        src="https://img.icons8.com/fluency/25/000000/star.png"
-                        alt=""
-                      />
-                      <img
-                        src="https://img.icons8.com/fluency/25/000000/star.png"
-                        alt=""
-                      />
+                      {hotel.name} &nbsp;
+                      <Rating name="read-only" value={hotel.rating} readOnly />
                     </h3>
-                    <div>
-                      <img
-                        src="https://img.icons8.com/ios-glyphs/25/000000/marker--v2.png"
-                        alt=""
-                      />
+                    <div style={{ marginRight: "40%" }}>
+                      <img src={loc} alt="" width="50" />
                       {hotel.location}
                     </div>
                     <br />
-                    <div>
+                    <div align="left">
                       <span title="Bell">
                         {" "}
                         <img
@@ -109,29 +80,37 @@ function ListeHotel() {
                         />
                       </span>
                     </div>
+                    <br />
                     <div className="row">
                       <div className="col-6">
-                        <div>
+                        <div align="left">
                           <p>
                             <img
                               src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
                               alt=""
                             />{" "}
-                            text1
+                            Breakfast{" "}
                           </p>
                           <p>
                             <img
                               src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
                               alt=""
                             />{" "}
-                            text2{" "}
+                            Half Pension{" "}
                           </p>
                           <p>
                             <img
                               src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
                               alt=""
                             />{" "}
-                            text3
+                            Full Pension
+                          </p>
+                          <p>
+                            <img
+                              src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
+                              alt=""
+                            />{" "}
+                            All inclusif
                           </p>
                         </div>
                       </div>
@@ -139,15 +118,11 @@ function ListeHotel() {
                         <div>
                           <h3>1,300 DT</h3>
                           <div>
-                            <h6 style={{ textdecoration: "line-through" }}>
+                            <h6 style={{ textDecoration: "line-through" }}>
                               1,999 DT
                             </h6>
                             <h6>32% off</h6>
                           </div>
-
-                          <button className="btn btn-primary">
-                            Show Details{" "}
-                          </button>
 
                           <button className="btn btn-primary">
                             Show Details{" "}
