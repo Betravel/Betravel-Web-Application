@@ -1,7 +1,7 @@
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import i from "../assets/h1.jpg";
 import i2 from "../assets/h2.jpg";
@@ -11,7 +11,6 @@ import i3 from "../assets/h7.jpg";
 import i6 from "../assets/h6.jpg";
 import i7 from "../assets/h7.jpg";
 import i8 from "../assets/h8.jpg";
-import Rating from "@mui/material/Rating";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -64,26 +63,37 @@ function DetailHotel() {
       title: "Fern",
     },
   ];
-  // var id = "6218bde9dcc29a5ce15285ab";
-  // const [hotel, setHotel] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/api/hotel/" + id)
-  //     .then((res) => {
-  //       setHotel(res.data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [hotel, id]);
+  var id = "6218bde9dcc29a5ce15285ab";
+  const [hotel, setHotel] = useState([]);
+  const [rate, setrate] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/hotel/" + id)
+      .then((res) => {
+        setHotel(res.data);
+        let r = [];
+        for (let index = 0; index < res.data.rating; index++) {
+          r.push("star");
+        }
+        setrate(r);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="container" style={{ marginTop: "100px" }}>
       <br />
       <br />
       <div className="row">
-        <h1>
-          {" "}
-          Hotel Name <Rating name="size-medium" defaultValue={3} readOnly />
-        </h1>
+        <h1> {hotel.name}</h1>
+        <h3>
+          {rate.map((r) => (
+            <img
+              src="https://img.icons8.com/fluency/20/000000/star.png"
+              alt=""
+            />
+          ))}
+        </h3>
       </div>
       <div className="row">
         <div className="col-3"></div>
@@ -122,35 +132,59 @@ function DetailHotel() {
       </div>
       <div className="row">
         <h3 aligntext="right">Description</h3>
-        <p>hotel description</p>
+        <p>{hotel.description}</p>
       </div>
       <div className="row">
-        <h3 aligntext="right">Options</h3>
-        <h6>
-          {" "}
-          * Free wifi &nbsp;
-          <img
-            src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/24/000000/external-wifi-network-and-cloud-computing-flatart-icons-solid-flatarticons.png"
-            alt=""
-          />{" "}
-        </h6>
-        <h6>
-          {" "}
-          * Pool &nbsp;
-          <img
-            src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/24/000000/external-pool-surfing-jumpicon-glyph-jumpicon-glyph-ayub-irawan.png"
-            alt=""
-          />
-        </h6>
-
-        <h6>
-          {" "}
-          * Restaurant &nbsp;
-          <img
-            src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
-            alt=""
-          />
-        </h6>
+        <h3>Options</h3>
+        <div className="col-3">
+          <h6 align="left">
+            {" "}
+            * Free wifi &nbsp;
+            <img
+              src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/24/000000/external-wifi-network-and-cloud-computing-flatart-icons-solid-flatarticons.png"
+              alt=""
+            />{" "}
+          </h6>
+        </div>
+        <div className="col-3">
+          <h6 align="left">
+            * Pool &nbsp;
+            <img
+              src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/24/000000/external-pool-surfing-jumpicon-glyph-jumpicon-glyph-ayub-irawan.png"
+              alt=""
+            />
+          </h6>
+        </div>
+        <div className="col-3">
+          <h6 align="left">
+            {" "}
+            * Restaurant &nbsp;
+            <img
+              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
+              alt=""
+            />
+          </h6>
+        </div>
+        <div className="col-3">
+          <h6 align="left">
+            {" "}
+            * Parking &nbsp;
+            <img
+              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
+              alt=""
+            />
+          </h6>
+        </div>{" "}
+        <div className="col-3">
+          <h6 align="left">
+            {" "}
+            * sea view &nbsp;
+            <img
+              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
+              alt=""
+            />
+          </h6>
+        </div>{" "}
       </div>
 
       <div className="row">
