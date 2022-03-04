@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Logo from "../../assets/betravel.png";
-import "./Navbar.css";
+import Logo from "../assets/betravel.png";
+import "../css/Navbar.css";
 function Navbar() {
   const history = useNavigate();
   const [navbar, setNavbar] = useState(false);

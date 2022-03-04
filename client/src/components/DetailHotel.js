@@ -3,14 +3,14 @@ import ImageListItem from "@mui/material/ImageListItem";
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import Box from "@mui/material/Box";
-import i from "../../assets/h1.jpg";
-import i2 from "../../assets/h2.jpg";
-import i5 from "../../assets/h2.jpg";
-import i4 from "../../assets/h4.jpg";
-import i3 from "../../assets/h7.jpg";
-import i6 from "../../assets/h6.jpg";
-import i7 from "../../assets/h7.jpg";
-import i8 from "../../assets/h8.jpg";
+import i from "../assets/h1.jpg";
+import i2 from "../assets/h2.jpg";
+import i5 from "../assets/h2.jpg";
+import i4 from "../assets/h4.jpg";
+import i3 from "../assets/h7.jpg";
+import i6 from "../assets/h6.jpg";
+import i7 from "../assets/h7.jpg";
+import i8 from "../assets/h8.jpg";
 import Rating from "@mui/material/Rating";
 
 function srcset(image, size, rows = 1, cols = 1) {
