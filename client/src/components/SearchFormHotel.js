@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
@@ -10,15 +10,16 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import "../css/SearchFormHotel.css";
+import axios from "axios";
 
 function SearchFormHotel() {
   const history = useNavigate();
-  localStorage.clear();
   const [Destination, setDestination] = useState("init");
   const [Adultes, setAdultes] = useState(1);
   const [Enfants, setEnfants] = useState(0);
   const [Chambres, setChambres] = useState(1);
   const [Periode, setPeriode] = useState([null, null]);
+  const [Dests, setDests] = useState([]);
 
   const destinations = [
     {
@@ -42,6 +43,14 @@ function SearchFormHotel() {
       label: "Mahdia",
     },
   ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/destinations/all")
+      .then((res) => {
+        setDests(res.data);
+      })
+      .catch();
+  }, []);
 
   const DestinationChangeHandler = (event) => {
     setDestination(event.target.value);
@@ -79,21 +88,28 @@ function SearchFormHotel() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    const Search = {
-      destination: Destination,
-      periode: Periode,
-      adultes: Adultes,
-      enfants: Enfants,
-      chambres: Chambres,
-    };
-    console.log(Search);
-    localStorage.setItem("search", JSON.stringify(Search));
-    history("/Hotel/Liste");
+    if (Destination === "init") {
+      alert("Choosing destination is required !!");
+    } else if (Periode[0] === null) {
+      alert("choosing checkin/checkout is required !!");
+    } else if (Periode[1] === null) {
+      alert("choosing checkin/checkout is required !!");
+    } else {
+      const Search = {
+        destination: Destination,
+        periode: Periode,
+        adultes: Adultes,
+        enfants: Enfants,
+        chambres: Chambres,
+      };
+      console.log(Search);
+      localStorage.setItem("search", JSON.stringify(Search));
+      history("/Hotel/Liste");
+    }
   };
   var today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+  var mm = today.getMonth() + 1;
   var yyyy = today.getFullYear();
   if (dd < 10) {
     dd = "0" + dd;
@@ -124,7 +140,7 @@ function SearchFormHotel() {
                     onChange={DestinationChangeHandler}
                     required
                   >
-                    {destinations.map((option) => (
+                    {Dests.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
