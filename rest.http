@@ -35,3 +35,5 @@ DELETE  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
 
 ###
 // Hotel 
+POST  http://localhost:8000/images
+###
