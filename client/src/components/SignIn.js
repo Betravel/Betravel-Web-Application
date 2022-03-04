@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./SignIn.css";
+import "../css/SignIn.css";
 import { useNavigate } from "react-router-dom";
-import img from "../../assets/img.png";
+import img from "../assets/img.png";
 function SignIn() {
   const history = useNavigate();
   useEffect(() => {

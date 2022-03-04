@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import "./SearchFormHotel.css";
+import "../css/SearchFormHotel.css";
 
 function SearchFormHotel() {
   const history = useNavigate();

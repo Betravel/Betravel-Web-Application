@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Contact.css";
-import img from "../../assets/pexels14 (2).png";
+import "../css/Contact.css";
+import img from "../assets/pexels14 (2).png";
 function Contact() {
   const history = useNavigate();
   const [firstname, setfirstname] = useState("");
