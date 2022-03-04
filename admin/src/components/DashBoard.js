@@ -1,10 +1,10 @@
-import PromosOverview from "./Overviews/PromosOverview";
-import ReservationsOverview from "./Overviews/ReservationOverview";
-import UsersOverview from "./Overviews/UsersOverview";
-import ListUsers from "./UsersAdmin/ListUsers";
-import ListHotels from "./HotelAdmin/ListHotels";
-import DetailUser from "./UsersAdmin/DetailUser";
-import NavHotel from "./HotelAdmin/NavHotel";
+import PromosOverview from "./PromosOverview";
+import ReservationsOverview from "./ReservationOverview";
+import UsersOverview from "./UsersOverview";
+import ListUsers from "./ListUsers";
+import ListHotels from "./ListHotels";
+import DetailUser from "./DetailUser";
+import NavHotel from "./NavHotel";
 function DashBoard() {
   return (
     <div className="container-fluid" style={{ marginTop: "120px" }}>
