@@ -1,18 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
-import Home from "./components/homepage/home";
-import SignUp from "./components/SignUp/SignUp";
-import SignIn from "./components/SignIn/SignIn";
-import Profil from "./components/Profil/Profil";
-import EditProfil from "./components/Profil/EditProfil/EditProfil";
-import Contact from "./components/Contact/Contact";
-import Confirmed from "./components/SignUp/Confirm/Confirmed";
-import DashBoard from "./components/DashBoard/DashBoard";
-import ResetPassword from "./components/SignIn/ResetPassword/ResetPassword";
-import ConfirmPassword from "./components/SignIn/ResetPassword/ConfirmPassword";
-import AboutUs from "./components/AboutUs/AboutUs";
-import DetailHotel from "./components/Hotels/DetailHotel";
-import ListeHotel from "./components/Hotels/ListeHotel";
+import Navbar from "./components/Navbar";
+import Home from "./components/home";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
+import Profil from "./components/Profil";
+import EditProfil from "./components/EditProfil";
+import Contact from "./components/Contact";
+import Confirmed from "./components/Confirmed";
+import ResetPassword from "./components/ResetPassword";
+import ConfirmPassword from "./components/ConfirmPassword";
+import AboutUs from "./components/AboutUs";
+import DetailHotel from "./components/DetailHotel";
+import ListeHotel from "./components/ListeHotel";
 import "./App.css";
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
-          <Route path="/Dashboard" element={<DashBoard />} />
           <Route path="/Profil/Edit" element={<EditProfil />} />
           <Route path="/Profil" element={<Profil />} />
           <Route path="/Restpass" element={<ResetPassword />} />
