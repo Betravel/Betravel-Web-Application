@@ -1,7 +1,7 @@
 import React from "react";
-import "./home.css";
-import SearchFormHotel from "../Search/SearchForm/SearchFormHotel";
-import Promos from "../PromosHotel/Promos";
+import "../css/home.css";
+import SearchFormHotel from "./SearchFormHotel";
+import Promos from "./Promos.js";
 
 function Home() {
   return (

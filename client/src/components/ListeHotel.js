@@ -1,15 +1,15 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import img from "../../assets/Djerba-Plaza.webp";
-import img1 from "../../assets/travel.jpg";
-import img2 from "../../assets/banner.jpg";
-import img3 from "../../assets/img.png";
+import img from "../assets/Djerba-Plaza.webp";
+import img1 from "../assets/travel.jpg";
+import img2 from "../assets/banner.jpg";
+import img3 from "../assets/img.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-import "./ListeHotel.css";
-import Search2 from "../Search/SearchForm/Search2";
+import "../css/ListeHotel.css";
+import Search2 from "./Search2";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 

@@ -1,4 +1,4 @@
-import Card from "../../UI/Card";
+import Card from "./Card";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

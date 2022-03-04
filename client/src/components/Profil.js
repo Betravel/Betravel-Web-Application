@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ModeEditOutlineSharpIcon from "@mui/icons-material/ModeEditOutlineSharp";
 import axios from "axios";
-import "./Profil.css";
+import "../css/Profil.css";
 
 function Profil() {
   const history = useNavigate();

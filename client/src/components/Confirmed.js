@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "../../UI/Card";
+import Card from "./Card";
 function Confirmed() {
   const history = useNavigate();
   let { id } = useParams();

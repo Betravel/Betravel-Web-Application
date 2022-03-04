@@ -8,7 +8,12 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3001",
+  })
+);
 app.use(express.json());
 app.use(cookies());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +26,7 @@ require("./server/routes/auth.route")(app);
 require("./server/routes/send.route")(app);
 require("./server/routes/user.route")(app);
 require("./server/routes/hotel.route")(app);
+require("./server/routes/image.route")(app);
 
 port = 8000;
 app.listen(port, () => {
