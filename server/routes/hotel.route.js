@@ -1,7 +1,6 @@
 const HotelController = require("../controllers/hotel.controller");
 const multer = require("multer");
 
-
 const DIR = "./public/";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -11,7 +10,6 @@ const storage = multer.diskStorage({
     const fileName = file.originalname.toLowerCase().split(" ").join("-");
 
     cb(null, fileName);
-
   },
 });
 
@@ -34,6 +32,7 @@ var upload = multer({
 module.exports = (app) => {
   app.get("/api/hotels/all", HotelController.getAllHotels);
   app.get("/api/destinations/all", HotelController.getDestinations);
+  app.get("/api/hotel/promo", HotelController.getHotelByPromo);
   app.get("/api/hotel/:id", HotelController.getHotelById);
   app.post("/api/hotel", upload.array("images"), HotelController.setHotel);
   app.put(
@@ -41,4 +40,5 @@ module.exports = (app) => {
     upload.array("images"),
     HotelController.updateHotel
   );
+  app.get("/api/hotel/search/:location", HotelController.getHotelByLocation);
 };
