@@ -4,14 +4,8 @@ const app = express();
 const cookies = require("cookie-parser");
 app.use(
   cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3001",
   })
 );
 app.use(express.json());

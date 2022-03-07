@@ -132,17 +132,9 @@ function NavHotel() {
     }
     data.append("promo", parseInt(promo));
     axios
-      .post("http://localhost:8000/images", { name: "test", image: images[0] })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // axios
-    //   .post("http://localhost:8000/api/hotel", data)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+      .post("http://localhost:8000/api/hotel", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (

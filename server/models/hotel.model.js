@@ -23,6 +23,9 @@ const HotelSchema = new mongoose.Schema(
     images: {
       type: Array,
     },
+    imagesurl: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );
