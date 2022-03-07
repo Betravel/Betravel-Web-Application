@@ -5,7 +5,8 @@ module.exports = (app) => {
   app.post("/images", async (req, res) => {
     try {
       // Upload image to cloudinary
-      const i = req.files[0].path;
+      console.log(req.files);
+      const i = req.files;
       const result = await cloudinary.uploader.upload(i);
       // Create new user
       let user = new Image({

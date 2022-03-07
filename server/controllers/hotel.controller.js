@@ -1,4 +1,5 @@
 const Hotel = require("../models/hotel.model");
+const addimage = require("./image.controller");
 
 module.exports.getAllHotels = (request, response) => {
   Hotel.find({})
@@ -28,16 +29,37 @@ module.exports.getHotelById = (request, response) => {
     .catch((err) => response.json(err));
 };
 
-module.exports.setHotel = (req, res) => {
+module.exports.setHotel = async (req, res) => {
   const hotel = new Hotel(req.body);
   const url = req.protocol + "://" + req.get("host");
   let imgs = [];
+  let urls = [];
   const files = req.files;
+  const uploader = async (path) => await addimage.addimage(path, "");
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     imgs.push(url + "/public/" + file.filename);
+    const { path } = file;
+    const newPath = await uploader(path);
+    urls.push(newPath);
+    // var oldpath = file.path;
+    // cloudinary.uploader.upload(oldpath).then((result) => {
+    //   let u = {};
+    //   for (var attributename in result) {
+    //     if (attributename == "public_id") {
+    //       u.publicid = result[attributename];
+    //     }
+    //     if (attributename == "url") {
+    //       u.iurl = result[attributename];
+    //     }
+    //   }
+    //   urls.push(u);
+    // });
+    console.log(newPath);
   }
+
   imgs.forEach((img) => hotel.images.push(img));
+  hotel.imagesurl = urls;
   hotel.price = JSON.parse(hotel.price);
   hotel
     .save()
