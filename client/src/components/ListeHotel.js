@@ -37,9 +37,7 @@ function ListeHotel() {
                     className="col-4"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
-                    {hotel.images.map((image) => (
-                      <img src={image.toString("base64")} alt="" />
-                    ))}
+                    <img src={hotel.imagesurl[0].url} alt="" width="100%" />
                   </div>
                   <div className="col-8">
                     {" "}
@@ -51,78 +49,76 @@ function ListeHotel() {
                       <img src={loc} alt="" width="50" />
                       {hotel.location}
                     </div>
-                    <br />
-                    <div align="left">
-                      <span title="Bell">
-                        {" "}
-                        <img
-                          src="https://img.icons8.com/external-itim2101-fill-itim2101/30/000000/external-hotel-bell-travel-itim2101-fill-itim2101.png"
-                          alt=""
-                        />{" "}
-                      </span>
-                      <span title="Single bed">
-                        {" "}
-                        <img
-                          src="https://img.icons8.com/material-outlined/30/000000/single-bed.png"
-                          alt=""
-                        />
-                      </span>
-                      <span title="Towels">
-                        <img
-                          src="https://img.icons8.com/external-prettycons-solid-prettycons/30/000000/external-towels-furniture-household-prettycons-solid-prettycons.png"
-                          alt=""
-                        />
-                      </span>
-                      <span title="Free wifi">
-                        <img
-                          src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/30/000000/external-wifi-network-and-cloud-computing-flatart-icons-solid-flatarticons.png"
-                          alt=""
-                        />
-                      </span>
-                    </div>
-                    <br />
                     <div className="row">
                       <div className="col-6">
                         <div align="left">
-                          <p>
-                            <img
-                              src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
-                              alt=""
-                            />{" "}
-                            Breakfast{" "}
-                          </p>
-                          <p>
-                            <img
-                              src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
-                              alt=""
-                            />{" "}
-                            Half Pension{" "}
-                          </p>
-                          <p>
-                            <img
-                              src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
-                              alt=""
-                            />{" "}
-                            Full Pension
-                          </p>
-                          <p>
-                            <img
-                              src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
-                              alt=""
-                            />{" "}
-                            All inclusif
-                          </p>
+                          {hotel.price.lp ? (
+                            <p>
+                              <img
+                                src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
+                                alt=""
+                              />{" "}
+                              Breakfast{" "}
+                            </p>
+                          ) : (
+                            ""
+                          )}
+
+                          {hotel.price.dp ? (
+                            <p>
+                              <img
+                                src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
+                                alt=""
+                              />{" "}
+                              Half Pension{" "}
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                          {hotel.price.pc ? (
+                            <p>
+                              <img
+                                src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
+                                alt=""
+                              />{" "}
+                              Full Pension
+                            </p>
+                          ) : (
+                            ""
+                          )}
+
+                          {hotel.price.ai ? (
+                            <p>
+                              <img
+                                src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
+                                alt=""
+                              />{" "}
+                              All inclusif
+                            </p>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                       <div className="col-6">
                         <div>
-                          <h3>1,300 DT</h3>
-                          <div>
-                            <h6 style={{ textDecoration: "line-through" }}>
-                              1,999 DT
-                            </h6>
-                            <h6>32% off</h6>
-                          </div>
+                          {/* <h3>
+                            {" "}
+                            A partir{" "}
+                            {hotel.price.ai.triple -
+                              (hotel.price.ai.triple * hotel.promo) / 100}{" "}
+                            DT{" "}
+                          </h3> 
+                          {hotel.promo === 0 ? (
+                            ""
+                          ) : (
+                            <div>
+                              <h6 style={{ textDecoration: "line-through" }}>
+                                {hotel.price} DT
+                              </h6>
+                              <h6>{hotel.promo}% off</h6>
+                            </div>
+                          )}*/}
 
                           <button className="btn btn-primary">
                             Show Details{" "}
