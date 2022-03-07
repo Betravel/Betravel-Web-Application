@@ -35,32 +35,21 @@ module.exports.setHotel = async (req, res) => {
   let imgs = [];
   let urls = [];
   const files = req.files;
-  const uploader = async (path) => await addimage.addimage(path, "");
+  const uploader = async (path) =>
+    await addimage.addimage(path, "/hotels/" + hotel._id);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     imgs.push(url + "/public/" + file.filename);
     const { path } = file;
     const newPath = await uploader(path);
     urls.push(newPath);
-    // var oldpath = file.path;
-    // cloudinary.uploader.upload(oldpath).then((result) => {
-    //   let u = {};
-    //   for (var attributename in result) {
-    //     if (attributename == "public_id") {
-    //       u.publicid = result[attributename];
-    //     }
-    //     if (attributename == "url") {
-    //       u.iurl = result[attributename];
-    //     }
-    //   }
-    //   urls.push(u);
-    // });
     console.log(newPath);
   }
 
   imgs.forEach((img) => hotel.images.push(img));
   hotel.imagesurl = urls;
   hotel.price = JSON.parse(hotel.price);
+  hotel.options = JSON.parse(hotel.options);
   hotel
     .save()
     .then((result) => res.json(result))
@@ -88,6 +77,26 @@ module.exports.updateHotel = (req, res) => {
   })
     .then((result) => {
       res.json(result);
+    })
+    .catch((err) => res.json(err));
+};
+
+module.exports.getHotelByLocation = (req, res) => {
+  Hotel.find({ location: req.params.location })
+    .then((hotel) => res.json(hotel))
+    .catch((err) => res.json(err));
+};
+
+module.exports.getHotelByPromo = (req, res) => {
+  Hotel.find({})
+    .then((hotel) => {
+      let hotels = [];
+      hotel.forEach((h) => {
+        if (h.promo !== 0) {
+          hotels.push(h);
+        }
+      });
+      res.json(hotels);
     })
     .catch((err) => res.json(err));
 };

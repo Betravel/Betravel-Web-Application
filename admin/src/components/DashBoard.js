@@ -36,12 +36,11 @@ function DashBoard() {
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
-          <NavHotel />
-        </div>
+        <div className="col-3"></div>
         <div className="col-6">
           <ListHotels />
         </div>
+        <div className="col-3"></div>
       </div>
     </div>
   );
