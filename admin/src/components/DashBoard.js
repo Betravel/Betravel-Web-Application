@@ -4,7 +4,6 @@ import UsersOverview from "./UsersOverview";
 import ListUsers from "./ListUsers";
 import ListHotels from "./ListHotels";
 import DetailUser from "./DetailUser";
-import NavHotel from "./NavHotel";
 function DashBoard() {
   return (
     <div className="container-fluid" style={{ marginTop: "120px" }}>

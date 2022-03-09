@@ -1,9 +1,9 @@
-import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import DashBoard from "./components/DashBoard";
 import Navbar from "./components/Navbar";
 import AddHotel from "./components/AddHotel";
+import UpdateHotel from "./components/UpdateHotel";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<DashBoard />} />
           <Route path="/AddHotel" element={<AddHotel />} />
+          <Route path="/UpdateHotel/:id" element={<UpdateHotel />} />
         </Routes>
       </Router>
     </div>
