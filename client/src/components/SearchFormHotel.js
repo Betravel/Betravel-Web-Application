@@ -21,28 +21,6 @@ function SearchFormHotel() {
   const [Periode, setPeriode] = useState([null, null]);
   const [Dests, setDests] = useState([]);
 
-  const destinations = [
-    {
-      value: "init",
-      label: "Choisir votre destination ...",
-    },
-    {
-      value: "Hammamet",
-      label: "Hammamet",
-    },
-    {
-      value: "Sousse",
-      label: "Sousse",
-    },
-    {
-      value: "Djerba",
-      label: "Djerba",
-    },
-    {
-      value: "Mahdia",
-      label: "Mahdia",
-    },
-  ];
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/destinations/all")
@@ -122,7 +100,7 @@ function SearchFormHotel() {
   return (
     <div className="container" style={{ backdropFilter: "blur(15px)" }}>
       <div className="row">
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} autocomplete="off">
           <br />
           <div className="container">
             <div className="row">

@@ -50,6 +50,56 @@ module.exports.setHotel = async (req, res) => {
   hotel.imagesurl = urls;
   hotel.price = JSON.parse(hotel.price);
   hotel.options = JSON.parse(hotel.options);
+
+  let prices = new Array();
+  if (hotel.price.lp) {
+    if (hotel.price.lp.triple) {
+      prices.push(hotel.price.lp.triple);
+    }
+    if (hotel.price.lp.double) {
+      prices.push(hotel.price.lp.double);
+    }
+    if (hotel.price.lp.single) {
+      prices.push(hotel.price.lp.single);
+    }
+  }
+  if (hotel.price.dp) {
+    if (hotel.price.dp.triple) {
+      prices.push(hotel.price.dp.triple);
+    }
+    if (hotel.price.dp.double) {
+      prices.push(hotel.price.dp.double);
+    }
+    if (hotel.price.dp.single) {
+      prices.push(hotel.price.dp.single);
+    }
+  }
+  if (hotel.price.pc) {
+    if (hotel.price.pc.triple) {
+      prices.push(hotel.price.pc.triple);
+    }
+    if (hotel.price.pc.double) {
+      prices.push(hotel.price.pc.double);
+    }
+    if (hotel.price.pc.single) {
+      prices.push(hotel.price.pc.single);
+    }
+  }
+  if (hotel.price.ai) {
+    if (hotel.price.ai.triple) {
+      prices.push(hotel.price.ai.triple);
+    }
+    if (hotel.price.ai.double) {
+      prices.push(hotel.price.ai.double);
+    }
+    if (hotel.price.ai.single) {
+      prices.push(hotel.price.ai.single);
+    }
+  }
+  prices.sort((a, b) => a - b);
+
+  hotel.price.best = prices[0];
+
   hotel
     .save()
     .then((result) => res.json(result))
@@ -83,7 +133,7 @@ module.exports.updateHotel = (req, res) => {
 
 module.exports.getHotelByLocation = (req, res) => {
   Hotel.find({ location: req.params.location })
-    .then((hotel) => res.json(hotel))
+    .then((hotels) => res.json(hotels))
     .catch((err) => res.json(err));
 };
 

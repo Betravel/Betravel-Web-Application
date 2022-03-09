@@ -4,10 +4,12 @@ const app = express();
 const cookies = require("cookie-parser");
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3000", "http://localhost:3001" ],
     credentials: true,
   })
 );
+
+
 app.use(express.json());
 app.use(cookies());
 app.use(express.urlencoded({ extended: true }));
