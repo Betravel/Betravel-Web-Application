@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -9,8 +10,10 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import "../css/SearchFormHotel.css";
+import axios from "axios";
 
 function Search2() {
+  const history = useNavigate();
   const [Destination, setDestination] = useState(
     JSON.parse(localStorage.getItem("search")).destination
   );
@@ -27,29 +30,16 @@ function Search2() {
   const [Chambres, setChambres] = useState(
     JSON.parse(localStorage.getItem("search")).chambres
   );
+  const [Dests, setDests] = useState([]);
 
-  const destinations = [
-    {
-      value: "init",
-      label: "Choisir votre destination ...",
-    },
-    {
-      value: "Hammamet",
-      label: "Hammamet",
-    },
-    {
-      value: "Sousse",
-      label: "Sousse",
-    },
-    {
-      value: "Djerba",
-      label: "Djerba",
-    },
-    {
-      value: "Mahdia",
-      label: "Mahdia",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/destinations/all")
+      .then((res) => {
+        setDests(res.data);
+      })
+      .catch();
+  }, []);
 
   const DestinationChangeHandler = (event) => {
     setDestination(event.target.value);
@@ -86,16 +76,24 @@ function Search2() {
   };
 
   const submitHandler = (event) => {
-    event.preventDefault();
-
-    const Search = {
-      destination: Destination,
-      periode: Periode,
-      adultes: Adultes,
-      enfants: Enfants,
-      chambres: Chambres,
-    };
-    console.log(Search);
+    if (Destination === "init") {
+      alert("Choosing destination is required !!");
+    } else if (Periode[0] === null) {
+      alert("choosing checkin/checkout is required !!");
+    } else if (Periode[1] === null) {
+      alert("choosing checkin/checkout is required !!");
+    } else {
+      const Search = {
+        destination: Destination,
+        periode: Periode,
+        adultes: Adultes,
+        enfants: Enfants,
+        chambres: Chambres,
+      };
+      console.log(Search);
+      localStorage.setItem("search", JSON.stringify(Search));
+      history("/Hotel/Liste");
+    }
   };
   var today = new Date();
   var dd = today.getDate();
@@ -124,7 +122,7 @@ function Search2() {
                 value={Destination}
                 onChange={DestinationChangeHandler}
               >
-                {destinations.map((option) => (
+                {Dests.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>

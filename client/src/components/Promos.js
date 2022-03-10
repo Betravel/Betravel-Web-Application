@@ -9,9 +9,10 @@ import axios from "axios";
 
 function Promos() {
   const [hotels, setHotels] = useState([]);
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/hotels/all")
+      .get("http://localhost:8000/api/hotel/promo")
       .then((res) => {
         setHotels(res.data);
       })
@@ -56,11 +57,23 @@ function Promos() {
                       <h1>
                         <em>{hotel.name}</em>
                       </h1>
-
-                      <h2>{hotel.description}</h2>
                     </div>
-                    <h1>{hotel.price.prix} DT</h1>
-                    <Link to={"/Hotel/Detail/"+hotel._id}>
+                    <div>
+                      <h3>
+                        {" "}
+                        A partir{" "}
+                        {hotel.price.best -
+                          (hotel.price.best * hotel.promo) / 100}{" "}
+                        DT
+                      </h3>
+                      <div>
+                        <h6 style={{ textDecoration: "line-through" }}>
+                          {hotel.price.best} DT
+                        </h6>
+                        <h6>{hotel.promo}% off</h6>
+                      </div>
+                    </div>
+                    <Link to={"/Hotel/Detail/" + hotel._id}>
                       <button className="btn button"> show details</button>
                     </Link>
                   </div>

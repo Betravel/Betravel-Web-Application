@@ -35,32 +35,71 @@ module.exports.setHotel = async (req, res) => {
   let imgs = [];
   let urls = [];
   const files = req.files;
-  const uploader = async (path) => await addimage.addimage(path, "");
+  const uploader = async (path) =>
+    await addimage.addimage(path, "/hotels/" + hotel._id);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     imgs.push(url + "/public/" + file.filename);
     const { path } = file;
     const newPath = await uploader(path);
     urls.push(newPath);
-    // var oldpath = file.path;
-    // cloudinary.uploader.upload(oldpath).then((result) => {
-    //   let u = {};
-    //   for (var attributename in result) {
-    //     if (attributename == "public_id") {
-    //       u.publicid = result[attributename];
-    //     }
-    //     if (attributename == "url") {
-    //       u.iurl = result[attributename];
-    //     }
-    //   }
-    //   urls.push(u);
-    // });
     console.log(newPath);
   }
 
   imgs.forEach((img) => hotel.images.push(img));
   hotel.imagesurl = urls;
   hotel.price = JSON.parse(hotel.price);
+  hotel.options = JSON.parse(hotel.options);
+
+  let prices = new Array();
+  if (hotel.price.lp) {
+    if (hotel.price.lp.triple) {
+      prices.push(hotel.price.lp.triple);
+    }
+    if (hotel.price.lp.double) {
+      prices.push(hotel.price.lp.double);
+    }
+    if (hotel.price.lp.single) {
+      prices.push(hotel.price.lp.single);
+    }
+  }
+  if (hotel.price.dp) {
+    if (hotel.price.dp.triple) {
+      prices.push(hotel.price.dp.triple);
+    }
+    if (hotel.price.dp.double) {
+      prices.push(hotel.price.dp.double);
+    }
+    if (hotel.price.dp.single) {
+      prices.push(hotel.price.dp.single);
+    }
+  }
+  if (hotel.price.pc) {
+    if (hotel.price.pc.triple) {
+      prices.push(hotel.price.pc.triple);
+    }
+    if (hotel.price.pc.double) {
+      prices.push(hotel.price.pc.double);
+    }
+    if (hotel.price.pc.single) {
+      prices.push(hotel.price.pc.single);
+    }
+  }
+  if (hotel.price.ai) {
+    if (hotel.price.ai.triple) {
+      prices.push(hotel.price.ai.triple);
+    }
+    if (hotel.price.ai.double) {
+      prices.push(hotel.price.ai.double);
+    }
+    if (hotel.price.ai.single) {
+      prices.push(hotel.price.ai.single);
+    }
+  }
+  prices.sort((a, b) => a - b);
+
+  hotel.price.best = prices[0];
+
   hotel
     .save()
     .then((result) => res.json(result))
@@ -88,6 +127,26 @@ module.exports.updateHotel = (req, res) => {
   })
     .then((result) => {
       res.json(result);
+    })
+    .catch((err) => res.json(err));
+};
+
+module.exports.getHotelByLocation = (req, res) => {
+  Hotel.find({ location: req.params.location })
+    .then((hotels) => res.json(hotels))
+    .catch((err) => res.json(err));
+};
+
+module.exports.getHotelByPromo = (req, res) => {
+  Hotel.find({})
+    .then((hotel) => {
+      let hotels = [];
+      hotel.forEach((h) => {
+        if (h.promo !== 0) {
+          hotels.push(h);
+        }
+      });
+      res.json(hotels);
     })
     .catch((err) => res.json(err));
 };
