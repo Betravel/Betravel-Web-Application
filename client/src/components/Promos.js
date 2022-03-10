@@ -14,7 +14,13 @@ function Promos() {
     axios
       .get("http://localhost:8000/api/hotel/promo")
       .then((res) => {
-        setHotels(res.data);
+        let hotel = res.data;
+        for (let i = hotel.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [hotel[i], hotel[j]] = [hotel[j], hotel[i]];
+        }
+        let randomhotels = [hotel[0], hotel[1], hotel[2]];
+        setHotels(randomhotels);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -26,6 +32,7 @@ function Promos() {
     slidesToShow: 2,
     slidesToScroll: 1,
   };
+
   return (
     <div>
       <div className="container">
@@ -48,14 +55,14 @@ function Promos() {
               {hotels.map((hotel, index) => (
                 <div key={index}>
                   <div className="wrapper">
-                    <h1>{hotel.location}</h1>{" "}
+                    <h1>{hotel.name}</h1>{" "}
                     <div
                       className="image "
                       style={{ backgroundImage: `url(${img})` }}
                     ></div>
                     <div className="details">
                       <h1>
-                        <em>{hotel.name}</em>
+                        <em>{hotel.location}</em>
                       </h1>
                     </div>
                     <div>
@@ -85,17 +92,19 @@ function Promos() {
         </div>
         <br />
         <div className="row">
-          <button
-            className="btn "
-            style={{
-              fontWeight: "bolder",
-              fontSize: "30px",
-              " textdecoration": "underline",
-            }}
-          >
-            {" "}
-            see more <DoubleArrowIcon />
-          </button>
+          <Link to="/Hotel/Promos">
+            <button
+              className="btn "
+              style={{
+                fontWeight: "bolder",
+                fontSize: "30px",
+                " textdecoration": "underline",
+              }}
+            >
+              {" "}
+              see more <DoubleArrowIcon />
+            </button>
+          </Link>
         </div>
       </div>
     </div>

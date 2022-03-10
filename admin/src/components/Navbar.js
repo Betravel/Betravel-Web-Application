@@ -43,6 +43,7 @@ function Navbar() {
       .catch((err) => console.error(err));
     changeBackground();
     window.addEventListener("scroll", changeBackground);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <nav
