@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
@@ -8,8 +9,11 @@ import Rating from "@mui/material/Rating";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function AddHotel() {
+  const history = useNavigate();
   const [name, setname] = useState("");
   const [locations, setlocations] = useState([]);
   const [location, setlocation] = useState("");
@@ -54,6 +58,7 @@ function AddHotel() {
   const [indoorpool, setindoorpool] = useState(false);
   const [spa, setspa] = useState(false);
   const [images, setimages] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/destinations/all")
@@ -63,7 +68,6 @@ function AddHotel() {
       .catch();
   }, []);
   const onsubmitform = (e) => {
-    e.preventDefault();
     const data = new FormData();
     data.append("name", name);
     data.append("location", location);
@@ -149,7 +153,11 @@ function AddHotel() {
     data.append("options", JSON.stringify(options));
     axios
       .post("http://localhost:8000/api/hotel", data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        history("/");
+      })
       .catch((err) => console.log(err));
   };
 
@@ -794,11 +802,20 @@ function AddHotel() {
           </div>
         </div>
         <br />
-        <button className="btn btn-primary" type="submit">
-          Add
-        </button>
+        <LoadingButton
+          color="secondary"
+          onClick={(e) => {
+            setLoading(true);
+            onsubmitform(e);
+          }}
+          loading={loading}
+          loadingPosition="start"
+          startIcon={<SaveIcon />}
+          variant="contained"
+        >
+          Save
+        </LoadingButton>
       </form>
-
       <br />
     </div>
   );

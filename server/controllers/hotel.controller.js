@@ -31,23 +31,18 @@ module.exports.getHotelById = (request, response) => {
 
 module.exports.setHotel = async (req, res) => {
   const hotel = new Hotel(req.body);
-  const url = req.protocol + "://" + req.get("host");
-  let imgs = [];
   let urls = [];
   const files = req.files;
   const uploader = async (path) =>
     await addimage.addimage(path, "/hotels/" + hotel._id);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    imgs.push(url + "/public/" + file.filename);
     const { path } = file;
     const newPath = await uploader(path);
     urls.push(newPath);
     console.log(newPath);
   }
-
-  imgs.forEach((img) => hotel.images.push(img));
-  hotel.imagesurl = urls;
+  hotel.images = urls;
   hotel.price = JSON.parse(hotel.price);
   hotel.options = JSON.parse(hotel.options);
 
@@ -106,14 +101,19 @@ module.exports.setHotel = async (req, res) => {
     .catch((err) => res.json(err));
 };
 
-module.exports.updateHotel = (req, res) => {
+module.exports.updateHotel = async (req, res) => {
   const updatedhotel = req.body;
-  const url = req.protocol + "://" + req.get("host");
+  const uploader = async (path) =>
+    await addimage.addimage(path, "/hotels/" + req.params.id);
   let imgs = [];
   const files = req.files;
+  console.log(files);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    imgs.push(url + "/public/" + file.filename);
+    const { path } = file;
+    const newPath = await uploader(path);
+    imgs.push(newPath);
+    console.log(newPath);
   }
   var newimg = Array(updatedhotel.images);
   if (newimg[0] === undefined) {
@@ -122,6 +122,8 @@ module.exports.updateHotel = (req, res) => {
     imgs.forEach((img) => newimg.push(img));
   }
   updatedhotel.images = newimg;
+  updatedhotel.price = JSON.parse(updatedhotel.price);
+  updatedhotel.options = JSON.parse(updatedhotel.options);
   Hotel.findOneAndUpdate({ _id: req.params.id }, updatedhotel, {
     new: true,
   })
@@ -149,4 +151,10 @@ module.exports.getHotelByPromo = (req, res) => {
       res.json(hotels);
     })
     .catch((err) => res.json(err));
+};
+
+module.exports.deleteHotel = (request, response) => {
+  Hotel.deleteOne({ _id: request.params.id })
+    .then((res) => response.json(res))
+    .catch((err) => response.json(err));
 };

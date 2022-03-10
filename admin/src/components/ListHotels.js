@@ -1,58 +1,8 @@
-import { Button, Rating } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Rating } from "@mui/material";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import axios from "axios";
-import { forwardRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-// import { useSpring, animated } from "@react-spring/web";
-// import Backdrop from "@mui/material/Backdrop";
-// import Box from "@mui/material/Box";
-// import Modal from "@mui/material/Modal";
-// import Typography from "@mui/material/Typography";
-// import PropTypes from "prop-types";
-// import NavHotel from "./NavHotel";
-
-// const Fade = forwardRef(function Fade(props, ref) {
-//   const { in: open, children, onEnter, onExited, ...other } = props;
-//   const style = useSpring({
-//     from: { opacity: 0 },
-//     to: { opacity: open ? 1 : 0 },
-//     onStart: () => {
-//       if (open && onEnter) {
-//         onEnter();
-//       }
-//     },
-//     onRest: () => {
-//       if (!open && onExited) {
-//         onExited();
-//       }
-//     },
-//   });
-
-//   return (
-//     <animated.div ref={ref} style={style} {...other}>
-//       {children}
-//     </animated.div>
-//   );
-// });
-
-// Fade.propTypes = {
-//   children: PropTypes.element,
-//   in: PropTypes.bool.isRequired,
-//   onEnter: PropTypes.func,
-//   onExited: PropTypes.func,
-// };
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 1000,
-//   bgcolor: "background.paper",
-//   border: "2px solid #000",
-//   boxShadow: 24,
-//   p: 4,
-// };
+import { useEffect, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function renameKey(obj, oldKey, newKey) {
   obj[newKey] = obj[oldKey];
@@ -64,9 +14,7 @@ function renderRating(params) {
 }
 
 function ListHotels() {
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const history = useNavigate();
   const cols = [
     { field: "name", headerName: "Name", width: "200" },
     {
@@ -82,7 +30,50 @@ function ListHotels() {
       headerName: "Promo",
       width: "100",
     },
+    {
+      field: "actions",
+      type: "actions",
+      width: 120,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<img src="https://img.icons8.com/nolan/48/cancel.png" alt="" />}
+          label="Delete"
+          onClick={deleteHotel(params.id)}
+        />,
+        <GridActionsCellItem
+          icon={
+            <img
+              src="data:image/png;base64,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"
+              alt=""
+            />
+          }
+          label="Update"
+          onClick={updateHotel(params.id)}
+        />,
+      ],
+    },
   ];
+  const deleteHotel = useCallback(
+    (id) => () => {
+      setTimeout(() => {
+        axios
+          .delete("http://localhost:8000/api/hotel/delete/" + id)
+          .then((res) => {
+            window.location.reload(false);
+          })
+          .catch((err) => console.log(err));
+      });
+    },
+    []
+  );
+  const updateHotel = useCallback(
+    (id) => () => {
+      setTimeout(() => {
+        history("/updateHotel/" + id);
+      });
+    },
+    []
+  );
   const [data, setdata] = useState([]);
   useEffect(() => {
     axios
@@ -102,26 +93,6 @@ function ListHotels() {
         <div style={{ height: 350, width: "100%" }}>
           <DataGrid rows={data} columns={cols} />
         </div>
-        {/* <Button color="primary" variant="contained" onClick={handleOpen}>
-          Add Hotel
-        </Button>
-        <Modal
-          aria-labelledby="spring-modal-title"
-          aria-describedby="spring-modal-description"
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <Box sx={style}>
-              <NavHotel />
-            </Box>
-          </Fade>
-        </Modal> */}
       </div>
       <Link to="/AddHotel">
         <button className="btn">
