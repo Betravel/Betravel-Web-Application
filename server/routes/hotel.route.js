@@ -41,4 +41,5 @@ module.exports = (app) => {
     HotelController.updateHotel
   );
   app.get("/api/hotel/search/:location", HotelController.getHotelByLocation);
+  app.delete("/api/hotel/delete/:id", HotelController.deleteHotel);
 };

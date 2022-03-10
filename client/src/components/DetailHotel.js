@@ -1,6 +1,7 @@
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import i from "../assets/h1.jpg";
@@ -63,9 +64,10 @@ function DetailHotel() {
       title: "Fern",
     },
   ];
-  var id = "6218bde9dcc29a5ce15285ab";
+
   const [hotel, setHotel] = useState([]);
   const [rate, setrate] = useState([]);
+  let { id } = useParams();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/hotel/" + id)
@@ -78,6 +80,7 @@ function DetailHotel() {
         setrate(r);
       })
       .catch((err) => console.error(err));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

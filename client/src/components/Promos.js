@@ -58,11 +58,9 @@ function Promos() {
                       </h1>
 
                       <h2>{hotel.description}</h2>
-
-                      <p>4 Days - 3 Nights</p>
                     </div>
                     <h1>{hotel.price.prix} DT</h1>
-                    <Link to="/Hotel/Detail">
+                    <Link to={"/Hotel/Detail/"+hotel._id}>
                       <button className="btn button"> show details</button>
                     </Link>
                   </div>
