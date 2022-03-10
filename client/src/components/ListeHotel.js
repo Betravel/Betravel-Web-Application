@@ -8,11 +8,17 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import loc from "../assets/icons8-place-marker.gif";
+import { Link } from "react-router-dom";
 function ListeHotel() {
   const [hotels, setHotels] = useState([]);
+
+  const [Destination] = useState(
+    JSON.parse(localStorage.getItem("search")).destination
+  );
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/hotels/all")
+      .get("http://localhost:8000/api/hotel/search/" + Destination)
       .then((res) => {
         setHotels(res.data);
       })
@@ -30,7 +36,7 @@ function ListeHotel() {
         </div>
         <div className="col-8">
           {hotels.map((hotel, index) => (
-            <div className="card">
+            <div className="card" style={{ height: "300px", width: "100%" }}>
               <div className="card-body">
                 <div className="row">
                   <div
@@ -102,27 +108,30 @@ function ListeHotel() {
                       </div>
                       <div className="col-6">
                         <div>
-                          {/* <h3>
+                          <h3>
                             {" "}
                             A partir{" "}
-                            {hotel.price.ai.triple -
-                              (hotel.price.ai.triple * hotel.promo) / 100}{" "}
-                            DT{" "}
-                          </h3> 
+                            {hotel.price.best -
+                              (hotel.price.best * hotel.promo) / 100}{" "}
+                            DT
+                          </h3>
                           {hotel.promo === 0 ? (
                             ""
                           ) : (
                             <div>
                               <h6 style={{ textDecoration: "line-through" }}>
-                                {hotel.price} DT
+                                {hotel.price.best} DT
                               </h6>
                               <h6>{hotel.promo}% off</h6>
                             </div>
-                          )}*/}
+                          )}
 
-                          <button className="btn btn-primary">
-                            Show Details{" "}
-                          </button>
+                          <Link to={"/Hotel/Detail/" + hotel._id}>
+                            <button className="btn btn-primary">
+                              {" "}
+                              show details
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
