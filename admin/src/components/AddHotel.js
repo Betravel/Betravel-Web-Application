@@ -47,6 +47,12 @@ function AddHotel() {
   const [aitriple, setaitriple] = useState(0);
   const [aidouble, setaidouble] = useState(0);
   const [aisingle, setaisingle] = useState(0);
+  const [singles, setsingles] = useState(false);
+  const [doubles, setdoubles] = useState(false);
+  const [triples, settriples] = useState(false);
+  const [single, setsingle] = useState(0);
+  const [double, setdouble] = useState(0);
+  const [triple, settriple] = useState(0);
   const [promos, setpromos] = useState(false);
   const [promo, setpromo] = useState(0);
   const [parking, setparking] = useState(false);
@@ -134,6 +140,17 @@ function AddHotel() {
         price.ai = ai;
       }
     }
+    let rooms = {};
+    if (singles) {
+      rooms.single = single;
+    }
+    if (doubles) {
+      rooms.double = double;
+    }
+    if (triples) {
+      rooms.triple = triple;
+    }
+    data.append("rooms", JSON.stringify(rooms));
     data.append("price", JSON.stringify(price));
     for (let index = 0; index < images.length; index++) {
       const element = images[index];
@@ -254,7 +271,10 @@ function AddHotel() {
                     disabled={!lptriples}
                     fullWidth
                     value={lptriple}
-                    onChange={(e) => setlptriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlptriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -273,7 +293,10 @@ function AddHotel() {
                     disabled={!lpdoubles}
                     fullWidth
                     value={lpdouble}
-                    onChange={(e) => setlpdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlpdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -292,7 +315,10 @@ function AddHotel() {
                     fullWidth
                     disabled={!lpsingles}
                     value={lpsingle}
-                    onChange={(e) => setlpsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlpsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -337,7 +363,10 @@ function AddHotel() {
                     disabled={!dptriples}
                     fullWidth
                     value={dptriple}
-                    onChange={(e) => setdptriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdptriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -356,7 +385,10 @@ function AddHotel() {
                     disabled={!dpdoubles}
                     fullWidth
                     value={dpdouble}
-                    onChange={(e) => setdpdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdpdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -375,7 +407,10 @@ function AddHotel() {
                     fullWidth
                     disabled={!dpsingles}
                     value={dpsingle}
-                    onChange={(e) => setdpsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdpsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -420,7 +455,10 @@ function AddHotel() {
                     disabled={!pctriples}
                     fullWidth
                     value={pctriple}
-                    onChange={(e) => setpctriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpctriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -439,7 +477,10 @@ function AddHotel() {
                     disabled={!pcdoubles}
                     fullWidth
                     value={pcdouble}
-                    onChange={(e) => setpcdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpcdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -458,7 +499,10 @@ function AddHotel() {
                     fullWidth
                     disabled={!pcsingles}
                     value={pcsingle}
-                    onChange={(e) => setpcsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpcsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -503,7 +547,10 @@ function AddHotel() {
                     disabled={!aitriples}
                     fullWidth
                     value={aitriple}
-                    onChange={(e) => setaitriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaitriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -522,7 +569,10 @@ function AddHotel() {
                     disabled={!aidoubles}
                     fullWidth
                     value={aidouble}
-                    onChange={(e) => setaidouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaidouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -541,7 +591,10 @@ function AddHotel() {
                     fullWidth
                     disabled={!aisingles}
                     value={aisingle}
-                    onChange={(e) => setaisingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaisingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -566,7 +619,6 @@ function AddHotel() {
               labelPlacement="end"
             />
           </div>
-          <br />
           <div className="col-8">
             {promos ? (
               <div className="row">
@@ -590,6 +642,74 @@ function AddHotel() {
             ) : (
               ""
             )}
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-4" align="left">
+            <label>Available rooms</label>
+          </div>
+          <div className="col-8">
+            <div className="row">
+              <div className="col-1">
+                <Checkbox
+                  name="triples"
+                  checked={triples}
+                  onChange={(e) => settriples(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="triple"
+                  label="Triple"
+                  type="number"
+                  variant="outlined"
+                  disabled={!triples}
+                  fullWidth
+                  value={triple}
+                  onChange={(e) => settriple(parseInt(e.target.value))}
+                />
+              </div>
+              <div className="col-1">
+                <Checkbox
+                  name="doubles"
+                  checked={doubles}
+                  onChange={(e) => setdoubles(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="double"
+                  label="Double"
+                  type="number"
+                  variant="outlined"
+                  disabled={!doubles}
+                  fullWidth
+                  value={double}
+                  onChange={(e) => setdouble(parseInt(e.target.value))}
+                />
+              </div>
+              <div className="col-1">
+                <Checkbox
+                  name="singles"
+                  checked={singles}
+                  onChange={(e) => setsingles(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="single"
+                  label="Single"
+                  variant="outlined"
+                  type="number"
+                  fullWidth
+                  disabled={!singles}
+                  value={single}
+                  s
+                  onChange={(e) => setsingle(parseInt(e.target.value))}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <br />

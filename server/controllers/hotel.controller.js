@@ -34,7 +34,7 @@ module.exports.setHotel = async (req, res) => {
   let urls = [];
   const files = req.files;
   const uploader = async (path) =>
-    await addimage.addimage(path, "/hotels/" + hotel._id);
+    await addimage.addimage(path, "/BeTravel/hotels/" + hotel._id);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const { path } = file;
@@ -45,6 +45,7 @@ module.exports.setHotel = async (req, res) => {
   hotel.images = urls;
   hotel.price = JSON.parse(hotel.price);
   hotel.options = JSON.parse(hotel.options);
+  hotel.rooms = JSON.parse(hotel.rooms);
 
   let prices = new Array();
   if (hotel.price.lp) {
@@ -104,7 +105,7 @@ module.exports.setHotel = async (req, res) => {
 module.exports.updateHotel = async (req, res) => {
   const updatedhotel = req.body;
   const uploader = async (path) =>
-    await addimage.addimage(path, "/hotels/" + req.params.id);
+    await addimage.addimage(path, "/BeTravel/hotels/" + req.params.id);
   let imgs = [];
   const files = req.files;
   console.log(files);
@@ -115,7 +116,7 @@ module.exports.updateHotel = async (req, res) => {
     imgs.push(newPath);
     console.log(newPath);
   }
-  var newimg = Array(updatedhotel.images);
+  var newimg = JSON.parse(updatedhotel.images);
   if (newimg[0] === undefined) {
     newimg = imgs;
   } else {
@@ -123,6 +124,55 @@ module.exports.updateHotel = async (req, res) => {
   }
   updatedhotel.images = newimg;
   updatedhotel.price = JSON.parse(updatedhotel.price);
+  updatedhotel.rooms = JSON.parse(updatedhotel.rooms);
+  let prices = new Array();
+  if (updatedhotel.price.lp) {
+    if (updatedhotel.price.lp.triple) {
+      prices.push(updatedhotel.price.lp.triple);
+    }
+    if (updatedhotel.price.lp.double) {
+      prices.push(updatedhotel.price.lp.double);
+    }
+    if (updatedhotel.price.lp.single) {
+      prices.push(updatedhotel.price.lp.single);
+    }
+  }
+  if (updatedhotel.price.dp) {
+    if (updatedhotel.price.dp.triple) {
+      prices.push(updatedhotel.price.dp.triple);
+    }
+    if (updatedhotel.price.dp.double) {
+      prices.push(updatedhotel.price.dp.double);
+    }
+    if (updatedhotel.price.dp.single) {
+      prices.push(updatedhotel.price.dp.single);
+    }
+  }
+  if (updatedhotel.price.pc) {
+    if (updatedhotel.price.pc.triple) {
+      prices.push(updatedhotel.price.pc.triple);
+    }
+    if (updatedhotel.price.pc.double) {
+      prices.push(updatedhotel.price.pc.double);
+    }
+    if (updatedhotel.price.pc.single) {
+      prices.push(updatedhotel.price.pc.single);
+    }
+  }
+  if (updatedhotel.price.ai) {
+    if (updatedhotel.price.ai.triple) {
+      prices.push(updatedhotel.price.ai.triple);
+    }
+    if (updatedhotel.price.ai.double) {
+      prices.push(updatedhotel.price.ai.double);
+    }
+    if (updatedhotel.price.ai.single) {
+      prices.push(updatedhotel.price.ai.single);
+    }
+  }
+  prices.sort((a, b) => a - b);
+
+  updatedhotel.price.best = prices[0];
   updatedhotel.options = JSON.parse(updatedhotel.options);
   Hotel.findOneAndUpdate({ _id: req.params.id }, updatedhotel, {
     new: true,
