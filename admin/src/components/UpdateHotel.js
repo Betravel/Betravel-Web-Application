@@ -48,6 +48,12 @@ function UpdateHotel() {
   const [aitriple, setaitriple] = useState(0);
   const [aidouble, setaidouble] = useState(0);
   const [aisingle, setaisingle] = useState(0);
+  const [singles, setsingles] = useState(false);
+  const [doubles, setdoubles] = useState(false);
+  const [triples, settriples] = useState(false);
+  const [single, setsingle] = useState(0);
+  const [double, setdouble] = useState(0);
+  const [triple, settriple] = useState(0);
   const [promos, setpromos] = useState(false);
   const [promo, setpromo] = useState(0);
   const [parking, setparking] = useState(false);
@@ -59,6 +65,7 @@ function UpdateHotel() {
   const [indoorpool, setindoorpool] = useState(false);
   const [spa, setspa] = useState(false);
   const [images, setimages] = useState([]);
+  const [oldimages, setoldimages] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     axios
@@ -129,6 +136,21 @@ function UpdateHotel() {
             setaisingle(hotel.price.ai.single);
           }
         }
+        if (hotel.rooms) {
+          if (hotel.rooms.single) {
+            setsingles(true);
+            setsingle(hotel.rooms.single);
+          }
+          if (hotel.rooms.double) {
+            setdoubles(true);
+            setdouble(hotel.rooms.double);
+          }
+          if (hotel.rooms.triple) {
+            settriples(true);
+            settriple(hotel.rooms.triple);
+          }
+        }
+        setoldimages(hotel.images);
         if (hotel.promo) {
           setpromos(true);
           setpromo(hotel.promo);
@@ -172,7 +194,7 @@ function UpdateHotel() {
     data.append("location", location);
     data.append("rating", rating);
     data.append("description", description);
-    const price = [];
+    const price = {};
     if (lps) {
       let lp = {};
       if (lptriples && lptriple !== 0) {
@@ -233,13 +255,23 @@ function UpdateHotel() {
         price.ai = ai;
       }
     }
+    let rooms = {};
+    if (singles) {
+      rooms.single = single;
+    }
+    if (doubles) {
+      rooms.double = double;
+    }
+    if (triples) {
+      rooms.triple = triple;
+    }
+    data.append("rooms", JSON.stringify(rooms));
     data.append("price", JSON.stringify(price));
     for (let index = 0; index < images.length; index++) {
       const element = images[index];
-      console.log(element);
       data.append("images", element);
-      console.log(data);
     }
+    data.append("images", JSON.stringify(oldimages));
     data.append("promo", parseInt(promo));
     let options = {
       parking,
@@ -355,7 +387,10 @@ function UpdateHotel() {
                     disabled={!lptriples}
                     fullWidth
                     value={lptriple}
-                    onChange={(e) => setlptriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlptriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -374,7 +409,10 @@ function UpdateHotel() {
                     disabled={!lpdoubles}
                     fullWidth
                     value={lpdouble}
-                    onChange={(e) => setlpdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlpdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -393,7 +431,10 @@ function UpdateHotel() {
                     fullWidth
                     disabled={!lpsingles}
                     value={lpsingle}
-                    onChange={(e) => setlpsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setlpsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -438,7 +479,10 @@ function UpdateHotel() {
                     disabled={!dptriples}
                     fullWidth
                     value={dptriple}
-                    onChange={(e) => setdptriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdptriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -457,7 +501,10 @@ function UpdateHotel() {
                     disabled={!dpdoubles}
                     fullWidth
                     value={dpdouble}
-                    onChange={(e) => setdpdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdpdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -476,7 +523,10 @@ function UpdateHotel() {
                     fullWidth
                     disabled={!dpsingles}
                     value={dpsingle}
-                    onChange={(e) => setdpsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setdpsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -521,7 +571,10 @@ function UpdateHotel() {
                     disabled={!pctriples}
                     fullWidth
                     value={pctriple}
-                    onChange={(e) => setpctriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpctriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -540,7 +593,10 @@ function UpdateHotel() {
                     disabled={!pcdoubles}
                     fullWidth
                     value={pcdouble}
-                    onChange={(e) => setpcdouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpcdouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -559,7 +615,10 @@ function UpdateHotel() {
                     fullWidth
                     disabled={!pcsingles}
                     value={pcsingle}
-                    onChange={(e) => setpcsingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setpcsingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -604,7 +663,10 @@ function UpdateHotel() {
                     disabled={!aitriples}
                     fullWidth
                     value={aitriple}
-                    onChange={(e) => setaitriple(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaitriple(parseInt(e.target.value));
+                      settriples(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -623,7 +685,10 @@ function UpdateHotel() {
                     disabled={!aidoubles}
                     fullWidth
                     value={aidouble}
-                    onChange={(e) => setaidouble(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaidouble(parseInt(e.target.value));
+                      setdoubles(true);
+                    }}
                   />
                 </div>
                 <div className="col-1">
@@ -642,7 +707,10 @@ function UpdateHotel() {
                     fullWidth
                     disabled={!aisingles}
                     value={aisingle}
-                    onChange={(e) => setaisingle(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setaisingle(parseInt(e.target.value));
+                      setsingles(true);
+                    }}
                   />
                 </div>
               </div>
@@ -691,6 +759,74 @@ function UpdateHotel() {
             ) : (
               ""
             )}
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-4" align="left">
+            <label>Available rooms</label>
+          </div>
+          <div className="col-8">
+            <div className="row">
+              <div className="col-1">
+                <Checkbox
+                  name="triples"
+                  checked={triples}
+                  onChange={(e) => settriples(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="triple"
+                  label="Triple"
+                  type="number"
+                  variant="outlined"
+                  disabled={!triples}
+                  fullWidth
+                  value={triple}
+                  onChange={(e) => settriple(parseInt(e.target.value))}
+                />
+              </div>
+              <div className="col-1">
+                <Checkbox
+                  name="doubles"
+                  checked={doubles}
+                  onChange={(e) => setdoubles(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="double"
+                  label="Double"
+                  type="number"
+                  variant="outlined"
+                  disabled={!doubles}
+                  fullWidth
+                  value={double}
+                  onChange={(e) => setdouble(parseInt(e.target.value))}
+                />
+              </div>
+              <div className="col-1">
+                <Checkbox
+                  name="singles"
+                  checked={singles}
+                  onChange={(e) => setsingles(e.target.checked)}
+                />
+              </div>
+              <div className="col-3">
+                <TextField
+                  id="single"
+                  label="Single"
+                  variant="outlined"
+                  type="number"
+                  fullWidth
+                  disabled={!singles}
+                  value={single}
+                  s
+                  onChange={(e) => setsingle(parseInt(e.target.value))}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <br />
