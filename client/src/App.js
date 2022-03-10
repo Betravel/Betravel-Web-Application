@@ -13,6 +13,7 @@ import AboutUs from "./components/AboutUs";
 import DetailHotel from "./components/DetailHotel";
 import ListeHotel from "./components/ListeHotel";
 import "./App.css";
+import ListePromo from "./components/ListePromo";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/Hotel/Detail/:id" element={<DetailHotel />} />
           <Route path="/Hotel/Liste" element={<ListeHotel />} />
+          <Route path="/Hotel/Promos" element={<ListePromo />} />
         </Routes>
       </Router>
     </div>

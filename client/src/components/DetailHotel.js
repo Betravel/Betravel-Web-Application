@@ -67,6 +67,7 @@ function DetailHotel() {
 
   const [hotel, setHotel] = useState([]);
   const [rate, setrate] = useState([]);
+  const [options, setoptions] = useState({});
   let { id } = useParams();
   useEffect(() => {
     axios
@@ -78,9 +79,10 @@ function DetailHotel() {
           r.push("star");
         }
         setrate(r);
+        setoptions(res.data.options);
       })
       .catch((err) => console.error(err));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -139,59 +141,123 @@ function DetailHotel() {
       </div>
       <div className="row">
         <h3>Options</h3>
-        <div className="col-3">
-          <h6 align="left">
-            {" "}
-            * Free wifi &nbsp;
-            <img
-              src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/24/000000/external-wifi-network-and-cloud-computing-flatart-icons-solid-flatarticons.png"
-              alt=""
-            />{" "}
-          </h6>
-        </div>
-        <div className="col-3">
-          <h6 align="left">
-            * Pool &nbsp;
-            <img
-              src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/24/000000/external-pool-surfing-jumpicon-glyph-jumpicon-glyph-ayub-irawan.png"
-              alt=""
-            />
-          </h6>
-        </div>
-        <div className="col-3">
-          <h6 align="left">
-            {" "}
-            * Restaurant &nbsp;
-            <img
-              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
-              alt=""
-            />
-          </h6>
-        </div>
-        <div className="col-3">
-          <h6 align="left">
-            {" "}
-            * Parking &nbsp;
-            <img
-              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
-              alt=""
-            />
-          </h6>
-        </div>{" "}
-        <div className="col-3">
-          <h6 align="left">
-            {" "}
-            * sea view &nbsp;
-            <img
-              src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/24/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
-              alt=""
-            />
-          </h6>
-        </div>{" "}
+        <br />
+        {options.wifi ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Free wifi &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-wifi-accommodation-and-hotel-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.pool ? (
+          <div className="col-3">
+            <h6 align="left">
+              * Pool &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-pool-fitness-and-gym-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.restaurant ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Restaurant &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.parking ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Parking &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-parking-gas-station-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.bar ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Bar &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-bar-beer-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.indoorpool ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Indoorpool &nbsp;
+              <img
+                src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/30/000000/external-swimming-pool-interface-kiranshastry-solid-kiranshastry.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
+        {options.spa ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Beauty & Spa &nbsp;
+              <img
+                src="https://img.icons8.com/external-icongeek26-outline-icongeek26/30/000000/external-spa-ayurveda-icongeek26-outline-icongeek26.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}{" "}
+        {options.elevator ? (
+          <div className="col-3">
+            <h6 align="left">
+              {" "}
+              * Elevator &nbsp;
+              <img
+                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-elevator-shopping-mall-xnimrodx-lineal-xnimrodx.png"
+                alt=""
+              />
+            </h6>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-
+      <br />
       <div className="row">
         <h3 aligntext="right">Availablity</h3>
+        <br />
       </div>
     </div>
   );
