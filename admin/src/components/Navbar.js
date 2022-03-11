@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Logo from "../assets/betravel.png";
 import "../css/Navbar.css";
 function Navbar() {
   const history = useNavigate();
@@ -43,7 +42,7 @@ function Navbar() {
       .catch((err) => console.error(err));
     changeBackground();
     window.addEventListener("scroll", changeBackground);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <nav
@@ -57,7 +56,11 @@ function Navbar() {
       <div className="container-fluid">
         <div className="col-lg-6">
           <a className="navbar-brand" href="/">
-            <img src={Logo} alt="" width="40%" />
+            <img
+              src="https://res.cloudinary.com/betravel/image/upload/v1646934431/BeTravel/Logo/betravel_sn54ad.png"
+              alt=""
+              width="40%"
+            />
           </a>
         </div>
 

@@ -7,7 +7,6 @@ import Search2 from "./Search2";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
-import loc from "../assets/icons8-place-marker.gif";
 import { Link } from "react-router-dom";
 function ListeHotel() {
   const [hotels, setHotels] = useState([]);
@@ -52,7 +51,11 @@ function ListeHotel() {
                       <Rating name="read-only" value={hotel.rating} readOnly />
                     </h3>
                     <div style={{ marginRight: "40%" }}>
-                      <img src={loc} alt="" width="50" />
+                      <img
+                        src="https://res.cloudinary.com/betravel/image/upload/v1646934456/BeTravel/assets/icons8-place-marker_zknh1z.gif"
+                        alt=""
+                        width="50"
+                      />
                       {hotel.location}
                     </div>
                     <div className="row">
