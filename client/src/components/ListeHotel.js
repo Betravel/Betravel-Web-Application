@@ -42,7 +42,7 @@ function ListeHotel() {
                     className="col-4"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
-                    <img src={hotel.imagesurl[0].url} alt="" width="100%" />
+                    <img src={hotel.images[0].url} alt="" width="100%" />
                   </div>
                   <div className="col-8">
                     {" "}
