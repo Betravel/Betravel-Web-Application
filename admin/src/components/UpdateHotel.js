@@ -54,6 +54,8 @@ function UpdateHotel() {
   const [single, setsingle] = useState(0);
   const [double, setdouble] = useState(0);
   const [triple, settriple] = useState(0);
+  const [enfants, setenfants] = useState(false);
+  const [enfant, setenfant] = useState(0);
   const [promos, setpromos] = useState(false);
   const [promo, setpromo] = useState(0);
   const [parking, setparking] = useState(false);
@@ -135,6 +137,10 @@ function UpdateHotel() {
             setaisingles(true);
             setaisingle(hotel.price.ai.single);
           }
+        }
+        if (hotel.price.kids) {
+          setenfants(true);
+          setenfant(hotel.price.kids);
         }
         if (hotel.rooms) {
           if (hotel.rooms.single) {
@@ -254,6 +260,63 @@ function UpdateHotel() {
       if (Object.keys(ai).length !== 0) {
         price.ai = ai;
       }
+    }
+    if (lpsingles || dpsingles || pcsingles || aisingles) {
+      let s = {};
+      if (lpsingles && lpsingle !== 0) {
+        s.lp = lpsingle;
+      }
+      if (dpsingles && dpsingle !== 0) {
+        s.dp = dpsingle;
+      }
+      if (pcsingles && pcsingle !== 0) {
+        s.pc = pcsingle;
+      }
+      if (aisingles && aisingle !== 0) {
+        s.ai = aisingle;
+      }
+      if (Object.keys(s).length !== 0) {
+        price.single = s;
+      }
+    }
+    if (lpdoubles || dpdoubles || pcdoubles || aidoubles) {
+      let d = {};
+      if (lpdoubles && lpdouble !== 0) {
+        d.lp = lpdouble;
+      }
+      if (dpdoubles && dpdouble !== 0) {
+        d.dp = dpdouble;
+      }
+      if (pcdoubles && pcdouble !== 0) {
+        d.pc = pcdouble;
+      }
+      if (aidoubles && aidouble !== 0) {
+        d.ai = aidouble;
+      }
+      if (Object.keys(d).length !== 0) {
+        price.double = d;
+      }
+    }
+    if (lptriples || dptriples || pctriples || aitriples) {
+      let t = {};
+      if (lptriples && lptriple !== 0) {
+        t.lp = lptriple;
+      }
+      if (dptriples && dptriple !== 0) {
+        t.dp = dptriple;
+      }
+      if (pctriples && pctriple !== 0) {
+        t.pc = pctriple;
+      }
+      if (aitriples && aitriple !== 0) {
+        t.ai = aitriple;
+      }
+      if (Object.keys(t).length !== 0) {
+        price.triple = t;
+      }
+    }
+    if (enfants) {
+      price.kids = enfant;
     }
     let rooms = {};
     if (singles) {
@@ -713,6 +776,47 @@ function UpdateHotel() {
                     }}
                   />
                 </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-4" align="left">
+            <FormControlLabel
+              value="end"
+              control={
+                <Switch
+                  color="primary"
+                  checked={enfants}
+                  onChange={(e) => setenfants(e.target.checked)}
+                />
+              }
+              label="Kids"
+              labelPlacement="end"
+            />
+          </div>
+          <div className="col-8">
+            {enfants ? (
+              <div className="row">
+                <div className="col-4"></div>
+                <div className="col-4">
+                  <TextField
+                    id="enfant"
+                    label="Kids"
+                    type="number"
+                    variant="outlined"
+                    disabled={!enfants}
+                    fullWidth
+                    value={enfant}
+                    onChange={(e) => {
+                      setenfant(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                <div className="col-4"></div>
               </div>
             ) : (
               ""
