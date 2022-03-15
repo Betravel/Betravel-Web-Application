@@ -17,13 +17,13 @@ const HotelSchema = new mongoose.Schema(
     price: {
       type: JSON,
     },
+    rooms: {
+      type: JSON,
+    },
     promo: {
       type: Number,
     },
     images: {
-      type: Array,
-    },
-    imagesurl: {
       type: Array,
     },
     options: {

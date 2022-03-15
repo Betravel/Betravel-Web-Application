@@ -2,14 +2,15 @@ const User = require("../models/user.model");
 var nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const path = require("path");
+require("dotenv").config();
 
 /// welcoming email par default using ejs ( HTML template)
 module.exports.sendmail = (req, res) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "testb8835@gmail.com",
-      pass: "Blabla123",
+      user: process.env.EMAIL_ACCOUNT,
+      pass: process.env.PASSWORD_ACCOUNT,
     },
   });
 

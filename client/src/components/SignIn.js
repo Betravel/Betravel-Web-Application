@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/SignIn.css";
 import { useNavigate } from "react-router-dom";
-import img from "../assets/img.png";
 function SignIn() {
   const history = useNavigate();
   useEffect(() => {
@@ -54,7 +53,10 @@ function SignIn() {
       <div className="container" style={{ marginTop: "100px" }}>
         <div className="row">
           <div className="col-6">
-            <img src={img} alt=""></img>
+            <img
+              src="https://res.cloudinary.com/betravel/image/upload/v1646934458/BeTravel/assets/img_bv1x50.png"
+              alt=""
+            ></img>
           </div>
           <div className="col-6">
             <div className="Login">
