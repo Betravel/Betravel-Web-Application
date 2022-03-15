@@ -42,7 +42,15 @@ function ListeHotel() {
                     className="col-4"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
-                    <img src={hotel.images[0].url} alt="" width="100%" />
+                    {hotel.images[0] ? (
+                      <img src={hotel.images[0].url} alt="" width="100%" />
+                    ) : (
+                      <img
+                        src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
+                        alt=""
+                        width="100%"
+                      />
+                    )}
                   </div>
                   <div className="col-8">
                     {" "}
