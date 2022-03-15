@@ -24,7 +24,7 @@ function Navbar() {
     if (
       window.scrollY >= 66 ||
       window.innerWidth < 991 ||
-      location.pathname === "/Dashboard"
+      location.pathname === "/"
     ) {
       setNavbar(true);
     } else {
@@ -130,7 +130,7 @@ function Navbar() {
                     </li>
                   ) : (
                     <li>
-                      <Link to="/Dashboard" className="dropdown-item">
+                      <Link to="/" className="dropdown-item">
                         {" "}
                         DashBoard{" "}
                       </Link>

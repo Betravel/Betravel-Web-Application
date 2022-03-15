@@ -129,10 +129,13 @@ function Navbar() {
                     </li>
                   ) : (
                     <li>
-                      <Link to="/Dashboard" className="dropdown-item">
+                      <a
+                        href="http://localhost:3001/"
+                        className="dropdown-item"
+                      >
                         {" "}
                         DashBoard{" "}
-                      </Link>
+                      </a>
                     </li>
                   )}
 
