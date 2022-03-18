@@ -1,97 +1,50 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import i from "../assets/h1.jpg";
-import i2 from "../assets/h2.jpg";
-import i5 from "../assets/h2.jpg";
-import i4 from "../assets/h4.jpg";
-import i3 from "../assets/h7.jpg";
-import i6 from "../assets/h6.jpg";
-import i7 from "../assets/h7.jpg";
-import i8 from "../assets/h8.jpg";
-
-function srcset(image, size, rows = 1, cols = 1) {
-  return {
-    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${size * cols}&h=${
-      size * rows
-    }&fit=crop&auto=format&dpr=2 2x`,
-  };
-}
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
 
 function DetailHotel() {
-  const itemData = [
-    {
-      img: i,
-      title: "Breakfast",
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: i2,
-      title: "Burger",
-    },
-    {
-      img: i3,
-      title: "Camera",
-    },
-    {
-      img: i4,
-      title: "Coffee",
-      cols: 2,
-    },
-    {
-      img: i5,
-      title: "Hats",
-      cols: 2,
-    },
-    {
-      img: i6,
-      title: "Honey",
-      author: "@arwinneil",
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: i7,
-      title: "Basketball",
-    },
-    {
-      img: i8,
-      title: "Fern",
-    },
-  ];
-
   const [hotel, setHotel] = useState([]);
   const [rate, setrate] = useState([]);
   const [options, setoptions] = useState({});
   const [price, setprice] = useState({});
+  const [images, setImages] = useState([]);
   const [single, setSingle] = useState("");
   const [double, setDouble] = useState("");
   const [triple, setTriple] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
   const [PriceSingle, setPriceSingle] = useState(0);
-  const [totaleSingle, settotaleSingle] = useState(0);
+  const [Singlerooms, setSinglerooms] = useState([]);
   const [nbRoomDouble, setnbRoomDouble] = useState(0);
   const [PriceDouble, setPriceDouble] = useState(0);
-  const [totaleDouble, settotaleDouble] = useState(0);
+  const [Doublerooms, setDoublerooms] = useState([]);
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
   const [PriceTriple, setPriceTriple] = useState(0);
-  const [totaleTriple, settotaleTriple] = useState(0);
+  const [Triplerooms, setTriplerooms] = useState([]);
   let { id } = useParams();
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/hotel/" + id)
       .then((res) => {
         setHotel(res.data);
-        console.log(res.data);
         let r = [];
         for (let index = 0; index < res.data.rating; index++) {
           r.push("star");
@@ -99,11 +52,155 @@ function DetailHotel() {
         setrate(r);
         setoptions(res.data.options);
         setprice(res.data.price);
+        setImages(res.data.images);
       })
       .catch((err) => console.error(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const changeNbsingleRooms = (e) => {
+    setnbRoomSingle(parseInt(e.target.value));
+    let chambres = new Array(parseInt(e.target.value));
+    for (let index = 0; index < parseInt(e.target.value); index++) {
+      if (Singlerooms[index]) {
+        chambres[index] = Singlerooms[index];
+      } else {
+        const element = index.toString();
+        const ch = {
+          adulte: 1,
+          enfant: 0,
+          pension: Object.keys(price.single)[0],
+        };
+        chambres[element] = ch;
+      }
+    }
+    setSinglerooms(chambres);
+  };
+
+  const changeNbDoubleRooms = (e) => {
+    setnbRoomDouble(parseInt(e.target.value));
+    let chambres = new Array(parseInt(e.target.value));
+    for (let index = 0; index < parseInt(e.target.value); index++) {
+      if (Doublerooms[index]) {
+        chambres[index] = Doublerooms[index];
+      } else {
+        const element = index.toString();
+        const ch = {
+          adulte: 1,
+          enfant: 0,
+          pension: Object.keys(price.double)[0],
+        };
+        chambres[element] = ch;
+      }
+    }
+    setDoublerooms(chambres);
+  };
+
+  const changeNbTripleRooms = (e) => {
+    setnbRoomTriple(parseInt(e.target.value));
+    let chambres = new Array(parseInt(e.target.value));
+    for (let index = 0; index < parseInt(e.target.value); index++) {
+      if (Triplerooms[index]) {
+        chambres[index] = Triplerooms[index];
+      } else {
+        const element = index.toString();
+        const ch = {
+          adulte: 1,
+          enfant: 0,
+          pension: Object.keys(price.triple)[0],
+        };
+        chambres[element] = ch;
+      }
+    }
+    setTriplerooms(chambres);
+  };
+
+  const ChangeSingleRooms = (e, i) => {
+    if (e.target.name === "adultes") {
+      Singlerooms[i].adulte = parseInt(e.target.value);
+    }
+    if (e.target.name === "enfants") {
+      Singlerooms[i].enfant = parseInt(e.target.value);
+    }
+    if (e.target.name === "pensions") {
+      Singlerooms[i].pension = e.target.value;
+    }
+    setSinglerooms(Singlerooms);
+  };
+
+  const ChangeDoubleRooms = (e, i) => {
+    if (e.target.name === "adulted") {
+      Doublerooms[i].adulte = parseInt(e.target.value);
+    }
+    if (e.target.name === "enfantd") {
+      Doublerooms[i].enfant = parseInt(e.target.value);
+    }
+    if (e.target.name === "pensiond") {
+      Doublerooms[i].pension = e.target.value;
+    }
+    setDoublerooms(Doublerooms);
+  };
+
+  const ChangeTripleRooms = (e, i) => {
+    if (e.target.name === "adultet") {
+      Triplerooms[i].adulte = parseInt(e.target.value);
+    }
+    if (e.target.name === "enfantt") {
+      Triplerooms[i].enfant = parseInt(e.target.value);
+    }
+    if (e.target.name === "pensiont") {
+      Triplerooms[i].pension = e.target.value;
+    }
+    setTriplerooms(Triplerooms);
+  };
+
+  const totalSignle = () => {
+    let t = 0;
+    for (let index = 0; index < Singlerooms.length; index++) {
+      const element = Singlerooms[index];
+      const pension = element.pension;
+      t =
+        t +
+        element.adulte * price.single[pension] +
+        price.kids * element.enfant;
+    }
+    return t;
+  };
+
+  const totalDouble = () => {
+    let t = 0;
+    for (let index = 0; index < Doublerooms.length; index++) {
+      const element = Doublerooms[index];
+      const pension = element.pension;
+      t =
+        t +
+        element.adulte * price.double[pension] +
+        price.kids * element.enfant;
+    }
+    return t;
+  };
+
+  const totalTriple = () => {
+    let t = 0;
+    for (let index = 0; index < Triplerooms.length; index++) {
+      const element = Triplerooms[index];
+      const pension = element.pension;
+      t =
+        t +
+        element.adulte * price.triple[pension] +
+        price.kids * element.enfant;
+    }
+    return t;
+  };
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <br />
@@ -120,38 +217,46 @@ function DetailHotel() {
         </h3>
       </div>
       <div className="row">
-        <div className="col-3"></div>
+        <div className="col-2"></div>
         <div className="col-4">
           <Box
-            sx={{
-              width: 700,
-              height: 600,
-            }}
+            sx={{ width: 1000, height: 700, overflowY: "scroll" }}
+            align="center"
           >
-            <div style={{ marginTop: "120px" }}>
-              <ImageList
-                sx={{ width: 700, height: 600 }}
-                variant="quilted"
-                cols={4}
-                rowHeight={121}
-              >
-                {itemData.map((item) => (
-                  <ImageListItem
-                    key={item.img}
-                    cols={item.cols || 1}
-                    rows={item.rows || 1}
+            <ImageList variant="masonry" cols={3} gap={8}>
+              {images.map((item) => (
+                <ImageListItem key={item.url}>
+                  <img
+                    src={`${item.url}?w=248&fit=crop&auto=format`}
+                    srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    alt=""
+                    loading="lazy"
+                    onClick={handleClickOpen}
+                  />
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    // aria-labelledby="alert-dialog-title"
+                    // aria-describedby="alert-dialog-description"
                   >
-                    <img
-                      {...srcset(item.img, 121, item.rows, item.cols)}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            </div>
+                    {/* <DialogTitle id="alert-dialog-title">
+                          {"Use Google's location service?"}
+                        </DialogTitle> */}
+                    <DialogContent>
+                      <img
+                        src={`${item.url}?w=248&fit=crop&auto=format`}
+                        srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt=""
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose}>close</Button>
+                    </DialogActions>
+                  </Dialog>
+                </ImageListItem>
+              ))}
+            </ImageList>
           </Box>
-          <div className="col-3"></div>
         </div>
       </div>
       <div className="row">
@@ -277,361 +382,531 @@ function DetailHotel() {
       <div className="row">
         <h3 aligntext="right">Availablity</h3>
         <br />
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Room's type</th>
-              <th scope="col">Occupation</th>
-              <th scope="col">Pension </th>
-              <th scope="col">Price </th>
-            </tr>
-          </thead>
-          <tbody>
-            {price.single ? (
-              <tr>
-                <th scope="row">
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "60px" }}
-                    onChange={(e) => {
-                      setnbRoomSingle(parseInt(e.target.value));
-                      settotaleSingle(PriceSingle * nbRoomSingle);
-                    }}
-                  >
-                    <option selected value="0">
-                      0
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-
-                  <h4> Single room </h4>
-                </th>
-                <td>
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                </td>
-                <td align="center">
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Pension
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={single}
-                      name="single"
-                      label="Pension"
-                      onChange={(e) => {
-                        setSingle(e.target.value);
-                        setPriceSingle(price.single[e.target.value]);
-                        settotaleSingle(PriceSingle * nbRoomSingle);
-                      }}
-                    >
-                      {price.single.lp ? (
-                        <MenuItem value={"lp"}>lp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.single.dp ? (
-                        <MenuItem value={"dp"}>dp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.single.pc ? (
-                        <MenuItem value={"pc"}>pc</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.single.ai ? (
-                        <MenuItem value={"ai"}>ai</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                    </Select>
-                  </FormControl>
-                  {/* <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "200px" }}
-                    onChange={(e) => {
-                      setPriceSingle(price.single[e.target.value]);
-                      settotaleSingle(PriceSingle * nbRoomSingle);
-                    }}
-                  >
-                    {price.single.lp ? (
-                      <option selected value="lp">
-                        Breakfast
-                      </option>
-                    ) : (
-                      ""
-                    )}
-                    {price.single.dp ? (
-                      <option value="dp">Half Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.single.pc ? (
-                      <option value="pc">Full Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.single.ai ? (
-                      <option value="ai">All inclusif</option>
-                    ) : (
-                      ""
-                    )}
-                  </select> */}
-                </td>
-                <td>{totaleSingle}</td>
-              </tr>
-            ) : (
-              ""
-            )}
-
-            {price.double ? (
-              <tr>
-                <th scope="row">
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "60px" }}
-                    onChange={(e) => {
-                      setnbRoomDouble(parseInt(e.target.value));
-                      settotaleDouble(PriceDouble * nbRoomDouble);
-                    }}
-                  >
-                    <option selected value="0">
-                      0
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-
-                  <h4> Double room</h4>
-                </th>
-                <td>
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                </td>
-                <td align="center">
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Pension
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={double}
-                      name="double"
-                      label="Pension"
-                      onChange={(e) => {
-                        setDouble(e.target.value);
-                        setPriceDouble(price.double[e.target.value]);
-                        settotaleDouble(PriceDouble * nbRoomDouble);
-                      }}
-                    >
-                      {price.double.lp ? (
-                        <MenuItem value={"lp"}>lp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.double.dp ? (
-                        <MenuItem value={"dp"}>dp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.double.pc ? (
-                        <MenuItem value={"pc"}>pc</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.double.ai ? (
-                        <MenuItem value={"ai"}>ai</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                    </Select>
-                  </FormControl>
-                  {/* <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "200px" }}
-                  >
-                    {price.double.lp ? (
-                      <option selected value="br">
-                        Breakfast
-                      </option>
-                    ) : (
-                      ""
-                    )}
-                    {price.double.dp ? (
-                      <option value="hp">Half Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.double.pc ? (
-                      <option value="fp">Full Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.double.ai ? (
-                      <option value="ai">All inclusif</option>
-                    ) : (
-                      ""
-                    )}
-                  </select> */}
-                </td>
-                <td>{totaleDouble}</td>
-              </tr>
-            ) : (
-              ""
-            )}
-
-            {price.triple ? (
-              <tr>
-                <th scope="row">
-                  <FormControl>
-                    <Select
-                      value={nbRoomTriple}
-                      name="nbRoomTriple"
-                      onChange={(e) => {
-                        console.log(e);
-                        setnbRoomTriple(parseInt(e.target.value));
-                        settotaleTriple(PriceTriple * nbRoomTriple);
-                      }}
-                      inputProps={{ "aria-label": "Without label" }}
-                    >
-                      <MenuItem value={0}>
-                        <em>0</em>
-                      </MenuItem>
-                      <MenuItem value={1}>1</MenuItem>
-                      <MenuItem value={2}>2</MenuItem>
-                      <MenuItem value={3}>3</MenuItem>
-                    </Select>
-                  </FormControl>
-                  {/* <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "60px" }}
-                    onChange={(e) => {
-                      setnbRoomTriple(parseInt(e.target.value));
-                      settotaleTriple(PriceTriple * nbRoomTriple);
-                    }}
-                  >
-                    <option selected value="0">
-                      0
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select> */}
-                  <h4>triple room</h4>
-                </th>
-                <td>
-                  {" "}
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                  <img
-                    src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                    alt=""
-                  />
-                </td>
-                <td align="center">
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Pension
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={triple}
-                      name="triple"
-                      label="Pension"
-                      onChange={(e) => {
-                        console.log(e);
-                        setTriple(e.target.value);
-                        setPriceTriple(price.triple[e.target.value]);
-                        settotaleTriple(PriceTriple * nbRoomTriple);
-                      }}
-                    >
-                      {price.triple.lp ? (
-                        <MenuItem value="lp">lp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.triple.dp ? (
-                        <MenuItem value="dp">dp</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.triple.pc ? (
-                        <MenuItem value="pc">pc</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                      {price.triple.ai ? (
-                        <MenuItem value="ai">ai</MenuItem>
-                      ) : (
-                        ""
-                      )}
-                    </Select>
-                  </FormControl>
-                  {/* <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    style={{ width: "200px" }}
-                  >
-                    {price.triple.lp ? (
-                      <option selected value="br">
-                        Breakfast
-                      </option>
-                    ) : (
-                      ""
-                    )}
-                    {price.triple.dp ? (
-                      <option value="hp">Half Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.triple.pc ? (
-                      <option value="fp">Full Pension</option>
-                    ) : (
-                      ""
-                    )}
-                    {price.triple.ai ? (
-                      <option value="ai">All inclusif</option>
-                    ) : (
-                      ""
-                    )}
-                  </select> */}
-                </td>
-                <td>{PriceTriple * nbRoomTriple}</td>
-              </tr>
-            ) : (
-              ""
-            )}
-          </tbody>
-        </table>
-        <br />
       </div>
+      <br />
+      <div className="row">
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Room's Detail</TableCell>
+                <TableCell align="center">Occupation</TableCell>
+                <TableCell align="center">Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {price.single ? (
+                <TableRow>
+                  <TableCell align="center">
+                    <div className="row">
+                      <div
+                        className="col-4"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                        }}
+                      >
+                        <FormControl>
+                          <Select
+                            value={nbRoomSingle}
+                            name="nbRoomSingle"
+                            defaultValue={0}
+                            onChange={changeNbsingleRooms}
+                            inputProps={{ "aria-label": "Without label" }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
+                        {nbRoomSingle !== 0 ? <h4>single room</h4> : ""}
+                      </div>
+                      <div
+                        className="col-8"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                      >
+                        {nbRoomSingle === 0 ? (
+                          <h4>single room</h4>
+                        ) : (
+                          <div>
+                            {/* {Array.from(Array(nbRoomSingle), (e, i) => {
+                              return ( */}
+                            {Singlerooms.map((room, i) => {
+                              return (
+                                <div key={i}>
+                                  <div className="row">
+                                    <div
+                                      className="col-4"
+                                      style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                      }}
+                                    >
+                                      <h6>chambre {i + 1} </h6>
+                                    </div>
+                                    <div className="col-8">
+                                      <div className="row ">
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="adultes">
+                                              adultes
+                                            </InputLabel>
+                                            <Select
+                                              labelId="adultes"
+                                              name="adultes"
+                                              defaultValue={1}
+                                              onChange={(event) => {
+                                                ChangeSingleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={1}>1</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="enfants">
+                                              enfants
+                                            </InputLabel>
+                                            <Select
+                                              labelId="enfants"
+                                              name="enfants"
+                                              defaultValue={0}
+                                              onChange={(event) => {
+                                                ChangeSingleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={0}>0</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="pensions">
+                                              Pension
+                                            </InputLabel>
+                                            <Select
+                                              labelId="pensions"
+                                              defaultValue={room["pension"]}
+                                              value={room["pension"]}
+                                              name="pensions"
+                                              onChange={(event) => {
+                                                ChangeSingleRooms(event, i);
+                                              }}
+                                            >
+                                              {price.single.lp ? (
+                                                <MenuItem value={"lp"}>
+                                                  lp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.single.dp ? (
+                                                <MenuItem value={"dp"}>
+                                                  dp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.single.pc ? (
+                                                <MenuItem value={"pc"}>
+                                                  pc
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.single.ai ? (
+                                                <MenuItem value={"ai"}>
+                                                  ai
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell align="center">
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                  </TableCell>
+                  <TableCell align="center">{totalSignle()}</TableCell>
+                </TableRow>
+              ) : (
+                ""
+              )}
+              {price.double ? (
+                <TableRow>
+                  <TableCell align="center">
+                    <div className="row">
+                      <div
+                        className="col-4"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                      >
+                        <FormControl>
+                          <Select
+                            value={nbRoomDouble}
+                            name="nbRoomDouble"
+                            defaultValue={0}
+                            onChange={changeNbDoubleRooms}
+                            inputProps={{ "aria-label": "Without label" }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
+                        {nbRoomDouble !== 0 ? <h4>double room</h4> : ""}
+                      </div>
+                      <div
+                        className="col-8"
+                        style={{ marginTop: "auto", marginBottom: "auto" }}
+                      >
+                        {nbRoomDouble === 0 ? (
+                          <h4>double room</h4>
+                        ) : (
+                          <div>
+                            {/* {Array.from(Array(nbRoomDouble), (e, i) => {
+                              return ( */}
+                            {Doublerooms.map((room, i) => {
+                              return (
+                                <div>
+                                  <div className="row" key={i}>
+                                    <div
+                                      className="col-4"
+                                      style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                      }}
+                                    >
+                                      Chambre {i + 1}
+                                    </div>
+                                    <div className="col-8">
+                                      <div className="row ">
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="adulted">
+                                              adultes
+                                            </InputLabel>
+                                            <Select
+                                              labelId="adulted"
+                                              name="adulted"
+                                              defaultValue={2}
+                                              onChange={(event) => {
+                                                ChangeDoubleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="enfantd">
+                                              enfants
+                                            </InputLabel>
+                                            <Select
+                                              labelId="enfantd"
+                                              name="enfantd"
+                                              defaultValue={0}
+                                              onChange={(event, i) => {
+                                                ChangeDoubleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={0}>0</MenuItem>
+                                              <MenuItem value={1}>1</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="pensiond">
+                                              Pension
+                                            </InputLabel>
+                                            <Select
+                                              labelId="pensiond"
+                                              defaultValue={room["pension"]}
+                                              value={room["pension"]}
+                                              name="pensiond"
+                                              onChange={(event) => {
+                                                ChangeDoubleRooms(event, i);
+                                              }}
+                                            >
+                                              {price.double.lp ? (
+                                                <MenuItem value={"lp"}>
+                                                  lp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.double.dp ? (
+                                                <MenuItem value={"dp"}>
+                                                  dp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.double.pc ? (
+                                                <MenuItem value={"pc"}>
+                                                  pc
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.double.ai ? (
+                                                <MenuItem value={"ai"}>
+                                                  ai
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell align="center">
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                  </TableCell>
+                  <TableCell align="center">{totalDouble()}</TableCell>
+                </TableRow>
+              ) : (
+                ""
+              )}
+              {price.triple ? (
+                <TableRow>
+                  <TableCell align="center">
+                    <div className="row">
+                      <div
+                        className="col-4"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                        }}
+                      >
+                        <FormControl>
+                          <Select
+                            value={nbRoomTriple}
+                            name="nbRoomTriple"
+                            defaultValue={0}
+                            onChange={changeNbTripleRooms}
+                            inputProps={{ "aria-label": "Without label" }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
+                        {nbRoomTriple !== 0 ? <h4>triple room</h4> : ""}
+                      </div>
+                      <div
+                        className="col-8"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                      >
+                        {nbRoomTriple === 0 ? (
+                          <h4>triple room</h4>
+                        ) : (
+                          <div>
+                            {/* {Array.from(Array(nbRoomTriple), (e, i) => {
+                              return ( */}
+                            {Triplerooms.map((room, i) => {
+                              return (
+                                <div key={i}>
+                                  <div className="row">
+                                    <div
+                                      className="col-4"
+                                      style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                      }}
+                                    >
+                                      <h6>chambre {i + 1}</h6>
+                                    </div>
+                                    <div className="col-8">
+                                      <div className="row ">
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="adultet">
+                                              adultes
+                                            </InputLabel>
+                                            <Select
+                                              labelId="adultet"
+                                              name="adultet"
+                                              defaultValue={3}
+                                              onChange={(event) => {
+                                                ChangeTripleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                              <MenuItem value={3}>3</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="enfantt">
+                                              enfants
+                                            </InputLabel>
+                                            <Select
+                                              labelId="enfantt"
+                                              name="enfantt"
+                                              defaultValue={0}
+                                              onChange={(event) => {
+                                                ChangeTripleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={0}>0</MenuItem>
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="pensiont">
+                                              Pension
+                                            </InputLabel>
+                                            <Select
+                                              labelId="pensiont"
+                                              value={room["pension"]}
+                                              name="pensiont"
+                                              onChange={(event) => {
+                                                ChangeTripleRooms(event, i);
+                                              }}
+                                            >
+                                              {price.triple.lp ? (
+                                                <MenuItem value={"lp"}>
+                                                  lp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.triple.dp ? (
+                                                <MenuItem value={"dp"}>
+                                                  dp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.triple.pc ? (
+                                                <MenuItem value={"pc"}>
+                                                  pc
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.triple.ai ? (
+                                                <MenuItem value={"ai"}>
+                                                  ai
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell align="center">
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                  </TableCell>
+                  <TableCell align="center">{totalTriple()}</TableCell>
+                </TableRow>
+              ) : (
+                ""
+              )}
+              <TableRow>
+                <TableCell rowSpan={3} />
+                <TableCell colSpan={2}>Total</TableCell>
+                <TableCell align="center"></TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
+      <IconButton>
+        <img
+          src="https://img.icons8.com/plasticine/100/000000/arrow.png"
+          alt=""
+          align="right"
+        />
+      </IconButton>
     </div>
   );
 }
