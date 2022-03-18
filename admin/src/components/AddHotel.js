@@ -53,6 +53,8 @@ function AddHotel() {
   const [single, setsingle] = useState(0);
   const [double, setdouble] = useState(0);
   const [triple, settriple] = useState(0);
+  const [enfants, setenfants] = useState(false);
+  const [enfant, setenfant] = useState(0);
   const [promos, setpromos] = useState(false);
   const [promo, setpromo] = useState(0);
   const [parking, setparking] = useState(false);
@@ -139,6 +141,9 @@ function AddHotel() {
       if (Object.keys(ai).length !== 0) {
         price.ai = ai;
       }
+    }
+    if (enfants) {
+      price.kids = enfant;
     }
     let rooms = {};
     if (singles) {
@@ -597,6 +602,47 @@ function AddHotel() {
                     }}
                   />
                 </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-4" align="left">
+            <FormControlLabel
+              value="end"
+              control={
+                <Switch
+                  color="primary"
+                  checked={enfants}
+                  onChange={(e) => setenfants(e.target.checked)}
+                />
+              }
+              label="Kids"
+              labelPlacement="end"
+            />
+          </div>
+          <div className="col-8">
+            {enfants ? (
+              <div className="row">
+                <div className="col-4"></div>
+                <div className="col-4">
+                  <TextField
+                    id="enfant"
+                    label="Kids"
+                    type="number"
+                    variant="outlined"
+                    disabled={!enfants}
+                    fullWidth
+                    value={enfant}
+                    onChange={(e) => {
+                      setenfant(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                <div className="col-4"></div>
               </div>
             ) : (
               ""
