@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -40,7 +40,12 @@ function DetailHotel() {
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
   const [PriceTriple, setPriceTriple] = useState(0);
   const [Triplerooms, setTriplerooms] = useState([]);
+  const [nbRoomQuadruple, setnbRoomQuadruple] = useState(0);
+  const [PriceQuadruple, setPriceQuadruple] = useState(0);
+  const [Quadruplerooms, setQuadruplerooms] = useState([]);
+
   let { id } = useParams();
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/hotel/" + id)
@@ -56,7 +61,6 @@ function DetailHotel() {
         setImages(res.data.images);
       })
       .catch((err) => console.error(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeNbsingleRooms = (e) => {
@@ -116,6 +120,25 @@ function DetailHotel() {
     setTriplerooms(chambres);
   };
 
+  const changeNbQuadrupleRooms = (e) => {
+    setnbRoomQuadruple(parseInt(e.target.value));
+    let chambres = new Array(parseInt(e.target.value));
+    for (let index = 0; index < parseInt(e.target.value); index++) {
+      if (Quadruplerooms[index]) {
+        chambres[index] = Quadruplerooms[index];
+      } else {
+        const element = index.toString();
+        const ch = {
+          adulte: 1,
+          enfant: 0,
+          pension: Object.keys(price.quadruple)[0],
+        };
+        chambres[element] = ch;
+      }
+    }
+    setQuadruplerooms(chambres);
+  };
+
   const ChangeSingleRooms = (e, i) => {
     if (e.target.name === "adultes") {
       Singlerooms[i].adulte = parseInt(e.target.value);
@@ -153,6 +176,19 @@ function DetailHotel() {
       Triplerooms[i].pension = e.target.value;
     }
     setTriplerooms(Triplerooms);
+  };
+
+  const ChangeQuadrupleRooms = (e, i) => {
+    if (e.target.name === "adultet") {
+      Quadruplerooms[i].adulte = parseInt(e.target.value);
+    }
+    if (e.target.name === "enfantt") {
+      Quadruplerooms[i].enfant = parseInt(e.target.value);
+    }
+    if (e.target.name === "pensiont") {
+      Quadruplerooms[i].pension = e.target.value;
+    }
+    setQuadruplerooms(Quadruplerooms);
   };
 
   const totalSignle = () => {
@@ -193,6 +229,20 @@ function DetailHotel() {
     }
     return t;
   };
+
+  const totalQuadruple = () => {
+    let t = 0;
+    for (let index = 0; index < Quadruplerooms.length; index++) {
+      const element = Quadruplerooms[index];
+      const pension = element.pension;
+      t =
+        t +
+        element.adulte * price.Quadruple[pension] +
+        price.kids * element.enfant;
+    }
+    return t;
+  };
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -237,15 +287,7 @@ function DetailHotel() {
                       setimage(item.url);
                     }}
                   />
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    // aria-labelledby="alert-dialog-title"
-                    // aria-describedby="alert-dialog-description"
-                  >
-                    {/* <DialogTitle id="alert-dialog-title">
-                          {"Use Google's location service?"}
-                        </DialogTitle> */}
+                  <Dialog open={open} onClose={handleClose}>
                     <DialogContent>
                       <img src={image} alt="" width="100%" />
                     </DialogContent>
@@ -890,6 +932,179 @@ function DetailHotel() {
               ) : (
                 ""
               )}
+
+              {price.quadruple ? (
+                <TableRow>
+                  <TableCell align="center">
+                    <div className="row">
+                      <div
+                        className="col-4"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                        }}
+                      >
+                        <FormControl>
+                          <Select
+                            value={nbRoomQuadruple}
+                            name="nbRoomQuadruple"
+                            defaultValue={0}
+                            onChange={changeNbQuadrupleRooms}
+                            inputProps={{ "aria-label": "Without label" }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
+                        {nbRoomQuadruple !== 0 ? <h4>Quadruple room</h4> : ""}
+                      </div>
+                      <div
+                        className="col-8"
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                      >
+                        {nbRoomQuadruple === 0 ? (
+                          <h4>Quadruple room</h4>
+                        ) : (
+                          <div>
+                            {/* {Array.from(Array(nbRoomTriple), (e, i) => {
+                              return ( */}
+                            {Triplerooms.map((room, i) => {
+                              return (
+                                <div key={i}>
+                                  <div className="row">
+                                    <div
+                                      className="col-4"
+                                      style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                      }}
+                                    >
+                                      <h6>chambre {i + 1}</h6>
+                                    </div>
+                                    <div className="col-8">
+                                      <div className="row ">
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="adultet">
+                                              adultes
+                                            </InputLabel>
+                                            <Select
+                                              labelId="adultet"
+                                              name="adultet"
+                                              defaultValue={3}
+                                              onChange={(event) => {
+                                                ChangeQuadrupleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                              <MenuItem value={3}>3</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="enfantt">
+                                              enfants
+                                            </InputLabel>
+                                            <Select
+                                              labelId="enfantt"
+                                              name="enfantt"
+                                              defaultValue={0}
+                                              onChange={(event) => {
+                                                ChangeQuadrupleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={0}>0</MenuItem>
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="pensiont">
+                                              Pension
+                                            </InputLabel>
+                                            <Select
+                                              labelId="pensiont"
+                                              value={room["pension"]}
+                                              name="pensiont"
+                                              onChange={(event) => {
+                                                ChangeQuadrupleRooms(event, i);
+                                              }}
+                                            >
+                                              {price.Quadruple.lp ? (
+                                                <MenuItem value={"lp"}>
+                                                  lp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.Quadruple.dp ? (
+                                                <MenuItem value={"dp"}>
+                                                  dp
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.Quadruple.pc ? (
+                                                <MenuItem value={"pc"}>
+                                                  pc
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                              {price.Quadruple.ai ? (
+                                                <MenuItem value={"ai"}>
+                                                  ai
+                                                </MenuItem>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <br />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell align="center">
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
+                  </TableCell>
+                  <TableCell align="center">{totalQuadruple()}</TableCell>
+                </TableRow>
+              ) : (
+                ""
+              )}
               <TableRow>
                 <TableCell rowSpan={3} />
                 <TableCell colSpan={2}>Total</TableCell>
@@ -899,14 +1114,15 @@ function DetailHotel() {
           </Table>
         </TableContainer>
       </div>
-
-      <IconButton>
-        <img
-          src="https://img.icons8.com/plasticine/100/000000/arrow.png"
-          alt=""
-          align="right"
-        />
-      </IconButton>
+      <Link to="/Hotel/Reserve">
+        <IconButton>
+          <img
+            src="https://img.icons8.com/plasticine/100/000000/arrow.png"
+            alt=""
+            align="right"
+          />
+        </IconButton>
+      </Link>
     </div>
   );
 }
