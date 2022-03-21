@@ -14,6 +14,7 @@ import DetailHotel from "./components/DetailHotel";
 import ListeHotel from "./components/ListeHotel";
 import "./App.css";
 import ListePromo from "./components/ListePromo";
+import Reserve from "./components/Resrve";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/Hotel/Detail/:id" element={<DetailHotel />} />
           <Route path="/Hotel/Liste" element={<ListeHotel />} />
           <Route path="/Hotel/Promos" element={<ListePromo />} />
+          <Route path="/Hotel/Reserve" element={<Reserve />} />
         </Routes>
       </Router>
     </div>
