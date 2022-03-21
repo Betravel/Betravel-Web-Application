@@ -27,6 +27,7 @@ function DetailHotel() {
   const [options, setoptions] = useState({});
   const [price, setprice] = useState({});
   const [images, setImages] = useState([]);
+  const [image, setimage] = useState("");
   const [single, setSingle] = useState("");
   const [double, setDouble] = useState("");
   const [triple, setTriple] = useState("");
@@ -231,7 +232,10 @@ function DetailHotel() {
                     srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                     alt=""
                     loading="lazy"
-                    onClick={handleClickOpen}
+                    onClick={() => {
+                      handleClickOpen();
+                      setimage(item.url);
+                    }}
                   />
                   <Dialog
                     open={open}
@@ -243,11 +247,7 @@ function DetailHotel() {
                           {"Use Google's location service?"}
                         </DialogTitle> */}
                     <DialogContent>
-                      <img
-                        src={`${item.url}?w=248&fit=crop&auto=format`}
-                        srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt=""
-                      />
+                      <img src={image} alt="" width="100%" />
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>close</Button>

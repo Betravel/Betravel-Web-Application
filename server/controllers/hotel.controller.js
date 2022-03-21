@@ -208,3 +208,113 @@ module.exports.deleteHotel = (request, response) => {
     .then((res) => response.json(res))
     .catch((err) => response.json(err));
 };
+
+module.exports.getprices = (request, response) => {
+  Hotel.findById(request.params.id)
+    .then((hotel) => {
+      const rooms = request.body;
+      const hprice = hotel.price;
+      let prices = {};
+      if (rooms.single) {
+        let single = rooms.single;
+        let totalsingle = 0;
+        for (let index = 0; index < single.length; index++) {
+          const element = single[index];
+          let singleprice =
+            element.adulte * hprice.single[element.pension] +
+            element.enfant * hprice.kids;
+          totalsingle = totalsingle + singleprice;
+          single[index].total = singleprice;
+        }
+        prices.single = single;
+        prices.totalsingle = totalsingle;
+      }
+      if (rooms.double) {
+        let double = rooms.double;
+        let totaldouble = 0;
+        for (let index = 0; index < double.length; index++) {
+          const element = double[index];
+          let doubleprice =
+            element.adulte * hprice.double[element.pension] +
+            element.enfant * hprice.kids;
+          totaldouble = totaldouble + doubleprice;
+          double[index].total = doubleprice;
+        }
+        prices.double = double;
+        prices.totaldouble = totaldouble;
+      }
+      if (rooms.triple) {
+        let triple = rooms.triple;
+        let totaltriple = 0;
+        for (let index = 0; index < triple.length; index++) {
+          const element = triple[index];
+          let tripleprice =
+            element.adulte * hprice.triple[element.pension] +
+            element.enfant * hprice.kids;
+          totaltriple = totaltriple + tripleprice;
+          triple[index].total = tripleprice;
+        }
+        prices.triple = triple;
+        prices.totaltriple = totaltriple;
+      }
+      response.json(prices);
+    })
+    .catch((err) => response.json(err));
+};
+
+module.exports.checkrooms = (request, response) => {
+  let initialrooms = request.body;
+  let room = [];
+  if (initialrooms.single) {
+    let single = initialrooms.single;
+    for (let index = 0; index < single.length; index++) {
+      const element = single[index];
+      if (element.adulte !== 1) {
+        element.adulte = 1;
+      }
+      if (element.enfant !== 0) {
+        element.enfant = 0;
+      }
+      room.push(element);
+    }
+  }
+  if (initialrooms.double) {
+    let double = initialrooms.double;
+    for (let index = 0; index < double.length; index++) {
+      const element = double[index];
+      if (element.adulte === 2) {
+        element.enfant = 0;
+      } else if (element.adulte === 1) {
+        element.enfant = 1;
+      } else if (element.adulte === 0) {
+        element.adulte = 1;
+        element.enfant = 1;
+      } else {
+        element.adulte = 2;
+        element.enfant = 0;
+      }
+      room.push(element);
+    }
+  }
+  if (initialrooms.triple) {
+    let triple = initialrooms.triple;
+    for (let index = 0; index < triple.length; index++) {
+      const element = triple[index];
+      if (element.adulte === 3) {
+        element.enfant = 0;
+      } else if (element.adulte === 2) {
+        element.enfant = 1;
+      } else if (element.adulte === 1) {
+        element.enfant = 2;
+      } else if (element.adulte === 0) {
+        element.adulte = 1;
+        triple[index].enfant = 2;
+      } else {
+        element.adulte = 3;
+        element.enfant = 0;
+      }
+      room.push(element);
+    }
+  }
+  response.json(room);
+};
