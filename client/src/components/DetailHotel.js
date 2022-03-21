@@ -27,19 +27,19 @@ function DetailHotel() {
   const [options, setoptions] = useState({});
   const [price, setprice] = useState({});
   const [images, setImages] = useState([]);
-
+  const [image, setimage] = useState("");
+  const [single, setSingle] = useState("");
+  const [double, setDouble] = useState("");
+  const [triple, setTriple] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
   const [PriceSingle, setPriceSingle] = useState(0);
   const [Singlerooms, setSinglerooms] = useState([]);
-
   const [nbRoomDouble, setnbRoomDouble] = useState(0);
   const [PriceDouble, setPriceDouble] = useState(0);
   const [Doublerooms, setDoublerooms] = useState([]);
-
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
   const [PriceTriple, setPriceTriple] = useState(0);
   const [Triplerooms, setTriplerooms] = useState([]);
-
   const [nbRoomQuadruple, setnbRoomQuadruple] = useState(0);
   const [PriceQuadruple, setPriceQuadruple] = useState(0);
   const [Quadruplerooms, setQuadruplerooms] = useState([]);
@@ -282,15 +282,14 @@ function DetailHotel() {
                     srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                     alt=""
                     loading="lazy"
-                    onClick={handleClickOpen}
+                    onClick={() => {
+                      handleClickOpen();
+                      setimage(item.url);
+                    }}
                   />
                   <Dialog open={open} onClose={handleClose}>
                     <DialogContent>
-                      <img
-                        src={`${item.url}?w=248&fit=crop&auto=format`}
-                        srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt=""
-                      />
+                      <img src={image} alt="" width="100%" />
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>close</Button>
