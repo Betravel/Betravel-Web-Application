@@ -33,6 +33,7 @@ module.exports = (app) => {
   app.get("/api/hotels/all", HotelController.getAllHotels);
   app.get("/api/destinations/all", HotelController.getDestinations);
   app.get("/api/hotel/promo", HotelController.getHotelByPromo);
+  app.get("/api/hotel/rooms", HotelController.checkrooms);
   app.get("/api/hotel/:id", HotelController.getHotelById);
   app.post("/api/hotel", upload.array("images"), HotelController.setHotel);
   app.put(
@@ -42,4 +43,5 @@ module.exports = (app) => {
   );
   app.get("/api/hotel/search/:location", HotelController.getHotelByLocation);
   app.delete("/api/hotel/delete/:id", HotelController.deleteHotel);
+  app.get("/api/hotel/price/:id", HotelController.getprices);
 };
