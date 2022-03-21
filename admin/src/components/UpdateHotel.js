@@ -15,39 +15,52 @@ import LoadingButton from "@mui/lab/LoadingButton";
 function UpdateHotel() {
   const history = useNavigate();
   let { id } = useParams();
+
+  const [Single, setSingle] = useState(false);
+  const [StateSinglelpd, setStateSinglelpd] = useState(false);
+  const [Singlelpd, setSinglelpd] = useState(0);
+  const [StateSingledp, setStateSingledp] = useState(false);
+  const [Singledp, setSingledp] = useState(0);
+  const [StateSinglepc, setStateSinglepc] = useState(false);
+  const [Singlepc, setSinglepc] = useState(0);
+  const [StateSingleai, setStateSingleai] = useState(false);
+  const [Singleai, setSingleai] = useState(0);
+
+  const [Double, setDouble] = useState(false);
+  const [StateDoublelpd, setStateDoublelpd] = useState(false);
+  const [Doublelpd, setDoublelpd] = useState(0);
+  const [StateDoubledp, setStateDoubledp] = useState(false);
+  const [Doubledp, setDoubledp] = useState(0);
+  const [StateDoublepc, setStateDoublepc] = useState(false);
+  const [Doublepc, setDoublepc] = useState(0);
+  const [StateDoubleai, setStateDoubleai] = useState(false);
+  const [Doubleai, setDoubleai] = useState(0);
+
+  const [Triple, setTriple] = useState(false);
+  const [StateTriplelpd, setStateTriplelpd] = useState(false);
+  const [Triplelpd, setTriplelpd] = useState(0);
+  const [StateTripledp, setStateTripledp] = useState(false);
+  const [Tripledp, setTripledp] = useState(0);
+  const [StateTriplepc, setStateTriplepc] = useState(false);
+  const [Triplepc, setTriplepc] = useState(0);
+  const [StateTripleai, setStateTripleai] = useState(false);
+  const [Tripleai, setTripleai] = useState(0);
+
+  const [Quadruple, setQuadruple] = useState(false);
+  const [StateQuadruplelpd, setStateQuadruplelpd] = useState(false);
+  const [Quadruplelpd, setQuadruplelpd] = useState(0);
+  const [StateQuadrupledp, setStateQuadrupledp] = useState(false);
+  const [Quadrupledp, setQuadrupledp] = useState(0);
+  const [StateQuadruplepc, setStateQuadruplepc] = useState(false);
+  const [Quadruplepc, setQuadruplepc] = useState(0);
+  const [StateQuadrupleai, setStateQuadrupleai] = useState(false);
+  const [Quadrupleai, setQuadrupleai] = useState(0);
+
   const [name, setname] = useState("");
   const [locations, setlocations] = useState([]);
   const [location, setlocation] = useState("");
   const [description, setdescription] = useState("");
   const [rating, setrating] = useState(0);
-  const [lps, setlp] = useState(false);
-  const [lptriples, setlptriples] = useState(false);
-  const [lpdoubles, setlpdoubles] = useState(false);
-  const [lpsingles, setlpsingles] = useState(false);
-  const [lptriple, setlptriple] = useState(0);
-  const [lpdouble, setlpdouble] = useState(0);
-  const [lpsingle, setlpsingle] = useState(0);
-  const [dps, setdp] = useState(false);
-  const [dptriples, setdptriples] = useState(false);
-  const [dpdoubles, setdpdoubles] = useState(false);
-  const [dpsingles, setdpsingles] = useState(false);
-  const [dptriple, setdptriple] = useState(0);
-  const [dpdouble, setdpdouble] = useState(0);
-  const [dpsingle, setdpsingle] = useState(0);
-  const [pcs, setpc] = useState(false);
-  const [pctriples, setpctriples] = useState(false);
-  const [pcdoubles, setpcdoubles] = useState(false);
-  const [pcsingles, setpcsingles] = useState(false);
-  const [pctriple, setpctriple] = useState(0);
-  const [pcdouble, setpcdouble] = useState(0);
-  const [pcsingle, setpcsingle] = useState(0);
-  const [ais, setai] = useState(false);
-  const [aitriples, setaitriples] = useState(false);
-  const [aidoubles, setaidoubles] = useState(false);
-  const [aisingles, setaisingles] = useState(false);
-  const [aitriple, setaitriple] = useState(0);
-  const [aidouble, setaidouble] = useState(0);
-  const [aisingle, setaisingle] = useState(0);
   const [singles, setsingles] = useState(false);
   const [doubles, setdoubles] = useState(false);
   const [triples, settriples] = useState(false);
@@ -78,70 +91,92 @@ function UpdateHotel() {
         setlocation(hotel.location);
         setrating(hotel.rating);
         setdescription(hotel.description);
-        if (hotel.price.lp) {
-          setlp(true);
-          if (hotel.price.lp.triple) {
-            setlptriples(true);
-            setlptriple(hotel.price.lp.triple);
+
+        if (hotel.price.single) {
+          setSingle(true);
+          if (hotel.price.single.lpd) {
+            setStateSinglelpd(true);
+            setSinglelpd(hotel.price.single.lpd);
           }
-          if (hotel.price.lp.double) {
-            setlpdoubles(true);
-            setlpdouble(hotel.price.lp.double);
+          if (hotel.price.single.dp) {
+            setStateSingledp(true);
+            setSingledp(hotel.price.single.dp);
           }
-          if (hotel.price.lp.single) {
-            setlpsingles(true);
-            setlpsingle(hotel.price.lp.single);
+          if (hotel.price.single.pc) {
+            setStateSinglepc(true);
+            setSinglepc(hotel.price.single.pc);
           }
-        }
-        if (hotel.price.dp) {
-          setdp(true);
-          if (hotel.price.dp.triple) {
-            setdptriples(true);
-            setdptriple(hotel.price.dp.triple);
-          }
-          if (hotel.price.dp.double) {
-            setdpdoubles(true);
-            setdpdouble(hotel.price.dp.double);
-          }
-          if (hotel.price.dp.single) {
-            setdpsingles(true);
-            setdpsingle(hotel.price.dp.single);
+          if (hotel.price.single.ai) {
+            setStateSingleai(true);
+            setSingleai(hotel.price.single.ai);
           }
         }
-        if (hotel.price.pc) {
-          setpc(true);
-          if (hotel.price.pc.triple) {
-            setpctriples(true);
-            setpctriple(hotel.price.pc.triple);
+
+        if (hotel.price.double) {
+          setDouble(true);
+          if (hotel.price.double.lpd) {
+            setStateDoublelpd(true);
+            setDoublelpd(hotel.price.double.lpd);
           }
-          if (hotel.price.pc.double) {
-            setpcdoubles(true);
-            setpcdouble(hotel.price.pc.double);
+          if (hotel.price.double.dp) {
+            setStateDoubledp(true);
+            setDoubledp(hotel.price.double.dp);
           }
-          if (hotel.price.pc.single) {
-            setpcsingles(true);
-            setpcsingle(hotel.price.pc.single);
+          if (hotel.price.double.pc) {
+            setStateDoublepc(true);
+            setDoublepc(hotel.price.double.pc);
           }
-        }
-        if (hotel.price.ai) {
-          setai(true);
-          if (hotel.price.ai.triple) {
-            setaitriples(true);
-            setaitriple(hotel.price.ai.triple);
-          }
-          if (hotel.price.ai.double) {
-            setaidoubles(true);
-            setaidouble(hotel.price.ai.double);
-          }
-          if (hotel.price.ai.single) {
-            setaisingles(true);
-            setaisingle(hotel.price.ai.single);
+          if (hotel.price.double.ai) {
+            setStateDoubleai(true);
+            setDoubleai(hotel.price.double.ai);
           }
         }
+
+        if (hotel.price.triple) {
+          setTriple(true);
+          if (hotel.price.triple.lpd) {
+            setStateTriplelpd(true);
+            setTriplelpd(hotel.price.triple.lpd);
+          }
+          if (hotel.price.triple.dp) {
+            setStateTripledp(true);
+            setTripledp(hotel.price.triple.dp);
+          }
+          if (hotel.price.triple.pc) {
+            setStateTriplepc(true);
+            setTriplepc(hotel.price.triple.pc);
+          }
+          if (hotel.price.triple.ai) {
+            setStateTripleai(true);
+            setTripleai(hotel.price.triple.ai);
+          }
+        }
+
+        if (hotel.price.quadruple) {
+          setQuadruple(true);
+          if (hotel.price.quadruple.lpd) {
+            setStateQuadruplelpd(true);
+            setQuadruplelpd(hotel.price.quadruple.lpd);
+          }
+          if (hotel.price.quadruple.dp) {
+            setStateQuadrupledp(true);
+            setQuadrupledp(hotel.price.quadruple.dp);
+          }
+          if (hotel.price.quadruple.pc) {
+            setStateQuadruplepc(true);
+            setQuadruplepc(hotel.price.quadruple.pc);
+          }
+          if (hotel.price.quadruple.ai) {
+            setStateQuadrupleai(true);
+            setQuadrupleai(hotel.price.quadruple.ai);
+          }
+        }
+
         if (hotel.price.kids) {
           setenfants(true);
           setenfant(hotel.price.kids);
         }
+
         if (hotel.rooms) {
           if (hotel.rooms.single) {
             setsingles(true);
@@ -156,6 +191,7 @@ function UpdateHotel() {
             settriple(hotel.rooms.triple);
           }
         }
+
         setoldimages(hotel.images);
         if (hotel.promo) {
           setpromos(true);
@@ -201,120 +237,83 @@ function UpdateHotel() {
     data.append("rating", rating);
     data.append("description", description);
     const price = {};
-    if (lps) {
-      let lp = {};
-      if (lptriples && lptriple !== 0) {
-        lp.triple = lptriple;
+
+    if (Single) {
+      let single = {};
+      if (StateSinglelpd && Singlelpd !== 0) {
+        single.lpd = Singlelpd;
       }
-      if (lpdoubles && lpdouble !== 0) {
-        lp.double = lpdouble;
+      if (StateSingledp && Singledp !== 0) {
+        single.dp = Singledp;
       }
-      if (lpsingles && lpsingle !== 0) {
-        lp.single = lpsingle;
+      if (StateSinglepc && Singlepc !== 0) {
+        single.pc = Singlepc;
       }
-      if (Object.keys(lp).length !== 0) {
-        price.lp = lp;
+      if (StateSingleai && Singleai !== 0) {
+        single.ai = Singleai;
       }
-    }
-    if (dps) {
-      let dp = {};
-      if (dptriples && dptriple !== 0) {
-        dp.triple = dptriple;
-      }
-      if (dpdoubles && dpdouble !== 0) {
-        dp.double = dpdouble;
-      }
-      if (dpsingles && dpsingle !== 0) {
-        dp.single = dpsingle;
-      }
-      if (Object.keys(dp).length !== 0) {
-        price.dp = dp;
+      if (Object.keys(single).length !== 0) {
+        price.single = single;
       }
     }
-    if (pcs) {
-      let pc = {};
-      if (pctriples && pctriple !== 0) {
-        pc.triple = pctriple;
+
+    if (Double) {
+      let double = {};
+      if (StateDoublelpd && Doublelpd !== 0) {
+        double.lpd = Doublelpd;
       }
-      if (pcdoubles && pcdouble !== 0) {
-        pc.double = pcdouble;
+      if (StateDoubledp && Doubledp !== 0) {
+        double.dp = Doubledp;
       }
-      if (pcsingles && pcsingle !== 0) {
-        pc.single = pcsingle;
+      if (StateDoublepc && Doublepc !== 0) {
+        double.pc = Doublepc;
       }
-      if (Object.keys(pc).length !== 0) {
-        price.pc = pc;
+      if (StateDoubleai && Doubleai !== 0) {
+        double.ai = Doubleai;
       }
-    }
-    if (ais) {
-      let ai = {};
-      if (aitriples && aitriple !== 0) {
-        ai.triple = aitriple;
-      }
-      if (aidoubles && aidouble !== 0) {
-        ai.double = aidouble;
-      }
-      if (aisingles && aisingle !== 0) {
-        ai.single = aisingle;
-      }
-      if (Object.keys(ai).length !== 0) {
-        price.ai = ai;
+      if (Object.keys(double).length !== 0) {
+        price.double = double;
       }
     }
-    if (lpsingles || dpsingles || pcsingles || aisingles) {
-      let s = {};
-      if (lpsingles && lpsingle !== 0) {
-        s.lp = lpsingle;
+
+    if (Triple) {
+      let triple = {};
+      if (StateTriplelpd && Triplelpd !== 0) {
+        triple.lpd = Triplelpd;
       }
-      if (dpsingles && dpsingle !== 0) {
-        s.dp = dpsingle;
+      if (StateTripledp && Tripledp !== 0) {
+        triple.dp = Tripledp;
       }
-      if (pcsingles && pcsingle !== 0) {
-        s.pc = pcsingle;
+      if (StateTriplepc && Triplepc !== 0) {
+        triple.pc = Triplepc;
       }
-      if (aisingles && aisingle !== 0) {
-        s.ai = aisingle;
+      if (StateTripleai && Tripleai !== 0) {
+        triple.ai = Tripleai;
       }
-      if (Object.keys(s).length !== 0) {
-        price.single = s;
-      }
-    }
-    if (lpdoubles || dpdoubles || pcdoubles || aidoubles) {
-      let d = {};
-      if (lpdoubles && lpdouble !== 0) {
-        d.lp = lpdouble;
-      }
-      if (dpdoubles && dpdouble !== 0) {
-        d.dp = dpdouble;
-      }
-      if (pcdoubles && pcdouble !== 0) {
-        d.pc = pcdouble;
-      }
-      if (aidoubles && aidouble !== 0) {
-        d.ai = aidouble;
-      }
-      if (Object.keys(d).length !== 0) {
-        price.double = d;
+      if (Object.keys(triple).length !== 0) {
+        price.triple = triple;
       }
     }
-    if (lptriples || dptriples || pctriples || aitriples) {
-      let t = {};
-      if (lptriples && lptriple !== 0) {
-        t.lp = lptriple;
+
+    if (Quadruple) {
+      let quadruple = {};
+      if (StateQuadruplelpd && Quadruplelpd !== 0) {
+        quadruple.lpd = Quadruplelpd;
       }
-      if (dptriples && dptriple !== 0) {
-        t.dp = dptriple;
+      if (StateQuadrupledp && Quadrupledp !== 0) {
+        quadruple.dp = Quadrupledp;
       }
-      if (pctriples && pctriple !== 0) {
-        t.pc = pctriple;
+      if (StateQuadruplepc && Quadruplepc !== 0) {
+        quadruple.pc = Quadruplepc;
       }
-      if (aitriples && aitriple !== 0) {
-        t.ai = aitriple;
+      if (StateQuadrupleai && Quadrupleai !== 0) {
+        quadruple.ai = Quadrupleai;
       }
-      if (Object.keys(t).length !== 0) {
-        price.triple = t;
+      if (Object.keys(quadruple).length !== 0) {
+        price.quadruple = quadruple;
       }
     }
+
     if (enfants) {
       price.kids = enfant;
     }
@@ -416,6 +415,7 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
+        {/*Single*/}
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
@@ -423,80 +423,103 @@ function UpdateHotel() {
               control={
                 <Switch
                   color="primary"
-                  checked={lps}
-                  onChange={(e) => setlp(e.target.checked)}
+                  checked={Single}
+                  onChange={(e) => setSingle(e.target.checked)}
                 />
               }
-              label="Logement petit dejeuner"
+              label="Single"
               labelPlacement="end"
             />
           </div>
           <div className="col-8">
-            {lps ? (
+            {Single ? (
               <div className="row">
+                {" "}
+                {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="lptriples"
-                    checked={lptriples}
-                    onChange={(e) => setlptriples(e.target.checked)}
+                    name="Singlelpd"
+                    checked={StateSinglelpd}
+                    onChange={(e) => setStateSinglelpd(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="lptriple"
-                    label="Triple"
+                    id="Singlelpd"
+                    label="Logement petit dejeuner"
                     variant="outlined"
                     type="number"
-                    disabled={!lptriples}
+                    disabled={!StateSinglelpd}
                     fullWidth
-                    value={lptriple}
+                    value={Singlelpd}
                     onChange={(e) => {
-                      setlptriple(parseInt(e.target.value));
-                      settriples(true);
+                      setSinglelpd(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="lpdoubles"
-                    checked={lpdoubles}
-                    onChange={(e) => setlpdoubles(e.target.checked)}
+                    name="Singledp"
+                    checked={StateSingledp}
+                    onChange={(e) => setStateSingledp(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="lpdouble"
-                    label="Double"
+                    id="Singlepd"
+                    label="Demi pension"
                     variant="outlined"
                     type="number"
-                    disabled={!lpdoubles}
+                    disabled={!StateSingledp}
                     fullWidth
-                    value={lpdouble}
+                    value={Singledp}
                     onChange={(e) => {
-                      setlpdouble(parseInt(e.target.value));
-                      setdoubles(true);
+                      setSingledp(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="lpsingles"
-                    checked={lpsingles}
-                    onChange={(e) => setlpsingles(e.target.checked)}
+                    name="Singlepc"
+                    checked={StateSinglepc}
+                    onChange={(e) => setStateSinglepc(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="lpsingle"
-                    label="Single"
+                    id="Singlepd"
+                    label="Pension Complete"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!lpsingles}
-                    value={lpsingle}
+                    disabled={!StateSinglepc}
+                    value={Singlepc}
                     onChange={(e) => {
-                      setlpsingle(parseInt(e.target.value));
-                      setsingles(true);
+                      setSinglepc(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* all incl */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Singleai"
+                    checked={StateSingleai}
+                    onChange={(e) => setStateSingleai(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Singleai"
+                    label="All inclusif"
+                    type="number"
+                    variant="outlined"
+                    fullWidth
+                    disabled={!StateSingleai}
+                    value={Singleai}
+                    onChange={(e) => {
+                      setSingleai(parseInt(e.target.value));
                     }}
                   />
                 </div>
@@ -507,6 +530,7 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
+        {/* double */}
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
@@ -514,91 +538,115 @@ function UpdateHotel() {
               control={
                 <Switch
                   color="primary"
-                  checked={dps}
-                  onChange={(e) => setdp(e.target.checked)}
+                  checked={Double}
+                  onChange={(e) => setDouble(e.target.checked)}
                 />
               }
-              label="Demi pension"
+              label="Double"
               labelPlacement="end"
             />
           </div>
+          <div className="col-8">
+            {Double ? (
+              <div className="row">
+                {" "}
+                {/* petit déj*/}
+                <div className="col-1">
+                  <Checkbox
+                    name="Doublelpd"
+                    checked={StateDoublelpd}
+                    onChange={(e) => setStateDoublelpd(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Doublelpd"
+                    label="Logement petit dejeuner"
+                    variant="outlined"
+                    type="number"
+                    disabled={!StateDoublelpd}
+                    fullWidth
+                    value={Doublelpd}
+                    onChange={(e) => {
+                      setDoublelpd(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* demi pension */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Doubledp"
+                    checked={StateDoubledp}
+                    onChange={(e) => setStateDoubledp(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Doublepd"
+                    label="Demi pension"
+                    variant="outlined"
+                    type="number"
+                    disabled={!StateDoubledp}
+                    fullWidth
+                    value={Doubledp}
+                    onChange={(e) => {
+                      setDoubledp(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* pension complete */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Doublepc"
+                    checked={StateDoublepc}
+                    onChange={(e) => setStateDoublepc(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Doublepd"
+                    label="Pension Complete"
+                    type="number"
+                    variant="outlined"
+                    fullWidth
+                    disabled={!StateDoublepc}
+                    value={Doublepc}
+                    onChange={(e) => {
+                      setDoublepc(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* all incl */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Doubleai"
+                    checked={StateDoubleai}
+                    onChange={(e) => setStateDoubleai(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Doubleai"
+                    label="All inclusif"
+                    type="number"
+                    variant="outlined"
+                    fullWidth
+                    disabled={!StateDoubleai}
+                    value={Doubleai}
+                    onChange={(e) => {
+                      setDoubleai(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+        <br />
 
-          <div className="col-8">
-            {dps ? (
-              <div className="row">
-                <div className="col-1">
-                  <Checkbox
-                    name="dptriples"
-                    checked={dptriples}
-                    onChange={(e) => setdptriples(e.target.checked)}
-                  />
-                </div>
-                <div className="col-3">
-                  <TextField
-                    id="dptriple"
-                    label="Triple"
-                    variant="outlined"
-                    type="number"
-                    disabled={!dptriples}
-                    fullWidth
-                    value={dptriple}
-                    onChange={(e) => {
-                      setdptriple(parseInt(e.target.value));
-                      settriples(true);
-                    }}
-                  />
-                </div>
-                <div className="col-1">
-                  <Checkbox
-                    name="dpdoubles"
-                    checked={dpdoubles}
-                    onChange={(e) => setdpdoubles(e.target.checked)}
-                  />
-                </div>
-                <div className="col-3">
-                  <TextField
-                    id="dpdouble"
-                    label="Double"
-                    variant="outlined"
-                    type="number"
-                    disabled={!dpdoubles}
-                    fullWidth
-                    value={dpdouble}
-                    onChange={(e) => {
-                      setdpdouble(parseInt(e.target.value));
-                      setdoubles(true);
-                    }}
-                  />
-                </div>
-                <div className="col-1">
-                  <Checkbox
-                    name="dpsingles"
-                    checked={dpsingles}
-                    onChange={(e) => setdpsingles(e.target.checked)}
-                  />
-                </div>
-                <div className="col-3">
-                  <TextField
-                    id="dpsingle"
-                    label="Single"
-                    variant="outlined"
-                    type="number"
-                    fullWidth
-                    disabled={!dpsingles}
-                    value={dpsingle}
-                    onChange={(e) => {
-                      setdpsingle(parseInt(e.target.value));
-                      setsingles(true);
-                    }}
-                  />
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <br />
+        {/* triple */}
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
@@ -606,81 +654,103 @@ function UpdateHotel() {
               control={
                 <Switch
                   color="primary"
-                  checked={pcs}
-                  onChange={(e) => setpc(e.target.checked)}
+                  checked={Triple}
+                  onChange={(e) => setTriple(e.target.checked)}
                 />
               }
-              label="Pension complete"
+              label="Triple"
               labelPlacement="end"
             />
           </div>
-
           <div className="col-8">
-            {pcs ? (
+            {Triple ? (
               <div className="row">
+                {" "}
+                {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="pctriples"
-                    checked={pctriples}
-                    onChange={(e) => setpctriples(e.target.checked)}
+                    name="Triplelpd"
+                    checked={StateTriplelpd}
+                    onChange={(e) => setStateTriplelpd(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="pctriple"
-                    label="Triple"
-                    type="number"
+                    id="Triplelpd"
+                    label="Logement petit dejeuner"
                     variant="outlined"
-                    disabled={!pctriples}
+                    type="number"
+                    disabled={!StateTriplelpd}
                     fullWidth
-                    value={pctriple}
+                    value={Triplelpd}
                     onChange={(e) => {
-                      setpctriple(parseInt(e.target.value));
-                      settriples(true);
+                      setTriplelpd(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="pcdoubles"
-                    checked={pcdoubles}
-                    onChange={(e) => setpcdoubles(e.target.checked)}
+                    name="Tripledp"
+                    checked={StateTripledp}
+                    onChange={(e) => setStateTripledp(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="pcdouble"
-                    label="Double"
-                    type="number"
+                    id="Triplepd"
+                    label="Demi pension"
                     variant="outlined"
-                    disabled={!pcdoubles}
+                    type="number"
+                    disabled={!StateTripledp}
                     fullWidth
-                    value={pcdouble}
+                    value={Tripledp}
                     onChange={(e) => {
-                      setpcdouble(parseInt(e.target.value));
-                      setdoubles(true);
+                      setTripledp(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="pcsingles"
-                    checked={pcsingles}
-                    onChange={(e) => setpcsingles(e.target.checked)}
+                    name="Triplepc"
+                    checked={StateTriplepc}
+                    onChange={(e) => setStateTriplepc(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="pcsingle"
-                    label="Single"
-                    variant="outlined"
+                    id="Triplepd"
+                    label="Pension Complete"
                     type="number"
+                    variant="outlined"
                     fullWidth
-                    disabled={!pcsingles}
-                    value={pcsingle}
+                    disabled={!StateTriplepc}
+                    value={Triplepc}
                     onChange={(e) => {
-                      setpcsingle(parseInt(e.target.value));
-                      setsingles(true);
+                      setTriplepc(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* all incl */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Tripleai"
+                    checked={StateTripleai}
+                    onChange={(e) => setStateTripleai(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Tripleai"
+                    label="All inclusif"
+                    type="number"
+                    variant="outlined"
+                    fullWidth
+                    disabled={!StateTripleai}
+                    value={Tripleai}
+                    onChange={(e) => {
+                      setTripleai(parseInt(e.target.value));
                     }}
                   />
                 </div>
@@ -691,6 +761,7 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
+        {/* Quadruple */}
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
@@ -698,81 +769,103 @@ function UpdateHotel() {
               control={
                 <Switch
                   color="primary"
-                  checked={ais}
-                  onChange={(e) => setai(e.target.checked)}
+                  checked={Quadruple}
+                  onChange={(e) => setQuadruple(e.target.checked)}
                 />
               }
-              label="All inclusif"
+              label="Quadruple"
               labelPlacement="end"
             />
           </div>
-
           <div className="col-8">
-            {ais ? (
+            {Quadruple ? (
               <div className="row">
+                {" "}
+                {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="aitriples"
-                    checked={aitriples}
-                    onChange={(e) => setaitriples(e.target.checked)}
+                    name="Quadruplelpd"
+                    checked={StateQuadruplelpd}
+                    onChange={(e) => setStateQuadruplelpd(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="aitriple"
-                    label="Triple"
-                    type="number"
+                    id="Quadruplelpd"
+                    label="Logement petit dejeuner"
                     variant="outlined"
-                    disabled={!aitriples}
+                    type="number"
+                    disabled={!StateQuadruplelpd}
                     fullWidth
-                    value={aitriple}
+                    value={Quadruplelpd}
                     onChange={(e) => {
-                      setaitriple(parseInt(e.target.value));
-                      settriples(true);
+                      setQuadruplelpd(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="aidoubles"
-                    checked={aidoubles}
-                    onChange={(e) => setaidoubles(e.target.checked)}
+                    name="Quadrupledp"
+                    checked={StateQuadrupledp}
+                    onChange={(e) => setStateQuadrupledp(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="aidouble"
-                    label="Double"
-                    type="number"
+                    id="Quadruplepd"
+                    label="Demi pension"
                     variant="outlined"
-                    disabled={!aidoubles}
+                    type="number"
+                    disabled={!StateQuadrupledp}
                     fullWidth
-                    value={aidouble}
+                    value={Quadrupledp}
                     onChange={(e) => {
-                      setaidouble(parseInt(e.target.value));
-                      setdoubles(true);
+                      setQuadrupledp(parseInt(e.target.value));
                     }}
                   />
                 </div>
+                {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="aisingles"
-                    checked={aisingles}
-                    onChange={(e) => setaisingles(e.target.checked)}
+                    name="Quadruplepc"
+                    checked={StateQuadruplepc}
+                    onChange={(e) => setStateQuadruplepc(e.target.checked)}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                   <TextField
-                    id="aisingle"
-                    label="Single"
-                    variant="outlined"
+                    id="Quadruplepd"
+                    label="Pension Complete"
                     type="number"
+                    variant="outlined"
                     fullWidth
-                    disabled={!aisingles}
-                    value={aisingle}
+                    disabled={!StateQuadruplepc}
+                    value={Quadruplepc}
                     onChange={(e) => {
-                      setaisingle(parseInt(e.target.value));
-                      setsingles(true);
+                      setQuadruplepc(parseInt(e.target.value));
+                    }}
+                  />
+                </div>
+                {/* all incl */}
+                <div className="col-1">
+                  <Checkbox
+                    name="Quadrupleai"
+                    checked={StateQuadrupleai}
+                    onChange={(e) => setStateQuadrupleai(e.target.checked)}
+                  />
+                </div>
+                <div className="col-2">
+                  <TextField
+                    id="Quadrupleai"
+                    label="All inclusif"
+                    type="number"
+                    variant="outlined"
+                    fullWidth
+                    disabled={!StateQuadrupleai}
+                    value={Quadrupleai}
+                    onChange={(e) => {
+                      setQuadrupleai(parseInt(e.target.value));
                     }}
                   />
                 </div>
@@ -783,6 +876,7 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
+
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
