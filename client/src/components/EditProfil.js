@@ -20,6 +20,7 @@ function EditProfil() {
       })
       .catch((err) => console.error(err));
   }, []);
+  
   const UserChangeHandler = (e) => {
     setUser({
       ...user,
