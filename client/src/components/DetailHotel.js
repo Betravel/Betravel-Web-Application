@@ -20,6 +20,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
+import TotalHotel from "./TotalHotel";
 
 function DetailHotel() {
   const [hotel, setHotel] = useState([]);
@@ -479,9 +480,9 @@ function DetailHotel() {
                           <h4>single room</h4>
                         ) : (
                           <div>
-                            {/* {Array.from(Array(nbRoomSingle), (e, i) => {
+                            {/* {Singlerooms.map((room, i) => {
                               return ( */}
-                            {Singlerooms.map((room, i) => {
+                            {Array.from(Array(nbRoomSingle), (e, i) => {
                               return (
                                 <div key={i}>
                                   <div className="row">
@@ -537,16 +538,18 @@ function DetailHotel() {
                                             </InputLabel>
                                             <Select
                                               labelId="pensions"
-                                              defaultValue={room["pension"]}
-                                              value={room["pension"]}
+                                              defaultValue={
+                                                Singlerooms[i].pension
+                                              }
+                                              value={Singlerooms[i].pension}
                                               name="pensions"
                                               onChange={(event) => {
                                                 ChangeSingleRooms(event, i);
                                               }}
                                             >
-                                              {price.single.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {price.single.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
@@ -593,7 +596,14 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{totalSignle()}</TableCell>
+                  <TableCell align="center">
+                    <TotalHotel
+                      type="single"
+                      room={{ single: Singlerooms }}
+                      id={id}
+                    />
+                  </TableCell>
+                  .
                 </TableRow>
               ) : (
                 ""
@@ -702,9 +712,9 @@ function DetailHotel() {
                                                 ChangeDoubleRooms(event, i);
                                               }}
                                             >
-                                              {price.double.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {price.double.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
@@ -870,9 +880,9 @@ function DetailHotel() {
                                                 ChangeTripleRooms(event, i);
                                               }}
                                             >
-                                              {price.triple.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {price.triple.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
@@ -1043,9 +1053,9 @@ function DetailHotel() {
                                                 ChangeQuadrupleRooms(event, i);
                                               }}
                                             >
-                                              {price.Quadruple.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {price.Quadruple.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""

@@ -69,7 +69,10 @@ function ListeHotel() {
                     <div className="row">
                       <div className="col-6">
                         <div align="left">
-                          {hotel.price.lp ? (
+                          {hotel.price.single.lpd ||
+                          hotel.price.double.lpd ||
+                          hotel.price.triple.lpd ||
+                          hotel.price.quadruple.ldp ? (
                             <p>
                               <img
                                 src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
@@ -81,7 +84,10 @@ function ListeHotel() {
                             ""
                           )}
 
-                          {hotel.price.dp ? (
+                          {hotel.price.single.dp ||
+                          hotel.price.double.dp ||
+                          hotel.price.triple.dp ||
+                          hotel.price.quadruple.dp ? (
                             <p>
                               <img
                                 src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
@@ -92,7 +98,10 @@ function ListeHotel() {
                           ) : (
                             ""
                           )}
-                          {hotel.price.pc ? (
+                          {hotel.price.single.pc ||
+                          hotel.price.double.pc ||
+                          hotel.price.triple.pc ||
+                          hotel.price.quadruple.pc ? (
                             <p>
                               <img
                                 src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
@@ -104,7 +113,10 @@ function ListeHotel() {
                             ""
                           )}
 
-                          {hotel.price.ai ? (
+                          {hotel.price.single.ai ||
+                          hotel.price.double.ai ||
+                          hotel.price.triple.ai ||  
+                          hotel.price.quadruple.ai ? (
                             <p>
                               <img
                                 src="https://img.icons8.com/emoji/25/000000/check-mark-emoji.png"
