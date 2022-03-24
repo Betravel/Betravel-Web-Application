@@ -212,6 +212,7 @@ module.exports.deleteHotel = (request, response) => {
 module.exports.getprices = (request, response) => {
   Hotel.findById(request.params.id)
     .then((hotel) => {
+      console.log(request.body);
       const rooms = request.body;
       const hprice = hotel.price;
       let prices = {};
