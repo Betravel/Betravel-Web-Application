@@ -100,7 +100,7 @@ function SearchFormHotel() {
   return (
     <div className="container" style={{ backdropFilter: "blur(15px)" }}>
       <div className="row">
-        <form onSubmit={submitHandler} autocomplete="off">
+        <form onSubmit={submitHandler} autoComplete="off">
           <br />
           <div className="container">
             <div className="row">
