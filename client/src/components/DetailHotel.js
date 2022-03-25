@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { roomsAction, getPrices } from "../Redux/roomsReducer";
 import axios from "axios";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -23,6 +25,9 @@ import IconButton from "@mui/material/IconButton";
 import TotalHotel from "./TotalHotel";
 
 function DetailHotel() {
+  const rooms = useSelector((state) => state.rooms);
+  console.log(rooms);
+  const dispatch = useDispatch();
   const [hotel, setHotel] = useState([]);
   const [rate, setrate] = useState([]);
   const [options, setoptions] = useState({});
@@ -48,6 +53,7 @@ function DetailHotel() {
   let { id } = useParams();
 
   useEffect(() => {
+    dispatch(getPrices(id));
     axios
       .get("http://localhost:8000/api/hotel/" + id)
       .then((res) => {
