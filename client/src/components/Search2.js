@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { searchAction, getDestinations } from "../Redux/searchReducer";
 import { useNavigate } from "react-router-dom";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
@@ -10,88 +12,65 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import "../css/SearchFormHotel.css";
-import axios from "axios";
 
 function Search2() {
+  const search = useSelector((state) => state.search);
+  console.log(search);
+  const dispatch = useDispatch();
   const history = useNavigate();
-  const [Destination, setDestination] = useState(
-    JSON.parse(localStorage.getItem("search")).destination
-  );
-  const [Periode, setPeriode] = useState(
-    JSON.parse(localStorage.getItem("search")).periode
-  );
-
-  const [Adultes, setAdultes] = useState(
-    JSON.parse(localStorage.getItem("search")).adultes
-  );
-  const [Enfants, setEnfants] = useState(
-    JSON.parse(localStorage.getItem("search")).enfants
-  );
-  const [Chambres, setChambres] = useState(
-    JSON.parse(localStorage.getItem("search")).chambres
-  );
-  const [Dests, setDests] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/destinations/all")
-      .then((res) => {
-        setDests(res.data);
-      })
-      .catch();
-  }, []);
+    const oldsearch = JSON.parse(localStorage.getItem("search"));
+    if (oldsearch.destination) {
+      dispatch(searchAction.replacesearch(oldsearch));
+    }
+    dispatch(getDestinations());
+  }, [dispatch]);
 
   const DestinationChangeHandler = (event) => {
-    setDestination(event.target.value);
+    dispatch(searchAction.dest(event.target.value));
   };
 
   const AddAdultes = () => {
-    setAdultes(Adultes + 1);
+    dispatch(searchAction.increment({ name: "adulte" }));
   };
 
   const ReduceAdultes = () => {
-    if (Adultes > 1) {
-      setAdultes(Adultes - 1);
+    if (search.adulte > 1) {
+      dispatch(searchAction.decrement({ name: "adulte" }));
     }
   };
 
   const AddEnfants = () => {
-    setEnfants(Enfants + 1);
+    dispatch(searchAction.increment({ name: "enfant" }));
   };
 
   const ReduceEnfants = () => {
-    if (Enfants > 0) {
-      setEnfants(Enfants - 1);
+    if (search.enfant > 0) {
+      dispatch(searchAction.decrement({ name: "enfant" }));
     }
   };
 
   const AddChambres = () => {
-    setChambres(Chambres + 1);
+    dispatch(searchAction.increment({ name: "chambre" }));
   };
 
   const ReduceChambres = () => {
-    if (Chambres > 1) {
-      setChambres(Chambres - 1);
+    if (search.chambre > 1) {
+      dispatch(searchAction.decrement({ name: "chambre" }));
     }
   };
 
   const submitHandler = (event) => {
-    if (Destination === "init") {
+    if (search.destination === "init") {
       alert("Choosing destination is required !!");
-    } else if (Periode[0] === null) {
+    } else if (search.periode[0] === null) {
       alert("choosing checkin/checkout is required !!");
-    } else if (Periode[1] === null) {
+    } else if (search.periode[1] === null) {
       alert("choosing checkin/checkout is required !!");
     } else {
-      const Search = {
-        destination: Destination,
-        periode: Periode,
-        adultes: Adultes,
-        enfants: Enfants,
-        chambres: Chambres,
-      };
-      console.log(Search);
-      localStorage.setItem("search", JSON.stringify(Search));
+      console.log(search);
+      localStorage.setItem("search", JSON.stringify(search));
       history("/Hotel/Liste");
     }
   };
@@ -119,10 +98,10 @@ function Search2() {
                 id="outlined-select-currency"
                 select
                 label="Destination"
-                value={Destination}
+                value={search.destination}
                 onChange={DestinationChangeHandler}
               >
-                {Dests.map((option) => (
+                {search.destinations.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -135,10 +114,10 @@ function Search2() {
                 <DateRangePicker
                   startText="Check-in"
                   endText="Check-out"
-                  value={Periode}
+                  value={search.periode}
                   minDate={new Date(today)}
                   onChange={(newValue) => {
-                    setPeriode(newValue);
+                    dispatch(searchAction.periode(newValue));
                   }}
                   renderInput={(startProps, endProps) => (
                     <React.Fragment>
@@ -163,7 +142,7 @@ function Search2() {
                   <AddIcon />
                 </Fab>
                 <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {Adultes}
+                  {search.adulte}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceAdultes}>
                   <RemoveRoundedIcon />
@@ -183,14 +162,13 @@ function Search2() {
                   <AddIcon />
                 </Fab>
                 <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {Enfants}
+                  {search.enfant}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceEnfants}>
                   <RemoveRoundedIcon />
                 </Fab>
               </Box>
             </div>
-            {Enfants > 0 ? () => {} : ""}
             <br />
             <div className="row">
               <label
@@ -204,7 +182,7 @@ function Search2() {
                   <AddIcon />
                 </Fab>
                 <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {Chambres}
+                  {search.chambre}
                 </Fab>
                 <Fab size="small" aria-label="edit" onClick={ReduceChambres}>
                   <RemoveRoundedIcon />
