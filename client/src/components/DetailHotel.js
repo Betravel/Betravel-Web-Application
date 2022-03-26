@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { roomsAction, getPrices } from "../Redux/roomsReducer";
+import { hotelAction, getHotel } from "../Redux/hotelReducer";
 import axios from "axios";
+import Rating from "@mui/material/Rating";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import MenuItem from "@mui/material/MenuItem";
@@ -22,17 +24,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-import TotalHotel from "./TotalHotel";
 
 function DetailHotel() {
   const rooms = useSelector((state) => state.rooms);
-  console.log(rooms);
+  const Hotel = useSelector((state) => state.hotel);
   const dispatch = useDispatch();
-  const [hotel, setHotel] = useState([]);
-  const [rate, setrate] = useState([]);
-  const [options, setoptions] = useState({});
   const [price, setprice] = useState({});
-  const [images, setImages] = useState([]);
   const [image, setimage] = useState("");
   const [single, setSingle] = useState("");
   const [double, setDouble] = useState("");
@@ -53,22 +50,9 @@ function DetailHotel() {
   let { id } = useParams();
 
   useEffect(() => {
+    dispatch(getHotel(id));
     dispatch(getPrices(id));
-    axios
-      .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => {
-        setHotel(res.data);
-        let r = [];
-        for (let index = 0; index < res.data.rating; index++) {
-          r.push("star");
-        }
-        setrate(r);
-        setoptions(res.data.options);
-        setprice(res.data.price);
-        setImages(res.data.images);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  }, [dispatch, id]);
 
   const changeNbsingleRooms = (e) => {
     setnbRoomSingle(parseInt(e.target.value));
@@ -264,14 +248,9 @@ function DetailHotel() {
       <br />
       <br />
       <div className="row">
-        <h1> {hotel.name}</h1>
+        <h1> {Hotel.name}</h1>
         <h3>
-          {rate.map((r) => (
-            <img
-              src="https://img.icons8.com/fluency/20/000000/star.png"
-              alt=""
-            />
-          ))}
+          <Rating name="read-only" value={Hotel.rating} readOnly />
         </h3>
       </div>
       <div className="row">
@@ -282,7 +261,7 @@ function DetailHotel() {
             align="center"
           >
             <ImageList variant="masonry" cols={3} gap={8}>
-              {images.map((item) => (
+              {Hotel.images.map((item) => (
                 <ImageListItem key={item.url}>
                   <img
                     src={`${item.url}?w=248&fit=crop&auto=format`}
@@ -310,12 +289,12 @@ function DetailHotel() {
       </div>
       <div className="row">
         <h3 aligntext="right">Description</h3>
-        <p>{hotel.description}</p>
+        <p>{Hotel.description}</p>
       </div>
       <div className="row">
         <h3>Options</h3>
         <br />
-        {options.wifi ? (
+        {Hotel.options.wifi ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -329,7 +308,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.pool ? (
+        {Hotel.options.pool ? (
           <div className="col-3">
             <h6 align="left">
               * Pool &nbsp;
@@ -342,7 +321,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.restaurant ? (
+        {Hotel.options.restaurant ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -356,7 +335,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.parking ? (
+        {Hotel.options.parking ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -370,7 +349,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.bar ? (
+        {Hotel.options.bar ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -384,7 +363,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.indoorpool ? (
+        {Hotel.options.indoorpool ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -398,7 +377,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.spa ? (
+        {Hotel.options.spa ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -412,7 +391,7 @@ function DetailHotel() {
         ) : (
           ""
         )}{" "}
-        {options.elevator ? (
+        {Hotel.options.elevator ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -444,7 +423,7 @@ function DetailHotel() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {price.single ? (
+              {Hotel.price.single ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -602,19 +581,12 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">
-                    <TotalHotel
-                      type="single"
-                      room={{ single: Singlerooms }}
-                      id={id}
-                    />
-                  </TableCell>
-                  .
+                  <TableCell align="center">{totalSignle()}</TableCell>.
                 </TableRow>
               ) : (
                 ""
               )}
-              {price.double ? (
+              {Hotel.price.double ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -776,7 +748,7 @@ function DetailHotel() {
               ) : (
                 ""
               )}
-              {price.triple ? (
+              {Hotel.price.triple ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -949,7 +921,7 @@ function DetailHotel() {
                 ""
               )}
 
-              {price.quadruple ? (
+              {Hotel.price.quadruple ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
