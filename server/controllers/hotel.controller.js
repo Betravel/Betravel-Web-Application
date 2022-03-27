@@ -48,48 +48,60 @@ module.exports.setHotel = async (req, res) => {
   hotel.rooms = JSON.parse(hotel.rooms);
 
   let prices = new Array();
-  if (hotel.price.lp) {
-    if (hotel.price.lp.triple) {
-      prices.push(hotel.price.lp.triple);
+  if (hotel.price.single) {
+    if (hotel.price.single.lpd) {
+      prices.push(hotel.price.single.lpd);
     }
-    if (hotel.price.lp.double) {
-      prices.push(hotel.price.lp.double);
+    if (hotel.price.single.dp) {
+      prices.push(hotel.price.single.dp);
     }
-    if (hotel.price.lp.single) {
-      prices.push(hotel.price.lp.single);
+    if (hotel.price.single.pc) {
+      prices.push(hotel.price.single.pc);
     }
-  }
-  if (hotel.price.dp) {
-    if (hotel.price.dp.triple) {
-      prices.push(hotel.price.dp.triple);
-    }
-    if (hotel.price.dp.double) {
-      prices.push(hotel.price.dp.double);
-    }
-    if (hotel.price.dp.single) {
-      prices.push(hotel.price.dp.single);
+    if (hotel.price.single.ai) {
+      prices.push(hotel.price.single.ai);
     }
   }
-  if (hotel.price.pc) {
-    if (hotel.price.pc.triple) {
-      prices.push(hotel.price.pc.triple);
+  if (hotel.price.double) {
+    if (hotel.price.double.lpd) {
+      prices.push(hotel.price.double.lpd);
     }
-    if (hotel.price.pc.double) {
-      prices.push(hotel.price.pc.double);
+    if (hotel.price.double.dp) {
+      prices.push(hotel.price.double.dp);
     }
-    if (hotel.price.pc.single) {
-      prices.push(hotel.price.pc.single);
+    if (hotel.price.double.pc) {
+      prices.push(hotel.price.double.pc);
+    }
+    if (hotel.price.double.ai) {
+      prices.push(hotel.price.double.ai);
     }
   }
-  if (hotel.price.ai) {
-    if (hotel.price.ai.triple) {
-      prices.push(hotel.price.ai.triple);
+  if (hotel.price.triple) {
+    if (hotel.price.triple.lpd) {
+      prices.push(hotel.price.triple.lpd);
     }
-    if (hotel.price.ai.double) {
-      prices.push(hotel.price.ai.double);
+    if (hotel.price.triple.dp) {
+      prices.push(hotel.price.triple.dp);
     }
-    if (hotel.price.ai.single) {
-      prices.push(hotel.price.ai.single);
+    if (hotel.price.triple.pc) {
+      prices.push(hotel.price.triple.pc);
+    }
+    if (hotel.price.triple.ai) {
+      prices.push(hotel.price.triple.ai);
+    }
+  }
+  if (hotel.price.quadruple) {
+    if (hotel.price.quadruple.lpd) {
+      prices.push(hotel.price.quadruple.lpd);
+    }
+    if (hotel.price.quadruple.dp) {
+      prices.push(hotel.price.quadruple.dp);
+    }
+    if (hotel.price.quadruple.pc) {
+      prices.push(hotel.price.quadruple.pc);
+    }
+    if (hotel.price.quadruple.ai) {
+      prices.push(hotel.price.quadruple.ai);
     }
   }
   prices.sort((a, b) => a - b);
@@ -126,48 +138,60 @@ module.exports.updateHotel = async (req, res) => {
   updatedhotel.price = JSON.parse(updatedhotel.price);
   updatedhotel.rooms = JSON.parse(updatedhotel.rooms);
   let prices = new Array();
-  if (updatedhotel.price.lp) {
-    if (updatedhotel.price.lp.triple) {
-      prices.push(updatedhotel.price.lp.triple);
+  if (updatedhotel.price.single) {
+    if (updatedhotel.price.single.lpd) {
+      prices.push(updatedhotel.price.single.lpd);
     }
-    if (updatedhotel.price.lp.double) {
-      prices.push(updatedhotel.price.lp.double);
+    if (updatedhotel.price.single.dp) {
+      prices.push(updatedhotel.price.single.dp);
     }
-    if (updatedhotel.price.lp.single) {
-      prices.push(updatedhotel.price.lp.single);
+    if (updatedhotel.price.single.pc) {
+      prices.push(updatedhotel.price.single.pc);
     }
-  }
-  if (updatedhotel.price.dp) {
-    if (updatedhotel.price.dp.triple) {
-      prices.push(updatedhotel.price.dp.triple);
-    }
-    if (updatedhotel.price.dp.double) {
-      prices.push(updatedhotel.price.dp.double);
-    }
-    if (updatedhotel.price.dp.single) {
-      prices.push(updatedhotel.price.dp.single);
+    if (updatedhotel.price.single.ai) {
+      prices.push(updatedhotel.price.single.ai);
     }
   }
-  if (updatedhotel.price.pc) {
-    if (updatedhotel.price.pc.triple) {
-      prices.push(updatedhotel.price.pc.triple);
+  if (updatedhotel.price.double) {
+    if (updatedhotel.price.double.lpd) {
+      prices.push(updatedhotel.price.double.lpd);
     }
-    if (updatedhotel.price.pc.double) {
-      prices.push(updatedhotel.price.pc.double);
+    if (updatedhotel.price.double.dp) {
+      prices.push(updatedhotel.price.double.dp);
     }
-    if (updatedhotel.price.pc.single) {
-      prices.push(updatedhotel.price.pc.single);
+    if (updatedhotel.price.double.pc) {
+      prices.push(updatedhotel.price.double.pc);
+    }
+    if (updatedhotel.price.double.ai) {
+      prices.push(updatedhotel.price.double.ai);
     }
   }
-  if (updatedhotel.price.ai) {
-    if (updatedhotel.price.ai.triple) {
-      prices.push(updatedhotel.price.ai.triple);
+  if (updatedhotel.price.triple) {
+    if (updatedhotel.price.triple.lpd) {
+      prices.push(updatedhotel.price.triple.lpd);
     }
-    if (updatedhotel.price.ai.double) {
-      prices.push(updatedhotel.price.ai.double);
+    if (updatedhotel.price.triple.dp) {
+      prices.push(updatedhotel.price.triple.dp);
     }
-    if (updatedhotel.price.ai.single) {
-      prices.push(updatedhotel.price.ai.single);
+    if (updatedhotel.price.triple.pc) {
+      prices.push(updatedhotel.price.triple.pc);
+    }
+    if (updatedhotel.price.triple.ai) {
+      prices.push(updatedhotel.price.triple.ai);
+    }
+  }
+  if (updatedhotel.price.quadruple) {
+    if (updatedhotel.price.quadruple.lpd) {
+      prices.push(updatedhotel.price.quadruple.lpd);
+    }
+    if (updatedhotel.price.quadruple.dp) {
+      prices.push(updatedhotel.price.quadruple.dp);
+    }
+    if (updatedhotel.price.quadruple.pc) {
+      prices.push(updatedhotel.price.quadruple.pc);
+    }
+    if (updatedhotel.price.quadruple.ai) {
+      prices.push(updatedhotel.price.quadruple.ai);
     }
   }
   prices.sort((a, b) => a - b);
@@ -207,115 +231,4 @@ module.exports.deleteHotel = (request, response) => {
   Hotel.deleteOne({ _id: request.params.id })
     .then((res) => response.json(res))
     .catch((err) => response.json(err));
-};
-
-module.exports.getprices = (request, response) => {
-  Hotel.findById(request.params.id)
-    .then((hotel) => {
-      console.log(request.body);
-      const rooms = request.body;
-      const hprice = hotel.price;
-      let prices = {};
-      if (rooms.single) {
-        let single = rooms.single;
-        let totalsingle = 0;
-        for (let index = 0; index < single.length; index++) {
-          const element = single[index];
-          let singleprice =
-            element.adulte * hprice.single[element.pension] +
-            element.enfant * hprice.kids;
-          totalsingle = totalsingle + singleprice;
-          single[index].total = singleprice;
-        }
-        prices.single = single;
-        prices.totalsingle = totalsingle;
-      }
-      if (rooms.double) {
-        let double = rooms.double;
-        let totaldouble = 0;
-        for (let index = 0; index < double.length; index++) {
-          const element = double[index];
-          let doubleprice =
-            element.adulte * hprice.double[element.pension] +
-            element.enfant * hprice.kids;
-          totaldouble = totaldouble + doubleprice;
-          double[index].total = doubleprice;
-        }
-        prices.double = double;
-        prices.totaldouble = totaldouble;
-      }
-      if (rooms.triple) {
-        let triple = rooms.triple;
-        let totaltriple = 0;
-        for (let index = 0; index < triple.length; index++) {
-          const element = triple[index];
-          let tripleprice =
-            element.adulte * hprice.triple[element.pension] +
-            element.enfant * hprice.kids;
-          totaltriple = totaltriple + tripleprice;
-          triple[index].total = tripleprice;
-        }
-        prices.triple = triple;
-        prices.totaltriple = totaltriple;
-      }
-      response.json(prices);
-    })
-    .catch((err) => response.json(err));
-};
-
-module.exports.checkrooms = (request, response) => {
-  let initialrooms = request.body;
-  let room = [];
-  if (initialrooms.single) {
-    let single = initialrooms.single;
-    for (let index = 0; index < single.length; index++) {
-      const element = single[index];
-      if (element.adulte !== 1) {
-        element.adulte = 1;
-      }
-      if (element.enfant !== 0) {
-        element.enfant = 0;
-      }
-      room.push(element);
-    }
-  }
-  if (initialrooms.double) {
-    let double = initialrooms.double;
-    for (let index = 0; index < double.length; index++) {
-      const element = double[index];
-      if (element.adulte === 2) {
-        element.enfant = 0;
-      } else if (element.adulte === 1) {
-        element.enfant = 1;
-      } else if (element.adulte === 0) {
-        element.adulte = 1;
-        element.enfant = 1;
-      } else {
-        element.adulte = 2;
-        element.enfant = 0;
-      }
-      room.push(element);
-    }
-  }
-  if (initialrooms.triple) {
-    let triple = initialrooms.triple;
-    for (let index = 0; index < triple.length; index++) {
-      const element = triple[index];
-      if (element.adulte === 3) {
-        element.enfant = 0;
-      } else if (element.adulte === 2) {
-        element.enfant = 1;
-      } else if (element.adulte === 1) {
-        element.enfant = 2;
-      } else if (element.adulte === 0) {
-        element.adulte = 1;
-        triple[index].enfant = 2;
-      } else {
-        element.adulte = 3;
-        element.enfant = 0;
-      }
-      room.push(element);
-    }
-  }
-  response.json(room);
 };
