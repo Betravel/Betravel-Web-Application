@@ -1,30 +1,21 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getAuth, logout } from "../Redux/authReducer";
+import { Link } from "react-router-dom";
 import "../css/Navbar.css";
 function Navbar() {
-  const history = useNavigate();
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [navbar, setNavbar] = useState(false);
-  const location = useLocation();
-  const [user, setUser] = useState();
 
-  const logout = () => {
-    axios
-      .get("http://localhost:8000/api/logout", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        history("/");
-        window.location.reload(false);
-      })
-      .catch((err) => console.log(err));
+  const changelogout = () => {
+    dispatch(logout());
   };
 
   const changeBackground = () => {
     if (
       window.scrollY >= 66 ||
-      window.innerWidth < 991 ||
-      location.pathname === "/Dashboard"
+      window.innerWidth < 991 
     ) {
       setNavbar(true);
     } else {
@@ -32,17 +23,9 @@ function Navbar() {
     }
   };
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/users/getloggedinuser", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => console.error(err));
-    changeBackground();
+    dispatch(getAuth());
     window.addEventListener("scroll", changeBackground);
-  }, []);
+  }, [dispatch]);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
@@ -118,9 +101,9 @@ function Navbar() {
               >
                 Profil
               </button>
-              {user ? (
+              {auth.isAuth ? (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {user.type === "user" ? (
+                  {auth.user.type === "user" ? (
                     <li>
                       <Link to="/Profil" className="dropdown-item">
                         {" "}
@@ -143,7 +126,7 @@ function Navbar() {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <button className="dropdown-item" onClick={logout}>
+                    <button className="dropdown-item" onClick={changelogout}>
                       Logout
                     </button>
                   </li>

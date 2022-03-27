@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -8,22 +9,14 @@ import TextField from "@mui/material/TextField";
 import FilledInput from "@mui/material/FilledInput";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
 function Reserve() {
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/users/getloggedinuser", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const auth = useSelector((state) => state.auth);
+  const hotel = useSelector((state) => state.hotel);
+  const rooms = useSelector((state) => state.rooms);
+  const [user, setUser] = useState(auth.user);
 
   const UserChangeHandler = (e) => {
     setUser({
