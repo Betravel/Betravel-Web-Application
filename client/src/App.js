@@ -12,9 +12,9 @@ import ConfirmPassword from "./components/ConfirmPassword";
 import AboutUs from "./components/AboutUs";
 import DetailHotel from "./components/DetailHotel";
 import ListeHotel from "./components/ListeHotel";
-import "./App.css";
 import ListePromo from "./components/ListePromo";
 import Reserve from "./components/Resrve";
+import "./App.css";
 
 function App() {
   return (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { getHotel, reservationActions } from "../Redux/reservationReducer";
+import Rating from "@mui/material/Rating";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,227 +22,111 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-
+import DateRangePicker from "@mui/lab/DateRangePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import TextField from "@mui/material/TextField";
 function DetailHotel() {
-  const [hotel, setHotel] = useState([]);
-  const [rate, setrate] = useState([]);
-  const [options, setoptions] = useState({});
-  const [price, setprice] = useState({});
-  const [images, setImages] = useState([]);
-
+  const reservation = useSelector((state) => state.reservation);
+  const Hotel = useSelector((state) => state.reservation.hotel);
+  const rooms = useSelector((state) => state.reservation.rooms);
+  const search = useSelector((state) => state.search);
+  const dispatch = useDispatch();
+  const [image, setimage] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
-  const [PriceSingle, setPriceSingle] = useState(0);
-  const [Singlerooms, setSinglerooms] = useState([]);
-
   const [nbRoomDouble, setnbRoomDouble] = useState(0);
-  const [PriceDouble, setPriceDouble] = useState(0);
-  const [Doublerooms, setDoublerooms] = useState([]);
-
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
-  const [PriceTriple, setPriceTriple] = useState(0);
-  const [Triplerooms, setTriplerooms] = useState([]);
-
   const [nbRoomQuadruple, setnbRoomQuadruple] = useState(0);
-  const [PriceQuadruple, setPriceQuadruple] = useState(0);
-  const [Quadruplerooms, setQuadruplerooms] = useState([]);
-
   let { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => {
-        setHotel(res.data);
-        let r = [];
-        for (let index = 0; index < res.data.rating; index++) {
-          r.push("star");
-        }
-        setrate(r);
-        setoptions(res.data.options);
-        setprice(res.data.price);
-        setImages(res.data.images);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    dispatch(getHotel(id));
+    dispatch(reservationActions.getPeriode(search.periode));
+  }, [dispatch, id, search.periode]);
+
+  const changeDate = (value) => {
+    dispatch(reservationActions.getPeriode(value));
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
+  };
 
   const changeNbsingleRooms = (e) => {
     setnbRoomSingle(parseInt(e.target.value));
-    let chambres = new Array(parseInt(e.target.value));
-    for (let index = 0; index < parseInt(e.target.value); index++) {
-      if (Singlerooms[index]) {
-        chambres[index] = Singlerooms[index];
-      } else {
-        const element = index.toString();
-        const ch = {
-          adulte: 1,
-          enfant: 0,
-          pension: Object.keys(price.single)[0],
-        };
-        chambres[element] = ch;
-      }
-    }
-    setSinglerooms(chambres);
+    dispatch(reservationActions.manageSingleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbDoubleRooms = (e) => {
     setnbRoomDouble(parseInt(e.target.value));
-    let chambres = new Array(parseInt(e.target.value));
-    for (let index = 0; index < parseInt(e.target.value); index++) {
-      if (Doublerooms[index]) {
-        chambres[index] = Doublerooms[index];
-      } else {
-        const element = index.toString();
-        const ch = {
-          adulte: 1,
-          enfant: 0,
-          pension: Object.keys(price.double)[0],
-        };
-        chambres[element] = ch;
-      }
-    }
-    setDoublerooms(chambres);
+    dispatch(reservationActions.manageDoubleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbTripleRooms = (e) => {
     setnbRoomTriple(parseInt(e.target.value));
-    let chambres = new Array(parseInt(e.target.value));
-    for (let index = 0; index < parseInt(e.target.value); index++) {
-      if (Triplerooms[index]) {
-        chambres[index] = Triplerooms[index];
-      } else {
-        const element = index.toString();
-        const ch = {
-          adulte: 1,
-          enfant: 0,
-          pension: Object.keys(price.triple)[0],
-        };
-        chambres[element] = ch;
-      }
-    }
-    setTriplerooms(chambres);
+    dispatch(reservationActions.manageTripleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbQuadrupleRooms = (e) => {
     setnbRoomQuadruple(parseInt(e.target.value));
-    let chambres = new Array(parseInt(e.target.value));
-    for (let index = 0; index < parseInt(e.target.value); index++) {
-      if (Quadruplerooms[index]) {
-        chambres[index] = Quadruplerooms[index];
-      } else {
-        const element = index.toString();
-        const ch = {
-          adulte: 1,
-          enfant: 0,
-          pension: Object.keys(price.quadruple)[0],
-        };
-        chambres[element] = ch;
-      }
-    }
-    setQuadruplerooms(chambres);
+    dispatch(reservationActions.manageQuadrupleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeSingleRooms = (e, i) => {
-    if (e.target.name === "adultes") {
-      Singlerooms[i].adulte = parseInt(e.target.value);
-    }
-    if (e.target.name === "enfants") {
-      Singlerooms[i].enfant = parseInt(e.target.value);
-    }
-    if (e.target.name === "pensions") {
-      Singlerooms[i].pension = e.target.value;
-    }
-    setSinglerooms(Singlerooms);
+    dispatch(
+      reservationActions.changeSingleRooms({
+        index: i,
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeDoubleRooms = (e, i) => {
-    if (e.target.name === "adulted") {
-      Doublerooms[i].adulte = parseInt(e.target.value);
-    }
-    if (e.target.name === "enfantd") {
-      Doublerooms[i].enfant = parseInt(e.target.value);
-    }
-    if (e.target.name === "pensiond") {
-      Doublerooms[i].pension = e.target.value;
-    }
-    setDoublerooms(Doublerooms);
+    dispatch(
+      reservationActions.changeDoubleRooms({
+        index: i,
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeTripleRooms = (e, i) => {
-    if (e.target.name === "adultet") {
-      Triplerooms[i].adulte = parseInt(e.target.value);
-    }
-    if (e.target.name === "enfantt") {
-      Triplerooms[i].enfant = parseInt(e.target.value);
-    }
-    if (e.target.name === "pensiont") {
-      Triplerooms[i].pension = e.target.value;
-    }
-    setTriplerooms(Triplerooms);
+    dispatch(
+      reservationActions.changeTripleRooms({
+        index: i,
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeQuadrupleRooms = (e, i) => {
-    if (e.target.name === "adultet") {
-      Quadruplerooms[i].adulte = parseInt(e.target.value);
-    }
-    if (e.target.name === "enfantt") {
-      Quadruplerooms[i].enfant = parseInt(e.target.value);
-    }
-    if (e.target.name === "pensiont") {
-      Quadruplerooms[i].pension = e.target.value;
-    }
-    setQuadruplerooms(Quadruplerooms);
-  };
-
-  const totalSignle = () => {
-    let t = 0;
-    for (let index = 0; index < Singlerooms.length; index++) {
-      const element = Singlerooms[index];
-      const pension = element.pension;
-      t =
-        t +
-        element.adulte * price.single[pension] +
-        price.kids * element.enfant;
-    }
-    return t;
-  };
-
-  const totalDouble = () => {
-    let t = 0;
-    for (let index = 0; index < Doublerooms.length; index++) {
-      const element = Doublerooms[index];
-      const pension = element.pension;
-      t =
-        t +
-        element.adulte * price.double[pension] +
-        price.kids * element.enfant;
-    }
-    return t;
-  };
-
-  const totalTriple = () => {
-    let t = 0;
-    for (let index = 0; index < Triplerooms.length; index++) {
-      const element = Triplerooms[index];
-      const pension = element.pension;
-      t =
-        t +
-        element.adulte * price.triple[pension] +
-        price.kids * element.enfant;
-    }
-    return t;
-  };
-
-  const totalQuadruple = () => {
-    let t = 0;
-    for (let index = 0; index < Quadruplerooms.length; index++) {
-      const element = Quadruplerooms[index];
-      const pension = element.pension;
-      t =
-        t +
-        element.adulte * price.Quadruple[pension] +
-        price.kids * element.enfant;
-    }
-    return t;
+    dispatch(
+      reservationActions.changeQuadrupleRooms({
+        index: i,
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
   };
 
   const [open, setOpen] = useState(false);
@@ -252,19 +138,26 @@ function DetailHotel() {
   const handleClose = () => {
     setOpen(false);
   };
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+  today = mm + "-" + dd + "-" + yyyy;
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <br />
       <br />
       <div className="row">
-        <h1> {hotel.name}</h1>
+        <h1> {Hotel.name}</h1>
         <h3>
-          {rate.map((r) => (
-            <img
-              src="https://img.icons8.com/fluency/20/000000/star.png"
-              alt=""
-            />
-          ))}
+          <Rating name="read-only" value={Hotel.rating} readOnly />
         </h3>
       </div>
       <div className="row">
@@ -275,28 +168,29 @@ function DetailHotel() {
             align="center"
           >
             <ImageList variant="masonry" cols={3} gap={8}>
-              {images.map((item) => (
-                <ImageListItem key={item.url}>
-                  <img
-                    src={`${item.url}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt=""
-                    loading="lazy"
-                    onClick={handleClickOpen}
-                  />
-                  <Dialog open={open} onClose={handleClose}>
-                    <DialogContent>
-                      <img
-                        src={`${item.url}?w=248&fit=crop&auto=format`}
-                        srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt=""
-                      />
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleClose}>close</Button>
-                    </DialogActions>
-                  </Dialog>
-                </ImageListItem>
+              {Hotel.images.map((item, i) => (
+                <div key={i}>
+                  <ImageListItem>
+                    <img
+                      src={`${item.url}?w=248&fit=crop&auto=format`}
+                      srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt=""
+                      loading="lazy"
+                      onClick={() => {
+                        handleClickOpen();
+                        setimage(item.url);
+                      }}
+                    />
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogContent>
+                        <img src={image} alt="" width="100%" />
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose}>close</Button>
+                      </DialogActions>
+                    </Dialog>
+                  </ImageListItem>
+                </div>
               ))}
             </ImageList>
           </Box>
@@ -304,12 +198,12 @@ function DetailHotel() {
       </div>
       <div className="row">
         <h3 aligntext="right">Description</h3>
-        <p>{hotel.description}</p>
+        <p>{Hotel.description}</p>
       </div>
       <div className="row">
         <h3>Options</h3>
         <br />
-        {options.wifi ? (
+        {Hotel.options.wifi ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -323,7 +217,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.pool ? (
+        {Hotel.options.pool ? (
           <div className="col-3">
             <h6 align="left">
               * Pool &nbsp;
@@ -336,7 +230,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.restaurant ? (
+        {Hotel.options.restaurant ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -350,7 +244,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.parking ? (
+        {Hotel.options.parking ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -364,7 +258,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.bar ? (
+        {Hotel.options.bar ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -378,7 +272,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.indoorpool ? (
+        {Hotel.options.indoorpool ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -392,7 +286,7 @@ function DetailHotel() {
         ) : (
           ""
         )}
-        {options.spa ? (
+        {Hotel.options.spa ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -406,7 +300,7 @@ function DetailHotel() {
         ) : (
           ""
         )}{" "}
-        {options.elevator ? (
+        {Hotel.options.elevator ? (
           <div className="col-3">
             <h6 align="left">
               {" "}
@@ -426,6 +320,27 @@ function DetailHotel() {
         <h3 aligntext="right">Availablity</h3>
         <br />
       </div>
+      <div className="row">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateRangePicker
+            startText="Check-in"
+            endText="Check-out"
+            value={reservation.periode}
+            minDate={new Date(today)}
+            required
+            onChange={(newValue) => {
+              changeDate(newValue);
+            }}
+            renderInput={(startProps, endProps) => (
+              <React.Fragment>
+                <TextField {...startProps} fullWidth />
+                <Box sx={{ mx: 2 }}> to </Box>
+                <TextField {...endProps} fullWidth />
+              </React.Fragment>
+            )}
+          />
+        </LocalizationProvider>
+      </div>
       <br />
       <div className="row">
         <TableContainer component={Paper}>
@@ -438,7 +353,7 @@ function DetailHotel() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {price.single ? (
+              {Hotel.price.single ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -480,9 +395,7 @@ function DetailHotel() {
                           <h4>single room</h4>
                         ) : (
                           <div>
-                            {/* {Array.from(Array(nbRoomSingle), (e, i) => {
-                              return ( */}
-                            {Singlerooms.map((room, i) => {
+                            {rooms.single.room.map((room, i) => {
                               return (
                                 <div key={i}>
                                   <div className="row">
@@ -505,7 +418,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="adultes"
                                               name="adultes"
-                                              defaultValue={1}
+                                              value={room.adulte}
                                               onChange={(event) => {
                                                 ChangeSingleRooms(event, i);
                                               }}
@@ -522,7 +435,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="enfants"
                                               name="enfants"
-                                              defaultValue={0}
+                                              value={room.enfant}
                                               onChange={(event) => {
                                                 ChangeSingleRooms(event, i);
                                               }}
@@ -538,35 +451,34 @@ function DetailHotel() {
                                             </InputLabel>
                                             <Select
                                               labelId="pensions"
-                                              defaultValue={room["pension"]}
-                                              value={room["pension"]}
+                                              value={room.pension}
                                               name="pensions"
                                               onChange={(event) => {
                                                 ChangeSingleRooms(event, i);
                                               }}
                                             >
-                                              {price.single.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {Hotel.price.single.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.single.dp ? (
+                                              {Hotel.price.single.dp ? (
                                                 <MenuItem value={"dp"}>
                                                   dp
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.single.pc ? (
+                                              {Hotel.price.single.pc ? (
                                                 <MenuItem value={"pc"}>
                                                   pc
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.single.ai ? (
+                                              {Hotel.price.single.ai ? (
                                                 <MenuItem value={"ai"}>
                                                   ai
                                                 </MenuItem>
@@ -594,12 +506,12 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{totalSignle()}</TableCell>
+                  <TableCell align="center">{rooms.single.total}</TableCell>
                 </TableRow>
               ) : (
                 ""
               )}
-              {price.double ? (
+              {Hotel.price.double ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -636,12 +548,10 @@ function DetailHotel() {
                           <h4>double room</h4>
                         ) : (
                           <div>
-                            {/* {Array.from(Array(nbRoomDouble), (e, i) => {
-                              return ( */}
-                            {Doublerooms.map((room, i) => {
+                            {rooms.double.room.map((room, i) => {
                               return (
-                                <div>
-                                  <div className="row" key={i}>
+                                <div key={i}>
+                                  <div className="row">
                                     <div
                                       className="col-4"
                                       style={{
@@ -661,7 +571,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="adulted"
                                               name="adulted"
-                                              defaultValue={2}
+                                              value={room.adulte}
                                               onChange={(event) => {
                                                 ChangeDoubleRooms(event, i);
                                               }}
@@ -679,7 +589,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="enfantd"
                                               name="enfantd"
-                                              defaultValue={0}
+                                              value={room.enfant}
                                               onChange={(event, i) => {
                                                 ChangeDoubleRooms(event, i);
                                               }}
@@ -696,35 +606,34 @@ function DetailHotel() {
                                             </InputLabel>
                                             <Select
                                               labelId="pensiond"
-                                              defaultValue={room["pension"]}
-                                              value={room["pension"]}
+                                              value={room.pension}
                                               name="pensiond"
                                               onChange={(event) => {
                                                 ChangeDoubleRooms(event, i);
                                               }}
                                             >
-                                              {price.double.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {Hotel.price.double.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.double.dp ? (
+                                              {Hotel.price.double.dp ? (
                                                 <MenuItem value={"dp"}>
                                                   dp
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.double.pc ? (
+                                              {Hotel.price.double.pc ? (
                                                 <MenuItem value={"pc"}>
                                                   pc
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.double.ai ? (
+                                              {Hotel.price.double.ai ? (
                                                 <MenuItem value={"ai"}>
                                                   ai
                                                 </MenuItem>
@@ -756,12 +665,12 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{totalDouble()}</TableCell>
+                  <TableCell align="center">{rooms.double.total}</TableCell>
                 </TableRow>
               ) : (
                 ""
               )}
-              {price.triple ? (
+              {Hotel.price.triple ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -805,7 +714,7 @@ function DetailHotel() {
                           <div>
                             {/* {Array.from(Array(nbRoomTriple), (e, i) => {
                               return ( */}
-                            {Triplerooms.map((room, i) => {
+                            {rooms.triple.room.map((room, i) => {
                               return (
                                 <div key={i}>
                                   <div className="row">
@@ -828,7 +737,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="adultet"
                                               name="adultet"
-                                              defaultValue={3}
+                                              value={room.adulte}
                                               onChange={(event) => {
                                                 ChangeTripleRooms(event, i);
                                               }}
@@ -847,7 +756,7 @@ function DetailHotel() {
                                             <Select
                                               labelId="enfantt"
                                               name="enfantt"
-                                              defaultValue={0}
+                                              value={room.enfant}
                                               onChange={(event) => {
                                                 ChangeTripleRooms(event, i);
                                               }}
@@ -865,34 +774,34 @@ function DetailHotel() {
                                             </InputLabel>
                                             <Select
                                               labelId="pensiont"
-                                              value={room["pension"]}
+                                              value={room.pension}
                                               name="pensiont"
                                               onChange={(event) => {
                                                 ChangeTripleRooms(event, i);
                                               }}
                                             >
-                                              {price.triple.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {Hotel.price.triple.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.triple.dp ? (
+                                              {Hotel.price.triple.dp ? (
                                                 <MenuItem value={"dp"}>
                                                   dp
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.triple.pc ? (
+                                              {Hotel.price.triple.pc ? (
                                                 <MenuItem value={"pc"}>
                                                   pc
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.triple.ai ? (
+                                              {Hotel.price.triple.ai ? (
                                                 <MenuItem value={"ai"}>
                                                   ai
                                                 </MenuItem>
@@ -928,13 +837,13 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{totalTriple()}</TableCell>
+                  <TableCell align="center">{rooms.triple.total}</TableCell>
                 </TableRow>
               ) : (
                 ""
               )}
 
-              {price.quadruple ? (
+              {Hotel.price.quadruple ? (
                 <TableRow>
                   <TableCell align="center">
                     <div className="row">
@@ -976,9 +885,7 @@ function DetailHotel() {
                           <h4>Quadruple room</h4>
                         ) : (
                           <div>
-                            {/* {Array.from(Array(nbRoomTriple), (e, i) => {
-                              return ( */}
-                            {Triplerooms.map((room, i) => {
+                            {rooms.quadruple.room.map((room, i) => {
                               return (
                                 <div key={i}>
                                   <div className="row">
@@ -995,17 +902,38 @@ function DetailHotel() {
                                       <div className="row ">
                                         <div className="col-4">
                                           <FormControl fullWidth>
-                                            <InputLabel id="adultet">
+                                            <InputLabel id="adulteq">
                                               adultes
                                             </InputLabel>
                                             <Select
-                                              labelId="adultet"
-                                              name="adultet"
-                                              defaultValue={3}
+                                              labelId="adulteq"
+                                              name="adulteq"
+                                              value={room.adulte}
                                               onChange={(event) => {
                                                 ChangeQuadrupleRooms(event, i);
                                               }}
                                             >
+                                              <MenuItem value={1}>1</MenuItem>
+                                              <MenuItem value={2}>2</MenuItem>
+                                              <MenuItem value={3}>3</MenuItem>
+                                              <MenuItem value={4}>4</MenuItem>
+                                            </Select>
+                                          </FormControl>
+                                        </div>
+                                        <div className="col-4">
+                                          <FormControl fullWidth>
+                                            <InputLabel id="enfantq">
+                                              enfants
+                                            </InputLabel>
+                                            <Select
+                                              labelId="enfantq"
+                                              name="enfantq"
+                                              value={room.enfant}
+                                              onChange={(event) => {
+                                                ChangeQuadrupleRooms(event, i);
+                                              }}
+                                            >
+                                              <MenuItem value={0}>0</MenuItem>
                                               <MenuItem value={1}>1</MenuItem>
                                               <MenuItem value={2}>2</MenuItem>
                                               <MenuItem value={3}>3</MenuItem>
@@ -1014,58 +942,39 @@ function DetailHotel() {
                                         </div>
                                         <div className="col-4">
                                           <FormControl fullWidth>
-                                            <InputLabel id="enfantt">
-                                              enfants
-                                            </InputLabel>
-                                            <Select
-                                              labelId="enfantt"
-                                              name="enfantt"
-                                              defaultValue={0}
-                                              onChange={(event) => {
-                                                ChangeQuadrupleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={0}>0</MenuItem>
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="pensiont">
+                                            <InputLabel id="pensionq">
                                               Pension
                                             </InputLabel>
                                             <Select
-                                              labelId="pensiont"
-                                              value={room["pension"]}
-                                              name="pensiont"
+                                              labelId="pensionq"
+                                              value={room.pension}
+                                              name="pensionq"
                                               onChange={(event) => {
                                                 ChangeQuadrupleRooms(event, i);
                                               }}
                                             >
-                                              {price.Quadruple.lp ? (
-                                                <MenuItem value={"lp"}>
-                                                  lp
+                                              {Hotel.price.quadruple.lpd ? (
+                                                <MenuItem value={"lpd"}>
+                                                  lpd
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.Quadruple.dp ? (
+                                              {Hotel.price.quadruple.dp ? (
                                                 <MenuItem value={"dp"}>
                                                   dp
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.Quadruple.pc ? (
+                                              {Hotel.price.quadruple.pc ? (
                                                 <MenuItem value={"pc"}>
                                                   pc
                                                 </MenuItem>
                                               ) : (
                                                 ""
                                               )}
-                                              {price.Quadruple.ai ? (
+                                              {Hotel.price.quadruple.ai ? (
                                                 <MenuItem value={"ai"}>
                                                   ai
                                                 </MenuItem>
@@ -1101,15 +1010,16 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{totalQuadruple()}</TableCell>
+                  <TableCell align="center">{rooms.quadruple.total}</TableCell>
                 </TableRow>
               ) : (
                 ""
               )}
               <TableRow>
-                <TableCell rowSpan={3} />
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell align="center"></TableCell>
+                <TableCell colSpan={2} align="right">
+                  Total
+                </TableCell>
+                <TableCell align="center">{rooms.total}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
