@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 const ReservationSchema = new mongoose.Schema({
-  hotelid: {
-    type: String,
+  hotel: {
+    type: JSON,
   },
-  email: {
-    type: String,
+  user: {
+    type: JSON,
+  },
+  rooms: {
+    type: JSON,
   },
   checkin: {
     type: Date,
@@ -15,15 +18,6 @@ const ReservationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-  },
-  price: {
-    type: Number,
-  },
-  rooms: {
-    type: JSON,
-  },
-  details: {
-    type: JSON,
   },
 });
 module.exports = mongoose.model("Reservations", ReservationSchema);
