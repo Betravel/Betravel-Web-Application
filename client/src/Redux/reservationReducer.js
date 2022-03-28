@@ -1,33 +1,73 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const getPrices = (id) => {
+export const getHotel = (id) => {
   return async function (dispatch) {
     return await axios
       .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => dispatch(roomsAction.addPrices(res.data.price)));
+      .then((res) => dispatch(reservationActions.getHotel(res.data)));
   };
 };
 
-const initialRoomsState = {
-  prices: {},
-  single: { room: [], total: 0 },
-  double: { room: [], total: 0 },
-  triple: { room: [], total: 0 },
-  quadruple: { room: [], total: 0 },
-  total: 0,
+const initialReservationState = {
+  hotel: {
+    name: "",
+    rating: 0,
+    description: "",
+    location: "",
+    price: {},
+    images: [],
+    promo: 0,
+    rooms: {},
+    options: {},
+  },
+  user: {
+    firstname: "",
+    lastname: "",
+    phone: 0,
+    email: "",
+  },
+  rooms: {
+    single: { room: [], total: 0 },
+    double: { room: [], total: 0 },
+    triple: { room: [], total: 0 },
+    quadruple: { room: [], total: 0 },
+    total: 0,
+  },
+  periode: [null, null],
+  nuits: 0,
+  price: 0,
 };
 
-const roomsSlice = createSlice({
-  name: "rooms",
-  initialState: initialRoomsState,
+const reservationSlice = createSlice({
+  name: "reservation",
+  initialState: initialReservationState,
   reducers: {
-    addPrices(state, action) {
-      state.prices = action.payload;
+    getUser(state, action) {
+      let user = action.payload;
+      state.user = user;
+    },
+    getHotel(state, action) {
+      let hotel = action.payload;
+      state.hotel.name = hotel.name;
+      state.hotel.rating = hotel.rating;
+      state.hotel.description = hotel.description;
+      state.hotel.location = hotel.location;
+      state.hotel.price = hotel.price;
+      state.hotel.promo = hotel.promo;
+      state.hotel.images = hotel.images;
+      state.hotel.rooms = hotel.rooms;
+      state.hotel.options = hotel.options;
+    },
+    getPeriode(state, action) {
+      let periode = action.payload;
+      state.periode = periode;
+      let nuits = periode[1] - periode[0];
+      state.nuits = nuits / (1000 * 60 * 60 * 24);
     },
     manageSingleRooms(state, action) {
       const i = action.payload;
-      let rooms = state.single.room;
+      let rooms = state.rooms.single.room;
       let updatedrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
@@ -36,21 +76,22 @@ const roomsSlice = createSlice({
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
-        for (let index = 0; index < i - rooms.length; index++) {
-          updatedrooms.push({ adulte: 1, enfant: 0, pension: "", total: 0 });
+        let range = i - rooms.length;
+        for (let index = 0; index < range; index++) {
+          updatedrooms.push({
+            adulte: 1,
+            enfant: 0,
+            pension: "",
+            total: 0,
+            details: {},
+          });
         }
       }
-      state.single.room = updatedrooms;
-      let total = 0;
-      for (let index = 0; index < state.single.room.length; index++) {
-        const element = state.single.room[index];
-        total += element.total;
-      }
-      state.single.total = total;
+      state.rooms.single.room = updatedrooms;
     },
     changeSingleRooms(state, action) {
       let i = action.payload.index;
-      let rooms = state.single.room;
+      let rooms = state.rooms.single.room;
       if (action.payload.type === "adultes") {
         rooms[i].adulte = action.payload.value;
       } else if (action.payload.type === "enfants") {
@@ -60,20 +101,22 @@ const roomsSlice = createSlice({
       }
       if (rooms[i].pension !== "") {
         rooms[i].total =
-          state.prices.single[rooms[i].pension] * rooms[i].adulte +
-          state.prices.kids * rooms[i].enfant;
+          state.hotel.price.single[rooms[i].pension] * rooms[i].adulte +
+          state.hotel.price.kids * rooms[i].enfant;
       }
-      state.single.room = rooms;
+      state.rooms.single.room = rooms;
+    },
+    totalSingle(state) {
       let total = 0;
-      for (let index = 0; index < state.single.room.length; index++) {
-        const element = state.single.room[index];
+      for (let index = 0; index < state.rooms.single.room.length; index++) {
+        const element = state.rooms.single.room[index];
         total += element.total;
       }
-      state.single.total = total;
+      state.rooms.single.total = total * state.nuits;
     },
     manageDoubleRooms(state, action) {
       const i = action.payload;
-      let rooms = state.double.room;
+      let rooms = state.rooms.double.room;
       let updatedrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
@@ -82,21 +125,22 @@ const roomsSlice = createSlice({
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
-        for (let index = 0; index < i - rooms.length; index++) {
-          updatedrooms.push({ adulte: 2, enfant: 0, pension: "", total: 0 });
+        let range = i - rooms.length;
+        for (let index = 0; index < range; index++) {
+          updatedrooms.push({
+            adulte: 2,
+            enfant: 0,
+            pension: "",
+            total: 0,
+            details: {},
+          });
         }
       }
-      state.double.room = updatedrooms;
-      let total = 0;
-      for (let index = 0; index < state.double.room.length; index++) {
-        const element = state.double.room[index];
-        total += element.total;
-      }
-      state.double.total = total;
+      state.rooms.double.room = updatedrooms;
     },
     changeDoubleRooms(state, action) {
       let i = action.payload.index;
-      let rooms = state.double.room;
+      let rooms = state.rooms.double.room;
       if (action.payload.type === "adulted") {
         if (action.payload.value === 2) {
           rooms[i].adulte = 2;
@@ -120,20 +164,22 @@ const roomsSlice = createSlice({
       }
       if (rooms[i].pension !== "") {
         rooms[i].total =
-          state.prices.double[rooms[i].pension] * rooms[i].adulte +
-          state.prices.kids * rooms[i].enfant;
+          state.hotel.price.double[rooms[i].pension] * rooms[i].adulte +
+          state.hotel.price.kids * rooms[i].enfant;
       }
-      state.double.room = rooms;
+      state.rooms.double.room = rooms;
+    },
+    totalDouble(state) {
       let total = 0;
-      for (let index = 0; index < state.double.room.length; index++) {
-        const element = state.double.room[index];
+      for (let index = 0; index < state.rooms.double.room.length; index++) {
+        const element = state.rooms.double.room[index];
         total += element.total;
       }
-      state.double.total = total;
+      state.rooms.double.total = total * state.nuits;
     },
     manageTripleRooms(state, action) {
       const i = action.payload;
-      let rooms = state.triple.room;
+      let rooms = state.rooms.triple.room;
       let updatedrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
@@ -142,21 +188,22 @@ const roomsSlice = createSlice({
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
-        for (let index = 0; index < i - rooms.length; index++) {
-          updatedrooms.push({ adulte: 3, enfant: 0, pension: "", total: 0 });
+        let range = i - rooms.length;
+        for (let index = 0; index < range; index++) {
+          updatedrooms.push({
+            adulte: 3,
+            enfant: 0,
+            pension: "",
+            total: 0,
+            details: {},
+          });
         }
       }
-      state.triple.room = updatedrooms;
-      let total = 0;
-      for (let index = 0; index < state.triple.room.length; index++) {
-        const element = state.triple.room[index];
-        total += element.total;
-      }
-      state.triple.total = total;
+      state.rooms.triple.room = updatedrooms;
     },
     changeTripleRooms(state, action) {
       let i = action.payload.index;
-      let rooms = state.triple.room;
+      let rooms = state.rooms.triple.room;
       if (action.payload.type === "adultet") {
         if (action.payload.value === 3) {
           rooms[i].adulte = 3;
@@ -188,20 +235,22 @@ const roomsSlice = createSlice({
       }
       if (rooms[i].pension !== "") {
         rooms[i].total =
-          state.prices.triple[rooms[i].pension] * rooms[i].adulte +
-          state.prices.kids * rooms[i].enfant;
+          state.hotel.price.triple[rooms[i].pension] * rooms[i].adulte +
+          state.hotel.price.kids * rooms[i].enfant;
       }
-      state.triple.room = rooms;
+      state.rooms.triple.room = rooms;
+    },
+    totalTriple(state) {
       let total = 0;
-      for (let index = 0; index < state.triple.room.length; index++) {
-        const element = state.triple.room[index];
+      for (let index = 0; index < state.rooms.triple.room.length; index++) {
+        const element = state.rooms.triple.room[index];
         total += element.total;
       }
-      state.triple.total = total;
+      state.rooms.triple.total = total * state.nuits;
     },
     manageQuadrupleRooms(state, action) {
       const i = action.payload;
-      let rooms = state.quadruple.room;
+      let rooms = state.rooms.quadruple.room;
       let updatedrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
@@ -210,21 +259,22 @@ const roomsSlice = createSlice({
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
-        for (let index = 0; index < i - rooms.length; index++) {
-          updatedrooms.push({ adulte: 4, enfant: 0, pension: "", total: 0 });
+        let range = i - rooms.length;
+        for (let index = 0; index < range; index++) {
+          updatedrooms.push({
+            adulte: 4,
+            enfant: 0,
+            pension: "",
+            total: 0,
+            details: {},
+          });
         }
       }
-      state.quadruple.room = updatedrooms;
-      let total = 0;
-      for (let index = 0; index < state.quadruple.room.length; index++) {
-        const element = state.quadruple.room[index];
-        total += element.total;
-      }
-      state.quadruple.total = total;
+      state.rooms.quadruple.room = updatedrooms;
     },
     changeQuadrupleRooms(state, action) {
       let i = action.payload.index;
-      let rooms = state.quadruple.room;
+      let rooms = state.rooms.quadruple.room;
       if (action.payload.type === "adulteq") {
         if (action.payload.value === 4) {
           rooms[i].adulte = 4;
@@ -264,28 +314,30 @@ const roomsSlice = createSlice({
       }
       if (rooms[i].pension !== "") {
         rooms[i].total =
-          state.prices.quadruple[rooms[i].pension] * rooms[i].adulte +
-          state.prices.kids * rooms[i].enfant;
+          state.hotel.price.quadruple[rooms[i].pension] * rooms[i].adulte +
+          state.hotel.price.kids * rooms[i].enfant;
       }
-      state.quadruple.room = rooms;
+      state.rooms.quadruple.room = rooms;
+    },
+    totalQuadruple(state) {
       let total = 0;
-      for (let index = 0; index < state.quadruple.room.length; index++) {
-        const element = state.quadruple.room[index];
+      for (let index = 0; index < state.rooms.quadruple.room.length; index++) {
+        const element = state.rooms.quadruple.room[index];
         total += element.total;
       }
-      state.quadruple.total = total;
+      state.rooms.quadruple.total = total * state.nuits;
     },
     getTotal(state) {
       let total = 0;
       total =
-        state.single.total +
-        state.double.total +
-        state.triple.total +
-        state.quadruple.total;
-      state.total = total;
+        state.rooms.single.total +
+        state.rooms.double.total +
+        state.rooms.triple.total +
+        state.rooms.quadruple.total;
+      state.rooms.total = total;
     },
   },
 });
 
-export const roomsAction = roomsSlice.actions;
-export default roomsSlice;
+export const reservationActions = reservationSlice.actions;
+export default reservationSlice;
