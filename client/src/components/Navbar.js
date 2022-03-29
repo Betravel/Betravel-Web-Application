@@ -67,18 +67,16 @@ function Navbar() {
                 to="/"
                 style={{ color: "white", fontSize: "25px" }}
               >
-                {" "}
-                Home{" "}
+                Home
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                to="/AboutUs"
+                to="/Event/Liste"
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
               >
-                {" "}
-                About{" "}
+                Event
               </Link>
             </li>
             <li className="nav-item">
