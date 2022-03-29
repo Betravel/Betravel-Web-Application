@@ -9,6 +9,14 @@ export const getHotel = (id) => {
   };
 };
 
+export const updateUser = (id, user) => {
+  return async function (dispatch) {
+    return await axios
+      .put("http://localhost:8000/api/user/" + id, user)
+      .then((res) => console.log(res));
+  };
+};
+
 const initialReservationState = {
   hotel: {
     name: "",
@@ -33,6 +41,12 @@ const initialReservationState = {
     triple: { room: [], total: 0 },
     quadruple: { room: [], total: 0 },
     total: 0,
+  },
+  details: {
+    single: [],
+    double: [],
+    triple: [],
+    quadruple: [],
   },
   periode: [null, null],
   nuits: 0,
@@ -68,14 +82,21 @@ const reservationSlice = createSlice({
     manageSingleRooms(state, action) {
       const i = action.payload;
       let rooms = state.rooms.single.room;
+      let details = state.details.single;
       let updatedrooms = [];
+      let detailrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
           const element = rooms[index];
           updatedrooms.push(element);
+          detailrooms.push({
+            adulte: [{ firstname: "", lastname: "" }],
+            enfant: [],
+          });
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
+        detailrooms = details;
         let range = i - rooms.length;
         for (let index = 0; index < range; index++) {
           updatedrooms.push({
@@ -83,11 +104,15 @@ const reservationSlice = createSlice({
             enfant: 0,
             pension: "",
             total: 0,
-            details: {},
+          });
+          detailrooms.push({
+            adulte: [{ firstname: "", lastname: "" }],
+            enfant: [],
           });
         }
       }
       state.rooms.single.room = updatedrooms;
+      state.details.single = detailrooms;
     },
     changeSingleRooms(state, action) {
       let i = action.payload.index;
@@ -104,6 +129,17 @@ const reservationSlice = createSlice({
           state.hotel.price.single[rooms[i].pension] * rooms[i].adulte +
           state.hotel.price.kids * rooms[i].enfant;
       }
+      let details = state.details.single;
+      let adulte = [];
+      let enfant = [];
+      for (let index = 0; index < rooms[i].adulte; index++) {
+        adulte.push({ firstname: "", lastname: "" });
+      }
+      for (let index = 0; index < rooms[i].enfant; index++) {
+        enfant.push({ firstname: "", lastname: "", age: 0 });
+      }
+      details[i] = { adulte, enfant };
+      state.details.single = details;
       state.rooms.single.room = rooms;
     },
     totalSingle(state) {
@@ -117,14 +153,24 @@ const reservationSlice = createSlice({
     manageDoubleRooms(state, action) {
       const i = action.payload;
       let rooms = state.rooms.double.room;
+      let details = state.details.double;
       let updatedrooms = [];
+      let detailrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
           const element = rooms[index];
           updatedrooms.push(element);
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
+          });
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
+        detailrooms = details;
         let range = i - rooms.length;
         for (let index = 0; index < range; index++) {
           updatedrooms.push({
@@ -132,11 +178,18 @@ const reservationSlice = createSlice({
             enfant: 0,
             pension: "",
             total: 0,
-            details: {},
+          });
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
           });
         }
       }
       state.rooms.double.room = updatedrooms;
+      state.details.double = detailrooms;
     },
     changeDoubleRooms(state, action) {
       let i = action.payload.index;
@@ -167,6 +220,17 @@ const reservationSlice = createSlice({
           state.hotel.price.double[rooms[i].pension] * rooms[i].adulte +
           state.hotel.price.kids * rooms[i].enfant;
       }
+      let details = state.details.double;
+      let adulte = [];
+      let enfant = [];
+      for (let index = 0; index < rooms[i].adulte; index++) {
+        adulte.push({ firstname: "", lastname: "" });
+      }
+      for (let index = 0; index < rooms[i].enfant; index++) {
+        enfant.push({ firstname: "", lastname: "", age: 0 });
+      }
+      details[i] = { adulte, enfant };
+      state.details.double = details;
       state.rooms.double.room = rooms;
     },
     totalDouble(state) {
@@ -180,14 +244,25 @@ const reservationSlice = createSlice({
     manageTripleRooms(state, action) {
       const i = action.payload;
       let rooms = state.rooms.triple.room;
+      let details = state.details.triple;
       let updatedrooms = [];
+      let detailrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
           const element = rooms[index];
           updatedrooms.push(element);
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
+          });
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
+        detailrooms = details;
         let range = i - rooms.length;
         for (let index = 0; index < range; index++) {
           updatedrooms.push({
@@ -195,11 +270,19 @@ const reservationSlice = createSlice({
             enfant: 0,
             pension: "",
             total: 0,
-            details: {},
+          });
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
           });
         }
       }
       state.rooms.triple.room = updatedrooms;
+      state.details.triple = detailrooms;
     },
     changeTripleRooms(state, action) {
       let i = action.payload.index;
@@ -238,6 +321,17 @@ const reservationSlice = createSlice({
           state.hotel.price.triple[rooms[i].pension] * rooms[i].adulte +
           state.hotel.price.kids * rooms[i].enfant;
       }
+      let details = state.details.triple;
+      let adulte = [];
+      let enfant = [];
+      for (let index = 0; index < rooms[i].adulte; index++) {
+        adulte.push({ firstname: "", lastname: "" });
+      }
+      for (let index = 0; index < rooms[i].enfant; index++) {
+        enfant.push({ firstname: "", lastname: "", age: 0 });
+      }
+      details[i] = { adulte, enfant };
+      state.details.triple = details;
       state.rooms.triple.room = rooms;
     },
     totalTriple(state) {
@@ -251,14 +345,26 @@ const reservationSlice = createSlice({
     manageQuadrupleRooms(state, action) {
       const i = action.payload;
       let rooms = state.rooms.quadruple.room;
+      let details = state.details.quadruple;
       let updatedrooms = [];
+      let detailrooms = [];
       if (i < rooms.length) {
         for (let index = 0; index < i; index++) {
           const element = rooms[index];
           updatedrooms.push(element);
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
+          });
         }
       } else if (i > rooms.length) {
         updatedrooms = rooms;
+        detailrooms = details;
         let range = i - rooms.length;
         for (let index = 0; index < range; index++) {
           updatedrooms.push({
@@ -266,11 +372,20 @@ const reservationSlice = createSlice({
             enfant: 0,
             pension: "",
             total: 0,
-            details: {},
+          });
+          detailrooms.push({
+            adulte: [
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+              { firstname: "", lastname: "" },
+            ],
+            enfant: [],
           });
         }
       }
       state.rooms.quadruple.room = updatedrooms;
+      state.details.quadruple = detailrooms;
     },
     changeQuadrupleRooms(state, action) {
       let i = action.payload.index;
@@ -317,6 +432,17 @@ const reservationSlice = createSlice({
           state.hotel.price.quadruple[rooms[i].pension] * rooms[i].adulte +
           state.hotel.price.kids * rooms[i].enfant;
       }
+      let details = state.details.quadruple;
+      let adulte = [];
+      let enfant = [];
+      for (let index = 0; index < rooms[i].adulte; index++) {
+        adulte.push({ firstname: "", lastname: "" });
+      }
+      for (let index = 0; index < rooms[i].enfant; index++) {
+        enfant.push({ firstname: "", lastname: "", age: 0 });
+      }
+      details[i] = { adulte, enfant };
+      state.details.quadruple = details;
       state.rooms.quadruple.room = rooms;
     },
     totalQuadruple(state) {
@@ -335,6 +461,90 @@ const reservationSlice = createSlice({
         state.rooms.triple.total +
         state.rooms.quadruple.total;
       state.rooms.total = total;
+    },
+    updateUser(state, action) {
+      if (action.payload.type === "firstname") {
+        state.user.firstname = action.payload.value;
+      } else if (action.payload.type === "lastname") {
+        state.user.lastname = action.payload.value;
+      } else if (action.payload.type === "phone") {
+        state.user.phone = action.payload.value;
+      }
+    },
+    addDetails(state, action) {
+      if (action.payload.type === "single") {
+        let detail = state.details.single[action.payload.index];
+        if (action.payload.champs === "adulte") {
+          if (action.payload.name === "firstname") {
+            detail.adulte[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.adulte[action.payload.i].lastname = action.payload.value;
+          }
+        } else if (action.payload.champs === "enfant") {
+          if (action.payload.name === "firstname") {
+            detail.enfant[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.enfant[action.payload.i].lastname = action.payload.value;
+          } else if (action.payload.name === "age") {
+            detail.enfant[action.payload.i].age = action.payload.value;
+          }
+        }
+        state.details.single[action.payload.index] = detail;
+      } else if (action.payload.type === "double") {
+        let detail = state.details.double[action.payload.index];
+        if (action.payload.champs === "adulte") {
+          if (action.payload.name === "firstname") {
+            detail.adulte[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.adulte[action.payload.i].lastname = action.payload.value;
+          }
+        } else if (action.payload.champs === "enfant") {
+          if (action.payload.name === "firstname") {
+            detail.enfant[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.enfant[action.payload.i].lastname = action.payload.value;
+          } else if (action.payload.name === "age") {
+            detail.enfant[action.payload.i].age = action.payload.value;
+          }
+        }
+        state.details.double[action.payload.index] = detail;
+      } else if (action.payload.type === "triple") {
+        let detail = state.details.triple[action.payload.index];
+        if (action.payload.champs === "adulte") {
+          if (action.payload.name === "firstname") {
+            detail.adulte[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.adulte[action.payload.i].lastname = action.payload.value;
+          }
+        } else if (action.payload.champs === "enfant") {
+          if (action.payload.name === "firstname") {
+            detail.enfant[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.enfant[action.payload.i].lastname = action.payload.value;
+          } else if (action.payload.name === "age") {
+            detail.enfant[action.payload.i].age = action.payload.value;
+          }
+        }
+        state.details.triple[action.payload.index] = detail;
+      } else if (action.payload.type === "quadruple") {
+        let detail = state.details.quadruple[action.payload.index];
+        if (action.payload.champs === "adulte") {
+          if (action.payload.name === "firstname") {
+            detail.adulte[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.adulte[action.payload.i].lastname = action.payload.value;
+          }
+        } else if (action.payload.champs === "enfant") {
+          if (action.payload.name === "firstname") {
+            detail.enfant[action.payload.i].firstname = action.payload.value;
+          } else if (action.payload.name === "lastname") {
+            detail.enfant[action.payload.i].lastname = action.payload.value;
+          } else if (action.payload.name === "age") {
+            detail.enfant[action.payload.i].age = action.payload.value;
+          }
+        }
+        state.details.quadruple[action.payload.index] = detail;
+      }
     },
   },
 });

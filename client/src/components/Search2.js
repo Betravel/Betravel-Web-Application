@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchAction, getDestinations } from "../Redux/searchReducer";
 import { useNavigate } from "react-router-dom";
+import { reservationActions } from "../Redux/reservationReducer";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -118,6 +119,7 @@ function Search2() {
                   minDate={new Date(today)}
                   onChange={(newValue) => {
                     dispatch(searchAction.periode(newValue));
+                    dispatch(reservationActions.getPeriode(newValue));
                   }}
                   renderInput={(startProps, endProps) => (
                     <React.Fragment>
