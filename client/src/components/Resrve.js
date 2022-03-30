@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -18,16 +18,33 @@ function Reserve() {
   const auth = useSelector((state) => state.auth);
   const hotel = useSelector((state) => state.reservation.hotel);
   const rooms = useSelector((state) => state.reservation.rooms);
+  const details = useSelector((state) => state.reservation.details);
   const reservation = useSelector((state) => state.reservation);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(reservationActions.getUser(auth.user));
   }, [auth.user, dispatch]);
 
-  const [age, setAge] = useState("");
+  const UserChangeHandler = (event) => {
+    dispatch(
+      reservationActions.updateUser({
+        type: event.target.name,
+        value: event.target.value,
+      })
+    );
+  };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const changeDetails = (event, type, i, index, champs) => {
+    dispatch(
+      reservationActions.addDetails({
+        index,
+        type,
+        i,
+        name: event.target.name,
+        value: event.target.value,
+        champs,
+      })
+    );
   };
 
   const onSubmitHandler = (e) => {
@@ -79,21 +96,23 @@ function Reserve() {
           <div className="row">
             <div className="col-6">
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled">First Name</InputLabel>
+                <InputLabel htmlFor="firstname">First Name</InputLabel>
                 <FilledInput
-                  id="component-filled"
+                  id="firstname"
+                  name="firstname"
                   value={reservation.user.firstname}
-                  // onChange={UserChangeHandler}
+                  onChange={UserChangeHandler}
                 />
               </FormControl>
             </div>
             <div className="col-6">
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled">Last Name</InputLabel>
+                <InputLabel htmlFor="lastname">Last Name</InputLabel>
                 <FilledInput
-                  id="component-filled"
+                  id="lastname"
+                  name="lastname"
                   value={reservation.user.lastname}
-                  // onChange={UserChangeHandler}
+                  onChange={UserChangeHandler}
                 />
               </FormControl>
             </div>
@@ -102,23 +121,25 @@ function Reserve() {
           <div className="row">
             <div className="col-6">
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled">Email</InputLabel>
+                <InputLabel htmlFor="email">Email</InputLabel>
                 <FilledInput
-                  id="component-filled"
+                  id="email"
+                  name="email"
                   value={reservation.user.email}
-                  // onChange={UserChangeHandler}
+                  readOnly
                 />
               </FormControl>
             </div>
             <div className="col-6">
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled" fullWidth>
+                <InputLabel htmlFor="phone" fullWidth>
                   Phone
                 </InputLabel>
                 <FilledInput
-                  id="component-filled"
+                  id="phone"
+                  name="phone"
                   value={reservation.user.phone}
-                  // onChange={UserChangeHandler}
+                  onChange={UserChangeHandler}
                 />
               </FormControl>
             </div>
@@ -138,222 +159,179 @@ function Reserve() {
           <br />
           <div className="row">
             <div className="col-6">
-              {" "}
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled" fullWidth>
+                <InputLabel htmlFor="hotelname" fullWidth>
                   Hotel Name
                 </InputLabel>
-                <FilledInput id="component-filled" value={hotel.name} />
+                <FilledInput
+                  id="hotelname"
+                  name="hotelname"
+                  value={hotel.name}
+                  readOnly
+                />
               </FormControl>
             </div>
             <div className="col-6">
-              {" "}
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="component-filled" fullWidth>
-                  {" "}
+                <InputLabel htmlFor="hotellocation" fullWidth>
                   Location
                 </InputLabel>
-                <FilledInput id="component-filled" value={hotel.location} />
+                <FilledInput
+                  id="hotellocation"
+                  name="hotellocation"
+                  value={hotel.location}
+                  readOnly
+                />
               </FormControl>
             </div>
           </div>
           <br />
-          {rooms.single.room.map((room, i) => (
-            <div key={i}>
+          {rooms.single.room.map((room, indexroom) => (
+            <div key={indexroom}>
               <div className="row">
                 <div className="col-12">
-                  <h4>Room {i + 1} </h4>
+                  <h4>Room {indexroom + 1} </h4>
                 </div>
                 <div className="row">
                   <div className="col-6">
-                    {" "}
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
+                      <InputLabel htmlFor="single" fullWidth>
                         Type
                       </InputLabel>
-                      <FilledInput id="component-filled" value=" Single" />
+                      <FilledInput id="single" value="Single" readOnly />
                     </FormControl>
                   </div>
                   <div className="col-6">
-                    {" "}
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
-                        {" "}
+                      <InputLabel htmlFor="pension" fullWidth>
                         Pension
                       </InputLabel>
-                      <FilledInput id="component-filled" value={room.pension} />
+                      <FilledInput
+                        id="pension"
+                        name="pension"
+                        value={room.pension}
+                      />
                     </FormControl>
                   </div>
                 </div>
               </div>
               <br />
-              {Array.from(Array(room.adulte), (e, i) => {
+              {details.single[indexroom].adulte.map((adulte, indexadulte) => {
                 return (
-                  <div key={i}>
+                  <div key={indexadulte}>
                     <div className="row">
-                      <div className="col-4"> Adult {i + 1} : </div>
+                      <div className="col-4"> Adult {indexadulte + 1} : </div>
                       <div className="col-4">
-                        {" "}
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={adulte.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "single",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-4">
-                        {" "}
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            {" "}
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={adulte.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "single",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                     </div>
-                    <br />
                   </div>
                 );
               })}
-              {Array.from(Array(room.enfant), (e, i) => {
+              <br />
+              {details.single[indexroom].enfant.map((enfant, indexenfant) => {
                 return (
-                  <div key={i}>
+                  <div key={indexenfant}>
                     <div className="row">
-                      <div className="col-4"> Enfant {i + 1}: </div>
+                      <div className="col-4"> Enfant {indexenfant + 1}: </div>
                       <div className="col-3">
-                        {" "}
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={enfant.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "single",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-3">
-                        {" "}
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            {" "}
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={enfant.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "single",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-2">
-                        {" "}
                         <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">
-                            Age
-                          </InputLabel>
+                          <InputLabel id="age">Age</InputLabel>
                           <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            label="Age"
-                            onChange={handleChange}
-                          >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
-                    <br />
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-          <br />
-          {rooms.double.room.map((room, i) => (
-            <div key={i}>
-              <div className="row">
-                <div className="col-12">
-                  <h4>Room {i + 1} </h4>
-                </div>
-                <div className="row">
-                  <div className="col-6">
-                    <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
-                        Type
-                      </InputLabel>
-                      <FilledInput id="component-filled" value=" Double" />
-                    </FormControl>
-                  </div>
-                  <div className="col-6">
-                    <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
-                        Pension
-                      </InputLabel>
-                      <FilledInput id="component-filled" value={room.pension} />
-                    </FormControl>
-                  </div>
-                </div>
-              </div>
-              <br />
-              {Array.from(Array(room.adulte), (e, i) => {
-                return (
-                  <div key={i}>
-                    <div className="row">
-                      <div className="col-4"> Adult {i + 1} : </div>
-                      <div className="col-4">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
-                        </FormControl>
-                      </div>
-                      <div className="col-4">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
-                        </FormControl>
-                      </div>
-                    </div>
-                    <br />
-                  </div>
-                );
-              })}
-              <br />
-              {Array.from(Array(room.enfant), (e, i) => {
-                return (
-                  <div key={i}>
-                    <div className="row">
-                      <div className="col-4"> Enfant {i + 1}: </div>
-                      <div className="col-3">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
-                        </FormControl>
-                      </div>
-                      <div className="col-3">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
-                        </FormControl>
-                      </div>
-                      <div className="col-2">
-                        <FormControl
-                          variant="filled"
-                          sx={{ m: 1, minWidth: 120 }}
-                        >
-                          <InputLabel id="demo-simple-select-filled-label">
-                            Age
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-filled-label"
-                            id="demo-simple-select-filled"
-                            value={age}
-                            onChange={handleChange}
+                            labelId="age"
+                            id="age"
+                            name="age"
+                            value={enfant.age}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "single",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
                           >
                             <MenuItem value={0}>
                               <em>0</em>
@@ -381,86 +359,170 @@ function Reserve() {
             </div>
           ))}
           <br />
-          {rooms.triple.room.map((room, i) => (
-            <div key={i}>
+          {rooms.double.room.map((room, indexroom) => (
+            <div key={indexroom}>
               <div className="row">
                 <div className="col-12">
-                  <h4>Room {i + 1} </h4>
+                  <h4>Room {indexroom + 1} </h4>
                 </div>
                 <div className="row">
                   <div className="col-6">
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
+                      <InputLabel htmlFor="double" fullWidth>
                         Type
                       </InputLabel>
-                      <FilledInput id="component-filled" value="Triple" />
+                      <FilledInput id="double" value="Double" readOnly />
                     </FormControl>
                   </div>
                   <div className="col-6">
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
+                      <InputLabel htmlFor="pension" fullWidth>
                         Pension
                       </InputLabel>
-                      <FilledInput id="component-filled" value={room.pension} />
+                      <FilledInput
+                        id="pension"
+                        name="pension"
+                        value={room.pension}
+                      />
                     </FormControl>
                   </div>
                 </div>
               </div>
               <br />
-              {Array.from(Array(room.adulte), (e, i) => {
+
+              {details.double[indexroom].adulte.map((adulte, indexadulte) => {
                 return (
-                  <div key={i}>
+                  <div key={indexadulte}>
                     <div className="row">
-                      <div className="col-4"> Adult {i + 1} : </div>
+                      <div className="col-4"> Adult {indexadulte + 1} : </div>
                       <div className="col-4">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={adulte.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "double",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-4">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={adulte.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "double",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                     </div>
-                    <br />
                   </div>
                 );
               })}
               <br />
-              {Array.from(Array(room.enfant), (e, i) => {
+              {details.double[indexroom].enfant.map((enfant, indexenfant) => {
                 return (
-                  <div key={i}>
+                  <div key={indexenfant}>
                     <div className="row">
-                      <div className="col-4"> Enfant {i + 1}: </div>
+                      <div className="col-4"> Enfant {indexenfant + 1}: </div>
                       <div className="col-3">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={enfant.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "double",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-3">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={enfant.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "double",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-2">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Age
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
+                        <FormControl fullWidth>
+                          <InputLabel id="age">Age</InputLabel>
+                          <Select
+                            labelId="age"
+                            id="age"
+                            name="age"
+                            value={enfant.age}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "double",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={7}>7</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={9}>9</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={11}>11</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
+                          </Select>
                         </FormControl>
                       </div>
                     </div>
@@ -471,86 +533,170 @@ function Reserve() {
             </div>
           ))}
           <br />
-          {rooms.quadruple.room.map((room, i) => (
-            <div key={i}>
+          {rooms.triple.room.map((room, indexroom) => (
+            <div key={indexroom}>
               <div className="row">
                 <div className="col-12">
-                  <h4>Room {i + 1} </h4>
+                  <h4>Room {indexroom + 1} </h4>
                 </div>
                 <div className="row">
                   <div className="col-6">
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
+                      <InputLabel htmlFor="triple" fullWidth>
                         Type
                       </InputLabel>
-                      <FilledInput id="component-filled" value="Quadruple" />
+                      <FilledInput id="triple" value="Triple" readOnly />
                     </FormControl>
                   </div>
                   <div className="col-6">
                     <FormControl variant="filled" fullWidth>
-                      <InputLabel htmlFor="component-filled" fullWidth>
+                      <InputLabel htmlFor="pension" fullWidth>
                         Pension
                       </InputLabel>
-                      <FilledInput id="component-filled" value={room.pension} />
+                      <FilledInput
+                        id="pension"
+                        name="pension"
+                        value={room.pension}
+                      />
                     </FormControl>
                   </div>
                 </div>
               </div>
               <br />
-              {Array.from(Array(room.adulte), (e, i) => {
+
+              {details.triple[indexroom].adulte.map((adulte, indexadulte) => {
                 return (
-                  <div key={i}>
+                  <div key={indexadulte}>
                     <div className="row">
-                      <div className="col-4"> Adult {i + 1} : </div>
+                      <div className="col-4"> Adult {indexadulte + 1} : </div>
                       <div className="col-4">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={adulte.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "triple",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-4">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={adulte.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "triple",
+                                indexadulte,
+                                indexroom,
+                                "adulte"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                     </div>
-                    <br />
                   </div>
                 );
               })}
               <br />
-              {Array.from(Array(room.enfant), (e, i) => {
+              {details.triple[indexroom].enfant.map((enfant, indexenfant) => {
                 return (
-                  <div key={i}>
+                  <div key={indexenfant}>
                     <div className="row">
-                      <div className="col-4"> Enfant {i + 1}: </div>
+                      <div className="col-4"> Enfant {indexenfant + 1}: </div>
                       <div className="col-3">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Nom
+                          <InputLabel htmlFor="firstname" fullWidth>
+                            Prenom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="firstname"
+                            name="firstname"
+                            value={enfant.firstname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "triple",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-3">
                         <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Prenom
+                          <InputLabel htmlFor="lastname" fullWidth>
+                            Nom
                           </InputLabel>
-                          <FilledInput id="component-filled" />
+                          <FilledInput
+                            id="lastname"
+                            name="lastname"
+                            value={enfant.lastname}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "triple",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          />
                         </FormControl>
                       </div>
                       <div className="col-2">
-                        <FormControl variant="filled" fullWidth>
-                          <InputLabel htmlFor="component-filled" fullWidth>
-                            Age
-                          </InputLabel>
-                          <FilledInput id="component-filled" />
+                        <FormControl fullWidth>
+                          <InputLabel id="age">Age</InputLabel>
+                          <Select
+                            labelId="age"
+                            id="age"
+                            name="age"
+                            value={enfant.age}
+                            onChange={(event) => {
+                              changeDetails(
+                                event,
+                                "triple",
+                                indexenfant,
+                                indexroom,
+                                "enfant"
+                              );
+                            }}
+                          >
+                            <MenuItem value={0}>
+                              <em>0</em>
+                            </MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={7}>7</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={9}>9</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={11}>11</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
+                          </Select>
                         </FormControl>
                       </div>
                     </div>
@@ -558,6 +704,184 @@ function Reserve() {
                   </div>
                 );
               })}
+            </div>
+          ))}
+          <br />
+          {rooms.quadruple.room.map((room, indexroom) => (
+            <div key={indexroom}>
+              <div className="row">
+                <div className="col-12">
+                  <h4>Room {indexroom + 1} </h4>
+                </div>
+                <div className="row">
+                  <div className="col-6">
+                    <FormControl variant="filled" fullWidth>
+                      <InputLabel htmlFor="quadruple" fullWidth>
+                        Type
+                      </InputLabel>
+                      <FilledInput id="quadruple" value="Quadruple" readOnly />
+                    </FormControl>
+                  </div>
+                  <div className="col-6">
+                    <FormControl variant="filled" fullWidth>
+                      <InputLabel htmlFor="pension" fullWidth>
+                        Pension
+                      </InputLabel>
+                      <FilledInput
+                        id="pension"
+                        name="pension"
+                        value={room.pension}
+                      />
+                    </FormControl>
+                  </div>
+                </div>
+              </div>
+              <br />
+
+              {details.quadruple[indexroom].adulte.map(
+                (adulte, indexadulte) => {
+                  return (
+                    <div key={indexadulte}>
+                      <div className="row">
+                        <div className="col-4"> Adult {indexadulte + 1} : </div>
+                        <div className="col-4">
+                          <FormControl variant="filled" fullWidth>
+                            <InputLabel htmlFor="firstname" fullWidth>
+                              Prenom
+                            </InputLabel>
+                            <FilledInput
+                              id="firstname"
+                              name="firstname"
+                              value={adulte.firstname}
+                              onChange={(event) => {
+                                changeDetails(
+                                  event,
+                                  "quadruple",
+                                  indexadulte,
+                                  indexroom,
+                                  "adulte"
+                                );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <div className="col-4">
+                          <FormControl variant="filled" fullWidth>
+                            <InputLabel htmlFor="lastname" fullWidth>
+                              Nom
+                            </InputLabel>
+                            <FilledInput
+                              id="lastname"
+                              name="lastname"
+                              value={adulte.lastname}
+                              onChange={(event) => {
+                                changeDetails(
+                                  event,
+                                  "quadruple",
+                                  indexadulte,
+                                  indexroom,
+                                  "adulte"
+                                );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+              <br />
+              {details.quadruple[indexroom].enfant.map(
+                (enfant, indexenfant) => {
+                  return (
+                    <div key={indexenfant}>
+                      <div className="row">
+                        <div className="col-4"> Enfant {indexenfant + 1}: </div>
+                        <div className="col-3">
+                          <FormControl variant="filled" fullWidth>
+                            <InputLabel htmlFor="firstname" fullWidth>
+                              Prenom
+                            </InputLabel>
+                            <FilledInput
+                              id="firstname"
+                              name="firstname"
+                              value={enfant.firstname}
+                              onChange={(event) => {
+                                changeDetails(
+                                  event,
+                                  "quadruple",
+                                  indexenfant,
+                                  indexroom,
+                                  "enfant"
+                                );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <div className="col-3">
+                          <FormControl variant="filled" fullWidth>
+                            <InputLabel htmlFor="lastname" fullWidth>
+                              Nom
+                            </InputLabel>
+                            <FilledInput
+                              id="lastname"
+                              name="lastname"
+                              value={enfant.lastname}
+                              onChange={(event) => {
+                                changeDetails(
+                                  event,
+                                  "quadruple",
+                                  indexenfant,
+                                  indexroom,
+                                  "enfant"
+                                );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <div className="col-2">
+                          <FormControl fullWidth>
+                            <InputLabel id="age">Age</InputLabel>
+                            <Select
+                              labelId="age"
+                              id="age"
+                              name="age"
+                              value={enfant.age}
+                              onChange={(event) => {
+                                changeDetails(
+                                  event,
+                                  "quadruple",
+                                  indexenfant,
+                                  indexroom,
+                                  "enfant"
+                                );
+                              }}
+                            >
+                              <MenuItem value={0}>
+                                <em>0</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                              <MenuItem value={4}>4</MenuItem>
+                              <MenuItem value={5}>5</MenuItem>
+                              <MenuItem value={6}>6</MenuItem>
+                              <MenuItem value={7}>7</MenuItem>
+                              <MenuItem value={8}>8</MenuItem>
+                              <MenuItem value={9}>9</MenuItem>
+                              <MenuItem value={10}>10</MenuItem>
+                              <MenuItem value={11}>11</MenuItem>
+                              <MenuItem value={12}>12</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </div>
+                      </div>
+                      <br />
+                    </div>
+                  );
+                }
+              )}
             </div>
           ))}
         </div>

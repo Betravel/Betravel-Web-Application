@@ -30,7 +30,6 @@ function DetailHotel() {
   const reservation = useSelector((state) => state.reservation);
   const Hotel = useSelector((state) => state.reservation.hotel);
   const rooms = useSelector((state) => state.reservation.rooms);
-  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const [image, setimage] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
@@ -41,8 +40,7 @@ function DetailHotel() {
 
   useEffect(() => {
     dispatch(getHotel(id));
-    dispatch(reservationActions.getPeriode(search.periode));
-  }, [dispatch, id, search.periode]);
+  }, [dispatch, id]);
 
   const changeDate = (value) => {
     dispatch(reservationActions.getPeriode(value));
@@ -590,7 +588,7 @@ function DetailHotel() {
                                               labelId="enfantd"
                                               name="enfantd"
                                               value={room.enfant}
-                                              onChange={(event, i) => {
+                                              onChange={(event) => {
                                                 ChangeDoubleRooms(event, i);
                                               }}
                                             >
