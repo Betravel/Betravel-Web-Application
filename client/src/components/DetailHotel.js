@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { roomsAction, getPrices } from "../Redux/roomsReducer";
-import { getHotel } from "../Redux/hotelReducer";
+import { getHotel, reservationActions } from "../Redux/reservationReducer";
 import Rating from "@mui/material/Rating";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -23,92 +22,110 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-
+import DateRangePicker from "@mui/lab/DateRangePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import TextField from "@mui/material/TextField";
 function DetailHotel() {
-  const rooms = useSelector((state) => state.rooms);
-  const Hotel = useSelector((state) => state.hotel);
+  const reservation = useSelector((state) => state.reservation);
+  const Hotel = useSelector((state) => state.reservation.hotel);
+  const rooms = useSelector((state) => state.reservation.rooms);
   const dispatch = useDispatch();
   const [image, setimage] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
   const [nbRoomDouble, setnbRoomDouble] = useState(0);
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
   const [nbRoomQuadruple, setnbRoomQuadruple] = useState(0);
-
   let { id } = useParams();
 
   useEffect(() => {
     dispatch(getHotel(id));
-    dispatch(getPrices(id));
   }, [dispatch, id]);
+
+  const changeDate = (value) => {
+    dispatch(reservationActions.getPeriode(value));
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
+  };
 
   const changeNbsingleRooms = (e) => {
     setnbRoomSingle(parseInt(e.target.value));
-    dispatch(roomsAction.manageSingleRooms(parseInt(e.target.value)));
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.manageSingleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbDoubleRooms = (e) => {
     setnbRoomDouble(parseInt(e.target.value));
-    dispatch(roomsAction.manageDoubleRooms(parseInt(e.target.value)));
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.manageDoubleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbTripleRooms = (e) => {
     setnbRoomTriple(parseInt(e.target.value));
-    dispatch(roomsAction.manageTripleRooms(parseInt(e.target.value)));
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.manageTripleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.getTotal());
   };
 
   const changeNbQuadrupleRooms = (e) => {
     setnbRoomQuadruple(parseInt(e.target.value));
-    dispatch(roomsAction.manageQuadrupleRooms(parseInt(e.target.value)));
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.manageQuadrupleRooms(parseInt(e.target.value)));
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeSingleRooms = (e, i) => {
     dispatch(
-      roomsAction.changeSingleRooms({
+      reservationActions.changeSingleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.totalSingle());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeDoubleRooms = (e, i) => {
     dispatch(
-      roomsAction.changeDoubleRooms({
+      reservationActions.changeDoubleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.totalDouble());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeTripleRooms = (e, i) => {
     dispatch(
-      roomsAction.changeTripleRooms({
+      reservationActions.changeTripleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.totalTriple());
+    dispatch(reservationActions.getTotal());
   };
 
   const ChangeQuadrupleRooms = (e, i) => {
     dispatch(
-      roomsAction.changeQuadrupleRooms({
+      reservationActions.changeQuadrupleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(roomsAction.getTotal());
+    dispatch(reservationActions.totalQuadruple());
+    dispatch(reservationActions.getTotal());
   };
-
 
   const [open, setOpen] = useState(false);
 
@@ -119,6 +136,18 @@ function DetailHotel() {
   const handleClose = () => {
     setOpen(false);
   };
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+  today = mm + "-" + dd + "-" + yyyy;
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <br />
@@ -289,6 +318,27 @@ function DetailHotel() {
         <h3 aligntext="right">Availablity</h3>
         <br />
       </div>
+      <div className="row">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateRangePicker
+            startText="Check-in"
+            endText="Check-out"
+            value={reservation.periode}
+            minDate={new Date(today)}
+            required
+            onChange={(newValue) => {
+              changeDate(newValue);
+            }}
+            renderInput={(startProps, endProps) => (
+              <React.Fragment>
+                <TextField {...startProps} fullWidth />
+                <Box sx={{ mx: 2 }}> to </Box>
+                <TextField {...endProps} fullWidth />
+              </React.Fragment>
+            )}
+          />
+        </LocalizationProvider>
+      </div>
       <br />
       <div className="row">
         <TableContainer component={Paper}>
@@ -454,7 +504,7 @@ function DetailHotel() {
                       alt=""
                     />
                   </TableCell>
-                  <TableCell align="center">{rooms.single.total}</TableCell>.
+                  <TableCell align="center">{rooms.single.total}</TableCell>
                 </TableRow>
               ) : (
                 ""
@@ -538,7 +588,7 @@ function DetailHotel() {
                                               labelId="enfantd"
                                               name="enfantd"
                                               value={room.enfant}
-                                              onChange={(event, i) => {
+                                              onChange={(event) => {
                                                 ChangeDoubleRooms(event, i);
                                               }}
                                             >
