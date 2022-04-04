@@ -35,7 +35,14 @@ function ListeHotel() {
         </div>
         <div className="col-8">
           {hotels.map((hotel, index) => (
-            <div className="card" style={{ height: "300px", width: "100%" }}>
+            <div
+              className="card"
+              style={{
+                height: "300px",
+                width: "100%",
+                backgroundColor: "#E9FBF3",
+              }}
+            >
               <div className="card-body">
                 <div className="row">
                   <div
@@ -60,9 +67,8 @@ function ListeHotel() {
                     </h3>
                     <div style={{ marginRight: "40%" }}>
                       <img
-                        src="https://res.cloudinary.com/betravel/image/upload/v1646934456/BeTravel/assets/icons8-place-marker_zknh1z.gif"
+                        src="https://img.icons8.com/android/20/000000/marker.png"
                         alt=""
-                        width="50"
                       />
                       {hotel.location}
                     </div>
@@ -115,7 +121,7 @@ function ListeHotel() {
 
                           {hotel.price.single.ai ||
                           hotel.price.double.ai ||
-                          hotel.price.triple.ai ||  
+                          hotel.price.triple.ai ||
                           hotel.price.quadruple.ai ? (
                             <p>
                               <img
@@ -150,10 +156,12 @@ function ListeHotel() {
                           )}
 
                           <Link to={"/Hotel/Detail/" + hotel._id}>
-                            <button className="btn btn-primary">
-                              {" "}
-                              show details
-                            </button>
+                            <div className="Search__actions">
+                              <button className="btn btn-primary">
+                                {" "}
+                                show details
+                              </button>
+                            </div>
                           </Link>
                         </div>
                       </div>

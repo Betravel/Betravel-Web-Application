@@ -150,13 +150,11 @@ function DetailHotel() {
   today = mm + "-" + dd + "-" + yyyy;
   return (
     <div className="container" style={{ marginTop: "100px" }}>
-      <br />
-      <br />
       <div className="row">
-        <h1> {Hotel.name}</h1>
-        <h3>
-          <Rating name="read-only" value={Hotel.rating} readOnly />
-        </h3>
+        <h1>
+          {" "}
+          {Hotel.name} <Rating name="read-only" value={Hotel.rating} readOnly />{" "}
+        </h1>
       </div>
       <div className="row">
         <div className="col-2"></div>
@@ -195,12 +193,17 @@ function DetailHotel() {
         </div>
       </div>
       <div className="row">
-        <h3 aligntext="right">Description</h3>
-        <p>{Hotel.description}</p>
+        <div className="col-12" style={{ textAlign: "left" }}>
+          <h3 style={{ textDecoration: "underline" }}>Description</h3>
+          <br />
+          <p>{Hotel.description}</p>
+        </div>
       </div>
       <div className="row">
-        <h3>Options</h3>
-        <br />
+        <h3 style={{ textDecoration: "underline", textAlign: "left" }}>
+          Options
+        </h3>
+        <br /> <br />
         {Hotel.options.wifi ? (
           <div className="col-3">
             <h6 align="left">
@@ -315,9 +318,12 @@ function DetailHotel() {
       </div>
       <br />
       <div className="row">
-        <h3 aligntext="right">Availablity</h3>
+        <h3 style={{ textDecoration: "underline", textAlign: "left" }}>
+          Availablity
+        </h3>
         <br />
       </div>
+      <br />
       <div className="row">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateRangePicker
@@ -1023,14 +1029,11 @@ function DetailHotel() {
           </Table>
         </TableContainer>
       </div>
+      <br /> <br />
       <Link to="/Hotel/Reserve">
-        <IconButton>
-          <img
-            src="https://img.icons8.com/plasticine/100/000000/arrow.png"
-            alt=""
-            align="right"
-          />
-        </IconButton>
+        <div className="Search__actions">
+          <button type="button">Book Now </button>
+        </div>
       </Link>
     </div>
   );

@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Contact.css";
 import img from "../assets/pexels14 (2).png";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 function Contact() {
   const history = useNavigate();
   const [firstname, setfirstname] = useState("");
@@ -44,7 +46,6 @@ function Contact() {
         <div className="container Contact">
           <div className="row" align="center">
             <h1>Have you question?</h1>
-
             <h2>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +77,7 @@ function Contact() {
             </h2>
           </div>
           <br />
+
           <div className="row">
             <div
               className="col-5"
@@ -87,7 +89,25 @@ function Contact() {
               <div className="container">
                 <form className="row g-3" onSubmit={send}>
                   <div className="col-md-6">
-                    <label htmlFor="firstname" className="form-label">
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "25ch" },
+                        input: { backgroundColor :"white"},
+                      }}
+                      
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="Firstname"
+                        label="Firstname"
+                        variant="outlined"
+                        onChange={(e) => setfirstname(e.target.value)}
+                        required
+                      />
+                    </Box>
+                    {/* <label htmlFor="firstname" className="form-label">
                       Firstname
                     </label>
                     <input
@@ -97,10 +117,26 @@ function Contact() {
                       onChange={(e) => setfirstname(e.target.value)}
                       style={{ background: "white" }}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="lastname" className="form-label">
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "25ch" },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="Lastname"
+                        label="Lastname"
+                        variant="outlined"
+                        onChange={(e) => setlastname(e.target.value)}
+                        required
+                      />
+                    </Box>
+                    {/* <label htmlFor="lastname" className="form-label">
                       Lastname
                     </label>
                     <input
@@ -110,10 +146,26 @@ function Contact() {
                       onChange={(e) => setlastname(e.target.value)}
                       style={{ background: "white" }}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="email" className="form-label">
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "25ch" },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="email"
+                        label="email"
+                        variant="outlined"
+                        onChange={(e) => setemail(e.target.value)}
+                        required
+                      />
+                    </Box>
+                    {/* <label htmlFor="email" className="form-label">
                       Email
                     </label>
                     <input
@@ -123,10 +175,31 @@ function Contact() {
                       onChange={(e) => setemail(e.target.value)}
                       style={{ background: "white" }}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="phone" className="form-label">
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "25ch" },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="outlined-number"
+                        label="phone"
+                        type="phone"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        pattern="[0-9]{8}"
+                        placeholder="8 digital number"
+                        onChange={(e) => setphone(e.target.value)}
+                        required
+                      />
+                    </Box>
+                    {/* <label htmlFor="phone" className="form-label">
                       Phone Number
                     </label>
                     <input
@@ -138,10 +211,19 @@ function Contact() {
                       onChange={(e) => setphone(e.target.value)}
                       style={{ background: "white" }}
                       required
-                    />
+                    /> */}
                   </div>
                   <div className="col-12">
-                    <label htmlFor="message" className="form-label">
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="message"
+                      multiline
+                      rows={4}
+                      onChange={(e) => setmessage(e.target.value)}
+                      required
+                      fullWidth
+                    />
+                    {/* <label htmlFor="message" className="form-label">
                       Message
                     </label>
                     <textarea
@@ -151,21 +233,23 @@ function Contact() {
                       onChange={(e) => setmessage(e.target.value)}
                       style={{ background: "white" }}
                       required
-                    />
+                    /> */}
                   </div>
                   <br />
                   <div className="col-12">
-                    <button type="submit" className="btn">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M0 12l11 3.1 7-8.1-8.156 5.672-4.312-1.202 15.362-7.68-3.974 14.57-3.75-3.339-2.17 2.925v-.769l-2-.56v7.383l4.473-6.031 4.527 4.031 6-22z" />
-                      </svg>
-                      &ensp; &ensp; Send
-                    </button>
+                    <div className="Search__actions">
+                      <button type="submit" className="btn ">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M0 12l11 3.1 7-8.1-8.156 5.672-4.312-1.202 15.362-7.68-3.974 14.57-3.75-3.339-2.17 2.925v-.769l-2-.56v7.383l4.473-6.031 4.527 4.031 6-22z" />
+                        </svg>
+                        &ensp; &ensp; Send
+                      </button>
+                    </div>
                   </div>
                 </form>
                 <br />

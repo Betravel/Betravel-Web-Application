@@ -17,6 +17,7 @@ import Reserve from "./components/Resrve";
 import "./App.css";
 import ListeEvent from "./components/ListeEvent";
 import DetailEvent from "./components/DetailEvent";
+import ReserveEvent from "./components/ReserveEvent";
 
 function App() {
   return (
@@ -40,6 +41,8 @@ function App() {
           <Route path="/Hotel/Reserve" element={<Reserve />} />
           <Route path="/Event/Liste" element={<ListeEvent />} />
           <Route path="/Event/Detail/:id" element={<DetailEvent />} />
+          <Route path="/Event/Reserve" element={<ReserveEvent />} />
+          
         </Routes>
       </Router>
     </div>

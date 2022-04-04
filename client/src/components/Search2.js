@@ -132,66 +132,7 @@ function Search2() {
               </LocalizationProvider>
             </div>
             <br />
-            <div className="row">
-              <label
-                className="form-label"
-                style={{ fontweight: "bold", color: "#43352c" }}
-              >
-                Adultes
-              </label>
-              <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                <Fab size="small" aria-label="add" onClick={AddAdultes}>
-                  <AddIcon />
-                </Fab>
-                <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {search.adulte}
-                </Fab>
-                <Fab size="small" aria-label="edit" onClick={ReduceAdultes}>
-                  <RemoveRoundedIcon />
-                </Fab>
-              </Box>
-            </div>
-            <br />
-            <div className="row">
-              <label
-                className="form-label"
-                style={{ fontweight: "bold", color: "#43352c" }}
-              >
-                Enfants
-              </label>
-              <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                <Fab size="small" aria-label="add" onClick={AddEnfants}>
-                  <AddIcon />
-                </Fab>
-                <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {search.enfant}
-                </Fab>
-                <Fab size="small" aria-label="edit" onClick={ReduceEnfants}>
-                  <RemoveRoundedIcon />
-                </Fab>
-              </Box>
-            </div>
-            <br />
-            <div className="row">
-              <label
-                className="form-label"
-                style={{ fontweight: "bold", color: "#43352c" }}
-              >
-                Chambres
-              </label>
-              <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                <Fab size="small" aria-label="add" onClick={AddChambres}>
-                  <AddIcon />
-                </Fab>
-                <Fab disabled variant="extended" style={{ color: "black" }}>
-                  {search.chambre}
-                </Fab>
-                <Fab size="small" aria-label="edit" onClick={ReduceChambres}>
-                  <RemoveRoundedIcon />
-                </Fab>
-              </Box>
-            </div>
-            <br />
+
             <div className="row">
               <div className="Search__actions">
                 <button type="submit">Search</button>
