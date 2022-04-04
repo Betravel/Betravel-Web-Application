@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { reservationActions } from "../Redux/reservationReducer";
 import axios from "axios";
+import RecapHotel from "./RecapHotel";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
@@ -931,7 +932,9 @@ function Reserve() {
             </div>
           </form>
         </div>
-        <div className="col-4"></div>
+        <div className="col-4">
+          <RecapHotel />
+        </div>
       </div>
     </div>
   );
