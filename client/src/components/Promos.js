@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import img from "../assets/Djerba-Plaza.webp";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -54,35 +53,42 @@ function Promos() {
             <Slider {...settings}>
               {hotels.map((hotel, index) => (
                 <div key={index}>
-                  <div className="wrapper">
-                    <h1>{hotel.name}</h1>{" "}
-                    <div
-                      className="image "
-                      style={{ backgroundImage: `url(${img})` }}
-                    ></div>
-                    <div className="details">
-                      <h1>
-                        <em>{hotel.location}</em>
-                      </h1>
+                  <div class="card" style={{ width: "95%" }}>
+                    {hotel.images[0] ? (
+                      <img src={hotel.images[0].url} alt="" height="100px" />
+                    ) : (
+                      <img
+                        src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
+                        alt=""
+                        height="100px"
+                      />
+                    )}
+                    <div class="card-body">
+                      <h3 class="card-title">{hotel.name}</h3>
+                      <h5 class="card-title">{hotel.location}</h5>
+                      <p class="card-text">
+                        <div>
+                          <h3>
+                            {" "}
+                            A partir{" "}
+                            {hotel.price.best -
+                              (hotel.price.best * hotel.promo) / 100}{" "}
+                            DT
+                          </h3>
+                          <div>
+                            <h6 style={{ textDecoration: "line-through" }}>
+                              {hotel.price.best} DT
+                            </h6>
+                            <h6>{hotel.promo}% off</h6>
+                          </div>
+                        </div>
+                      </p>
+                      <Link to={"/Hotel/Detail/" + hotel._id}>
+                        <div className="Search__actions">
+                          <button className="btn button"> show details</button>
+                        </div>
+                      </Link>
                     </div>
-                    <div>
-                      <h3>
-                        {" "}
-                        A partir{" "}
-                        {hotel.price.best -
-                          (hotel.price.best * hotel.promo) / 100}{" "}
-                        DT
-                      </h3>
-                      <div>
-                        <h6 style={{ textDecoration: "line-through" }}>
-                          {hotel.price.best} DT
-                        </h6>
-                        <h6>{hotel.promo}% off</h6>
-                      </div>
-                    </div>
-                    <Link to={"/Hotel/Detail/" + hotel._id}>
-                      <button className="btn button"> show details</button>
-                    </Link>
                   </div>
                 </div>
               ))}

@@ -24,7 +24,15 @@ export const logout = () => {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { isAuth: false },
+  initialState: {
+    isAuth: false,
+    user: {
+      firstname: "",
+      lastname: "",
+      phone: 0,
+      email: "",
+    },
+  },
   reducers: {
     authentified(state, action) {
       state.isAuth = true;
@@ -32,7 +40,12 @@ const authSlice = createSlice({
     },
     notauthentified(state) {
       state.isAuth = false;
-      state.user = {};
+      state.user = {
+        firstname: "",
+        lastname: "",
+        phone: 0,
+        email: "",
+      };
     },
   },
 });

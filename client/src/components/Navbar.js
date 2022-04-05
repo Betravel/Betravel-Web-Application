@@ -13,10 +13,7 @@ function Navbar() {
   };
 
   const changeBackground = () => {
-    if (
-      window.scrollY >= 66 ||
-      window.innerWidth < 991 
-    ) {
+    if (window.scrollY >= 66 || window.innerWidth < 991) {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -31,7 +28,7 @@ function Navbar() {
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
       style={
         navbar
-          ? { backgroundColor: "#000B18" }
+          ? { backgroundColor: "#21445B" }
           : { backgroundColor: "transparent" }
       }
     >
@@ -62,13 +59,13 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link
+              <a
                 className="btn active"
-                to="/"
+                href="/"
                 style={{ color: "white", fontSize: "25px" }}
               >
                 Home
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
               <Link
@@ -80,14 +77,13 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/Contact"
+              <a
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
+                href="/#contact"
               >
-                {" "}
-                Contact{" "}
-              </Link>
+                Contact
+              </a>
             </li>
             <li className="nav-item dropdown">
               <button

@@ -2,8 +2,8 @@
   font: inherit;
   cursor: pointer;
   padding: 1rem 2rem;
-  border: 1px solid #07002a;
-  background-color: #07002a;
+  border: 1px solid #6c9574;
+  background-color: #6c9574;
   color: white;
   border-radius: 12px;
   margin-right: 1rem;
@@ -13,16 +13,5 @@
 .Search__actions button:active {
   background-color: white;
   border-color: white;
-  color: #07002a;
-}
-
-.Search__actions button.alternative {
-  color: #220131;
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.Search__actions button.alternative:hover,
-.Search__actions button.alternative:active {
-  background-color: #ddb3f8;
+  color: #6c9574;
 }
