@@ -4,17 +4,20 @@ const EventSchema = new mongoose.Schema({
   name: {
     type: String,
   },
- location : {
+  location: {
+    type: String,
+  },
+  type: {
+    type: String,
+  },
+  description: {
     type: String,
   },
   date: {
-    type: String,
-  },
-  hour: {
-    type: String,
+    type: JSON,
   },
   periode: {
-    type: String,
+    type: Number,
   },
   price: {
     type: Number,
@@ -23,8 +26,10 @@ const EventSchema = new mongoose.Schema({
     type: Array,
   },
   note: {
-    type: String,
+    type: Array,
   },
-
+  image: {
+    type: Array,
+  },
 });
 module.exports = mongoose.model("Events", EventSchema);

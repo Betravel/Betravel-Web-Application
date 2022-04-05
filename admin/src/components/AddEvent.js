@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { eventActions } from "../Redux/eventReducer";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import DateTimePicker from "@mui/lab/DateTimePicker";
+import DatePicker from "@mui/lab/DatePicker";
 import frLocale from "date-fns/locale/fr";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -11,8 +11,17 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useState } from "react";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function AddEvent() {
   const event = useSelector((state) => state.event);
+  const [loading, setLoading] = useState(false);
+  const [images, setimages] = useState([]);
+  const history = useNavigate();
   const dispatch = useDispatch();
   const updateEvent = (e) => {
     dispatch(
@@ -59,7 +68,26 @@ function AddEvent() {
       })
     );
   };
-  const onsubmitform = () => {};
+  const onsubmitform = () => {
+    const data = new FormData();
+    data.append("name", event.name);
+    data.append("location", event.location);
+    data.append("type", event.type);
+    data.append("date", JSON.stringify(event.date));
+    data.append("periode", event.periode);
+    data.append("price", event.price);
+    data.append("program", event.program);
+    data.append("note", event.note);
+    data.append("image", images);
+    axios
+      .post("http://localhost:8000/api/event/add", data)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        history("/");
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <br />
@@ -107,41 +135,112 @@ function AddEvent() {
           </div>
         </div>
         <br />
+        {event.type === "camping" ? (
+          <div className="row">
+            <div className="col-4">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+                fullWidth
+              >
+                <DatePicker
+                  mask={"__/__/____"}
+                  label="Day"
+                  value={event.date.day}
+                  onChange={(value) => updateDate("date", value)}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-4">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <TimePicker
+                  label="From"
+                  value={event.date.from}
+                  onChange={(value) => updateDate("fromdate", value)}
+                  renderInput={(params) => <TextField {...params} />}
+                  shouldDisableTime={(timeValue, clockType) => {
+                    if (clockType === "minutes" && timeValue % 5) {
+                      return true;
+                    }
+                    return false;
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-4">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <TimePicker
+                  label="Until"
+                  value={event.date.to}
+                  onChange={(value) => updateDate("todate", value)}
+                  renderInput={(params) => <TextField {...params} />}
+                  shouldDisableTime={(timeValue, clockType) => {
+                    if (clockType === "minutes" && timeValue % 5) {
+                      return true;
+                    }
+                    return false;
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+        ) : (
+          <div className="row">
+            <div className="col-5">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+                fullWidth
+              >
+                <DatePicker
+                  label="From"
+                  mask={"__/__/____"}
+                  value={event.date.from}
+                  onChange={(value) => updateDate("fromdate", value)}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-2">
+              <h4>To</h4>
+            </div>
+            <div className="col-5">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+                fullWidth
+              >
+                <DatePicker
+                  label="Until"
+                  mask={"__/__/____"}
+                  value={event.date.to}
+                  onChange={(value) => updateDate("todate", value)}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+        )}
+        <br />
         <div className="row">
-          <div className="col-5">
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-              fullWidth
-            >
-              <DateTimePicker
-                name="fromdate"
-                renderInput={(props) => <TextField {...props} />}
-                label="From"
-                value={event.date[0]}
-                onChange={(value) => updateDate("fromdate", value)}
-                fullWidth
-              />
-            </LocalizationProvider>
-          </div>
-          <div className="col-2">
-            <h4>To</h4>
-          </div>
-          <div className="col-5">
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-              fullWidth
-            >
-              <DateTimePicker
-                name="todate"
-                renderInput={(props) => <TextField {...props} />}
-                label="To"
-                value={event.date[1]}
-                onChange={(value) => updateDate("todate", value)}
-                fullWidth
-              />
-            </LocalizationProvider>
+          <div className="col-12">
+            <TextField
+              name="description"
+              label="Description"
+              variant="outlined"
+              multiline
+              rows={3}
+              style={{ width: "100%" }}
+              value={event.description}
+              onChange={updateEvent}
+            />
           </div>
         </div>
         <br />
@@ -251,6 +350,51 @@ function AddEvent() {
           </button>
         </div>
         <br />
+        <div className="row">
+          <div className="col-4">
+            <h4>Price</h4>
+          </div>
+          <div className="col-8">
+            <TextField
+              id="price"
+              name="price"
+              label="Price"
+              variant="outlined"
+              type="number"
+              value={event.price}
+              onChange={updateEvent}
+              fullWidth
+            />
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-12">
+            <input
+              id="images"
+              label="image"
+              type="file"
+              multiple
+              variant="filled"
+              accept="image/png,image/jpg"
+              onChange={(e) => setimages(e.target.files)}
+            />
+          </div>
+        </div>
+        <br />
+        <LoadingButton
+          color="secondary"
+          onClick={(e) => {
+            setLoading(true);
+            onsubmitform(e);
+          }}
+          loading={loading}
+          loadingPosition="start"
+          startIcon={<SaveIcon />}
+          variant="contained"
+        >
+          Save
+        </LoadingButton>
       </form>
     </div>
   );

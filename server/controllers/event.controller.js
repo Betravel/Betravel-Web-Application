@@ -2,6 +2,7 @@ const Event = require("../models/event.model");
 
 module.exports.addEvent = (request, response) => {
   const event = new Event(request.body);
+  console.log(event);
   event
     .save()
     .then((res) => response.json(res))
