@@ -1012,6 +1012,10 @@ function DetailHotel() {
                       src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
                       alt=""
                     />
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
                   </TableCell>
                   <TableCell align="center">{rooms.quadruple.total}</TableCell>
                 </TableRow>

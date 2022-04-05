@@ -71,52 +71,52 @@ function Events() {
                         {event.location}
                       </div>
                       <div className="row">
-                        <div className="col-6">
-                          <div align="left">
-                            <div className="row ">
-                              <div className="col-4">
-                                <img
-                                  src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
-                                  alt=""
-                                />{" "}
-                              </div>
-                              <div className="col-8">{event.date}</div>
+                        <div align="left">
+                          <div className="row ">
+                            <div className="col-4">
+                              <img
+                                src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
+                                alt=""
+                              />{" "}
                             </div>
-                          </div>
-                          <br />
-                          <div align="left">
-                            <div className="row ">
-                              <div className="col-4">
-                                <img
-                                  src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/20/000000/external-time-education-xnimrodx-lineal-xnimrodx.png"
-                                  alt=""
-                                />{" "}
-                              </div>
-                              <div className="col-8">{event.hour}</div>
-                            </div>
-                          </div>
-                          <br />
-                          <div align="left">
-                            <div className="row ">
-                              <div className="col-4">
-                                <img
-                                  src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
-                                  alt=""
-                                />{" "}
-                              </div>
-                              <div className="col-8">Circuit de 20 Km</div>
-                            </div>
+                            <div className="col-8">{event.date}</div>
                           </div>
                         </div>
-                        <div className="col-6">
-                          <div>
-                            <h3> {event.price} DT</h3>
-
+                        <br />
+                        <div align="left">
+                          <div className="row ">
+                            <div className="col-4">
+                              <img
+                                src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/20/000000/external-time-education-xnimrodx-lineal-xnimrodx.png"
+                                alt=""
+                              />{" "}
+                            </div>
+                            <div className="col-8">{event.hour}</div>
+                          </div>
+                        </div>
+                        <br />
+                        <div align="left">
+                          <div className="row ">
+                            <div className="col-4">
+                              <img
+                                src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
+                                alt=""
+                              />{" "}
+                            </div>
+                            <div className="col-8">Circuit de 20 Km</div>
+                          </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div className="row">
+                          <div className="col-12">
                             <Link to={"/Event/Detail/" + event._id}>
-                              <button className="btn btn-primary">
-                                {" "}
-                                show details
-                              </button>
+                              <div className="Search__actions">
+                                <button className="btn button">
+                                  {" "}
+                                  show details
+                                </button>
+                              </div>
                             </Link>
                           </div>
                         </div>

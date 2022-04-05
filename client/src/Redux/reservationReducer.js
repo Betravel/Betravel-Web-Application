@@ -48,7 +48,7 @@ const initialReservationState = {
     triple: [],
     quadruple: [],
   },
-  periode: [null, null],
+  periode: [new Date(), new Date()],
   nuits: 0,
   price: 0,
 };
