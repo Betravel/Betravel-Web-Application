@@ -229,7 +229,7 @@ function UpdateHotel() {
         setlocations(des.data);
       })
       .catch();
-  }, []);
+  }, [id]);
   const onsubmitform = (e) => {
     const data = new FormData();
     data.append("name", name);

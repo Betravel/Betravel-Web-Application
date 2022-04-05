@@ -89,7 +89,7 @@ function AddHotel() {
       .catch();
   }, []);
 
-  const onsubmitform = (e) => {
+  const onsubmitform = () => {
     const data = new FormData();
     data.append("name", name);
     data.append("location", location);
@@ -204,7 +204,7 @@ function AddHotel() {
       indoorpool,
       spa,
     };
-    
+
     data.append("options", JSON.stringify(options));
     axios
       .post("http://localhost:8000/api/hotel", data)

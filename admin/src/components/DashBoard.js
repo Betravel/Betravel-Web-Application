@@ -4,6 +4,7 @@ import UsersOverview from "./UsersOverview";
 import ListUsers from "./ListUsers";
 import ListHotels from "./ListHotels";
 import DetailUser from "./DetailUser";
+import ListEvents from "./ListEvents";
 function DashBoard() {
   return (
     <div className="container-fluid" style={{ marginTop: "120px" }}>
@@ -35,11 +36,12 @@ function DashBoard() {
         </div>
       </div>
       <div className="row">
-        <div className="col-3"></div>
         <div className="col-6">
           <ListHotels />
         </div>
-        <div className="col-3"></div>
+        <div className="col-6">
+          <ListEvents />
+        </div>
       </div>
     </div>
   );
