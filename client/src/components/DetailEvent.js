@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getEvent } from "../Redux/eventReducer";
 import { useSelector, useDispatch } from "react-redux";
+import IconButton from "@mui/material/IconButton";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
@@ -77,6 +78,16 @@ function DetailEvent() {
           </div>
         );
       })}
+
+      <Link to="/Event/Reserve">
+        <IconButton>
+          <img
+            src="https://img.icons8.com/plasticine/100/000000/arrow.png"
+            alt=""
+            align="right"
+          />
+        </IconButton>
+      </Link>
     </div>
   );
 }
