@@ -3,6 +3,7 @@ import searchSlice from "./searchReducer";
 import authSlice from "./authReducer";
 import reservationSlice from "./reservationReducer";
 import eventSlice from "./eventReducer";
+import hotelsSlice from "./hotelsReducer";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     search: searchSlice.reducer,
     reservation: reservationSlice.reducer,
     event: eventSlice.reducer,
+    hotels: hotelsSlice.reducer,
   },
 });
 

@@ -10,11 +10,17 @@ const ReservationSchema = new mongoose.Schema({
   rooms: {
     type: JSON,
   },
-  checkin: {
-    type: Date,
+  details: {
+    type: JSON,
   },
-  checkout: {
-    type: Date,
+  periode: {
+    type: Array,
+  },
+  nuits: {
+    type: Number,
+  },
+  price: {
+    type: Number,
   },
   status: {
     type: String,

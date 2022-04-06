@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
@@ -24,7 +25,7 @@ function Reserve() {
   const details = useSelector((state) => state.reservation.details);
   const reservation = useSelector((state) => state.reservation);
   const dispatch = useDispatch();
-
+  const history = useNavigate();
   useEffect(() => {
     dispatch(reservationActions.getUser(auth.user));
   }, [auth.user, dispatch]);
@@ -54,9 +55,11 @@ function Reserve() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     axios
-      .get("http://localhost:8000/api/reservation/add")
-      .then((res) => {})
-      .catch((err) => {});
+      .post("http://localhost:8000/api/reservation/add", reservation)
+      .then((res) => {
+        history("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   const [value, setValue] = useState("payment at the agency");
@@ -81,10 +84,10 @@ function Reserve() {
       </Box>
       <div className="col-12">
         <h1>BOOKING FORM</h1>
-      </div>
-      <div className="row">
-        <div className="col-8">
-          <form onSubmit={onSubmitHandler}>
+      </div>{" "}
+      <form onSubmit={onSubmitHandler}>
+        <div className="row">
+          <div className="col-8">
             <br />
             {/*card personal info*/}
             <div class="card">
@@ -822,54 +825,55 @@ function Reserve() {
                 ))}
               </div>
             </div>
-          </form>
+          </div>
+          <div className="col-4">
+            <RecapHotel />
+          </div>
         </div>
-        <div className="col-4">
-          <RecapHotel />
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <div className="row">
-            <div className="col-12">
-              <h2
-                style={{
-                  textDecoration: "underline",
-                  textAlign: "left",
-                }}
-              >
-                Payment
-              </h2>
+        <div class="card">
+          <div class="card-body">
+            <div className="row">
+              <div className="col-12">
+                <h2
+                  style={{
+                    textDecoration: "underline",
+                    textAlign: "left",
+                  }}
+                >
+                  Payment
+                </h2>
+              </div>
+            </div>
+            <div
+              className="row"
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={value}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="payment at the agency"
+                    control={<Radio />}
+                    label="Payment at the agency"
+                  />
+                </RadioGroup>
+              </FormControl>
             </div>
           </div>
-          <div
-            className="row"
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={value}
-              >
-                <FormControlLabel
-                  value="payment at the agency"
-                  control={<Radio />}
-                  label="Payment at the agency"
-                />
-              </RadioGroup>
-            </FormControl>
+        </div>
+        <div className="row">
+          <div className="Search__actions">
+            <button type="submit">Confirm</button>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="Search__actions">
-          <button type="submit">Confirm</button>
-        </div>
-      </div>
+      </form>
     </div>
   );
 }
