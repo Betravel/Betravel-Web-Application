@@ -53,9 +53,9 @@ function Promos() {
             <Slider {...settings}>
               {hotels.map((hotel, index) => (
                 <div key={index}>
-                  <div class="card" style={{ width: "95%" }}>
+                  <div class="card" style={{ width: "95%", height: "600px" }}>
                     {hotel.images[0] ? (
-                      <img src={hotel.images[0].url} alt="" height="100px" />
+                      <img src={hotel.images[0].url} alt="" height="100%" />
                     ) : (
                       <img
                         src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"

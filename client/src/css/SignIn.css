@@ -1,21 +1,21 @@
 .Login {
-  padding: 1rem;
-  margin: 2rem auto;
-  width: 50rem;
-  max-width: 95%;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
-  background-color: #5384a5;
+  background: url("../assets/banner.jpg");
+  min-height: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  background-size: cover;
 }
 
-.Login button {
-  font: inherit;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  border: 1px solid #07002a;
-  background-color: #07002a;
-  color: white;
-  border-radius: 12px;
-  margin-right: 1rem;
+.Login2 {
+  position: relative;
+  z-index: 100;
+  justify-content: end;
+  margin-top: 100px;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-bottom: 150px;
+  
 }
+
+

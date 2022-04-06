@@ -18,7 +18,6 @@ import "./App.css";
 import ListeEvent from "./components/ListeEvent";
 import DetailEvent from "./components/DetailEvent";
 import ReserveEvent from "./components/ReserveEvent";
-import RecapHotel from "./components/RecapHotel";
 
 function App() {
   return (

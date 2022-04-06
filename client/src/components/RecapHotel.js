@@ -39,13 +39,13 @@ function RecapHotel() {
             <p style={{ textAlign: "center" }}>
               {reservation.periode[0].getDate() +
                 "/" +
-                reservation.periode[0].getMonth() +
+                (reservation.periode[0].getMonth() + 1) +
                 "/" +
                 reservation.periode[0].getFullYear()}{" "}
-              {"==>"}{" "}
+              {" to "}{" "}
               {reservation.periode[1].getDate() +
                 "/" +
-                reservation.periode[1].getMonth() +
+                (reservation.periode[1].getMonth() + 1) +
                 "/" +
                 reservation.periode[1].getFullYear()}
             </p>

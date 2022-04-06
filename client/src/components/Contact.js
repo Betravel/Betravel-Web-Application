@@ -93,9 +93,8 @@ function Contact() {
                       component="form"
                       sx={{
                         "& > :not(style)": { m: 1, width: "25ch" },
-                        input: { backgroundColor :"white", opacity:"50%"},
+                        input: { backgroundColor: "white", opacity: "50%" },
                       }}
-                      
                       noValidate
                       autoComplete="off"
                     >
@@ -107,23 +106,13 @@ function Contact() {
                         required
                       />
                     </Box>
-                    {/* <label htmlFor="firstname" className="form-label">
-                      Firstname
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstname"
-                      onChange={(e) => setfirstname(e.target.value)}
-                      style={{ background: "white" }}
-                      required
-                    /> */}
                   </div>
                   <div className="col-md-6">
                     <Box
                       component="form"
                       sx={{
                         "& > :not(style)": { m: 1, width: "25ch" },
+                        input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
                       autoComplete="off"
@@ -136,23 +125,13 @@ function Contact() {
                         required
                       />
                     </Box>
-                    {/* <label htmlFor="lastname" className="form-label">
-                      Lastname
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastname"
-                      onChange={(e) => setlastname(e.target.value)}
-                      style={{ background: "white" }}
-                      required
-                    /> */}
                   </div>
                   <div className="col-md-6">
                     <Box
                       component="form"
                       sx={{
                         "& > :not(style)": { m: 1, width: "25ch" },
+                        input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
                       autoComplete="off"
@@ -165,23 +144,13 @@ function Contact() {
                         required
                       />
                     </Box>
-                    {/* <label htmlFor="email" className="form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      onChange={(e) => setemail(e.target.value)}
-                      style={{ background: "white" }}
-                      required
-                    /> */}
                   </div>
                   <div className="col-md-6">
                     <Box
                       component="form"
                       sx={{
                         "& > :not(style)": { m: 1, width: "25ch" },
+                        input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
                       autoComplete="off"
@@ -199,19 +168,6 @@ function Contact() {
                         required
                       />
                     </Box>
-                    {/* <label htmlFor="phone" className="form-label">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="phone"
-                      pattern="[0-9]{8}"
-                      placeholder="8 digital number"
-                      onChange={(e) => setphone(e.target.value)}
-                      style={{ background: "white" }}
-                      required
-                    /> */}
                   </div>
                   <div className="col-12">
                     <TextField
@@ -223,17 +179,6 @@ function Contact() {
                       required
                       fullWidth
                     />
-                    {/* <label htmlFor="message" className="form-label">
-                      Message
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="message"
-                      rows="4"
-                      onChange={(e) => setmessage(e.target.value)}
-                      style={{ background: "white" }}
-                      required
-                    /> */}
                   </div>
                   <br />
                   <div className="col-12">
