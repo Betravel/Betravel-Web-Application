@@ -28,7 +28,7 @@ const EventSchema = new mongoose.Schema({
   note: {
     type: Array,
   },
-  image: {
+  images: {
     type: Array,
   },
 });

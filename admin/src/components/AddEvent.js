@@ -76,9 +76,9 @@ function AddEvent() {
     data.append("date", JSON.stringify(event.date));
     data.append("periode", event.periode);
     data.append("price", event.price);
-    data.append("program", event.program);
+    data.append("program", JSON.stringify(event.program));
     data.append("note", event.note);
-    data.append("image", images);
+    data.append("images", images);
     axios
       .post("http://localhost:8000/api/event/add", data)
       .then((res) => {
