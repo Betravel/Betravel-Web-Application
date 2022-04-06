@@ -12,12 +12,14 @@ export const getEvent = (id) => {
 const initialEventState = {
   name: "",
   location: "",
-  type: "",
-  date: [new Date(), new Date()],
-  periode: "",
+  type: "camping",
+  description: "",
+  date: { day: new Date(), from: new Date(), to: new Date() },
+  periode: 0,
   price: 0,
   program: [{ hour: new Date(), text: "" }],
   note: [""],
+  image: [],
 };
 
 const eventSlice = createSlice({
@@ -29,9 +31,13 @@ const eventSlice = createSlice({
       state.name = event.name;
       state.location = event.location;
       state.type = event.type;
+      state.description = event.description;
+      state.date = event.date;
       state.periode = event.periode;
+      state.price = event.price;
       state.program = event.program;
       state.note = event.note;
+      state.image = event.image;
     },
     updateevent(state, action) {
       switch (action.payload.type) {
@@ -41,17 +47,33 @@ const eventSlice = createSlice({
         case "location":
           state.location = action.payload.value;
           break;
+        case "description":
+          state.description = action.payload.value;
+          break;
         case "type":
           state.type = action.payload.value;
+          state.program = [];
+          break;
+        case "date":
+          state.date.day = action.payload.value;
           break;
         case "fromdate":
-          state.date[0] = action.payload.value;
+          state.date.from = action.payload.value;
           break;
         case "todate":
-          state.date[1] = action.payload.value;
+          state.date.to = action.payload.value;
+          break;
+        case "price":
+          state.price = action.payload.value;
           break;
         default:
           break;
+      }
+      let periode = state.date.to - state.date.from;
+      if (state.type === "camping") {
+        state.periode = parseInt(periode / (1000 * 60 * 60));
+      } else {
+        state.periode = parseInt(periode / (1000 * 60 * 60 * 24));
       }
     },
     manageProgram(state, action) {

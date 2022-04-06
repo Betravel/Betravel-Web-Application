@@ -85,149 +85,59 @@ function SearchFormHotel() {
 
   today = mm + "-" + dd + "-" + yyyy;
   return (
-    <div className="container" style={{ backdropFilter: "blur(15px)" }}>
+    <div
+      className="container"
+      style={{ backdropFilter: "blur(30px)", marginTop: "50px" }}
+    >
       <div className="row">
         <form onSubmit={submitHandler} autoComplete="off">
           <br />
           <div className="container">
-            <div className="row">
-              <div
-                className="col-6"
-                style={{ marginTop: "auto", marginBottom: "auto" }}
+            <div
+              className="row"
+              style={{ marginTop: "auto", marginBottom: "auto" }}
+            >
+              <TextField
+                fullWidth
+                id="outlined-select-currency"
+                select
+                label="Destination"
+                value={search.destination}
+                onChange={DestinationChangeHandler}
+                required
               >
-                <div className="row">
-                  <TextField
-                    fullWidth
-                    id="outlined-select-currency"
-                    select
-                    label="Destination"
-                    value={search.destination}
-                    onChange={DestinationChangeHandler}
-                    required
-                  >
-                    {search.destinations.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </div>
-                <br />
-                <div className="row">
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateRangePicker
-                      startText="Check-in"
-                      endText="Check-out"
-                      value={search.periode}
-                      minDate={new Date(today)}
-                      required
-                      onChange={(newValue) => {
-                        dispatch(searchAction.periode(newValue));
-                        dispatch(reservationActions.getPeriode(newValue));
-                      }}
-                      renderInput={(startProps, endProps) => (
-                        <React.Fragment>
-                          <TextField {...startProps} fullWidth />
-                          <Box sx={{ mx: 2 }}> to </Box>
-                          <TextField {...endProps} fullWidth />
-                        </React.Fragment>
-                      )}
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-6">
-                      <label
-                        className="form-label"
-                        style={{ fontweight: "bold", color: "#43352c" }}
-                      >
-                        Adultes
-                      </label>
-                      <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                        <Fab size="small" aria-label="add" onClick={AddAdultes}>
-                          <AddIcon />
-                        </Fab>
-                        <Fab
-                          disabled
-                          variant="extended"
-                          style={{ color: "black" }}
-                        >
-                          {search.adulte}
-                        </Fab>
-                        <Fab
-                          size="small"
-                          aria-label="edit"
-                          onClick={ReduceAdultes}
-                        >
-                          <RemoveRoundedIcon />
-                        </Fab>
-                      </Box>
-                    </div>
-                    <div className="col-6">
-                      <label
-                        className="form-label"
-                        style={{ fontweight: "bold", color: "#43352c" }}
-                      >
-                        Enfants
-                      </label>
-                      <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                        <Fab size="small" aria-label="add" onClick={AddEnfants}>
-                          <AddIcon />
-                        </Fab>
-                        <Fab
-                          disabled
-                          variant="extended"
-                          style={{ color: "black" }}
-                        >
-                          {search.enfant}
-                        </Fab>
-                        <Fab
-                          size="small"
-                          aria-label="edit"
-                          onClick={ReduceEnfants}
-                        >
-                          <RemoveRoundedIcon />
-                        </Fab>
-                      </Box>
-                    </div>
-                    <div className="col-12">
-                      <label
-                        className="form-label"
-                        style={{ fontweight: "bold", color: "#43352c" }}
-                      >
-                        Chambres
-                      </label>
-                      <Box sx={{ "& > :not(style)": { m: 1 }, border: "1px" }}>
-                        <Fab
-                          size="small"
-                          aria-label="add"
-                          onClick={AddChambres}
-                        >
-                          <AddIcon />
-                        </Fab>
-                        <Fab
-                          disabled
-                          variant="extended"
-                          style={{ color: "black" }}
-                        >
-                          {search.chambre}
-                        </Fab>
-                        <Fab
-                          size="small"
-                          aria-label="edit"
-                          onClick={ReduceChambres}
-                        >
-                          <RemoveRoundedIcon />
-                        </Fab>
-                      </Box>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {search.destinations.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </div>
+            <br />
+            <div className="row">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateRangePicker
+                  startText="Check-in"
+                  endText="Check-out"
+                  value={search.periode}
+                  minDate={new Date(today)}
+                  required
+                  onChange={(newValue) => {
+                    dispatch(searchAction.periode(newValue));
+                    dispatch(reservationActions.getPeriode(newValue));
+                  }}
+                  renderInput={(startProps, endProps) => (
+                    <React.Fragment>
+                      <TextField {...startProps} fullWidth />
+                      <Box sx={{ mx: 2 }}> to </Box>
+                      <TextField {...endProps} fullWidth />
+                    </React.Fragment>
+                  )}
+                />
+              </LocalizationProvider>
+            </div>
+
+            <br />
             <div className="row">
               <div className="Search__actions">
                 <button type="submit">Search</button>
