@@ -48,9 +48,10 @@ const initialReservationState = {
     triple: [],
     quadruple: [],
   },
-  periode: [null, null],
+  periode: [new Date(), new Date()],
   nuits: 0,
   price: 0,
+  status: "In Progress",
 };
 
 const reservationSlice = createSlice({
@@ -461,6 +462,7 @@ const reservationSlice = createSlice({
         state.rooms.triple.total +
         state.rooms.quadruple.total;
       state.rooms.total = total;
+      state.price = total;
     },
     updateUser(state, action) {
       if (action.payload.type === "firstname") {
