@@ -213,7 +213,10 @@ function AddHotel() {
         setLoading(false);
         history("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (

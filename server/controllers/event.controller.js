@@ -17,7 +17,13 @@ module.exports.addEvent = async (request, response) => {
   }
   event.images = urls;
   event.date = JSON.parse(event.date);
+  event.date.day = new Date(event.date.day);
+  event.date.from = new Date(event.date.from);
+  event.date.to = new Date(event.date.to);
   event.program = JSON.parse(event.program);
+  for (let index = 0; index < event.program.length; index++) {
+    event.program[index].hour = new Date(event.program[index].hour);
+  }
   event
     .save()
     .then((res) => response.json(res))
@@ -41,5 +47,49 @@ module.exports.getEventById = (request, response) => {
 module.exports.deleteEvent = (request, response) => {
   Event.deleteOne({ _id: request.params.id })
     .then((res) => response.json(res))
+    .catch((err) => response.json(err));
+};
+
+module.exports.updateEvent = async (request, response) => {
+  const updatedevent = request.body;
+  console.log(updatedevent);
+  const uploader = async (path) =>
+    await addimage.addimage(path, "/BeTravel/hotels/" + req.params.id);
+  let imgs = [];
+  const files = request.files;
+  console.log(files);
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const { path } = file;
+    const newPath = await uploader(path);
+    imgs.push(newPath);
+    console.log(newPath);
+  }
+  var newimg = [];
+  if (updatedevent.images !== "undefined") {
+    newimg = JSON.parse(updatedevent.images);
+  }
+  if (newimg[0] === undefined) {
+    newimg = imgs;
+  } else {
+    imgs.forEach((img) => newimg.push(img));
+  }
+  updatedevent.images = newimg;
+  updatedevent.date = JSON.parse(updatedevent.date);
+  updatedevent.date.day = new Date(updatedevent.date.day);
+  updatedevent.date.from = new Date(updatedevent.date.from);
+  updatedevent.date.to = new Date(updatedevent.date.to);
+  updatedevent.program = JSON.parse(updatedevent.program);
+  for (let index = 0; index < updatedevent.program.length; index++) {
+    updatedevent.program[index].hour = new Date(
+      updatedevent.program[index].hour
+    );
+  }
+  Event.findOneAndUpdate({ _id: request.params.id }, updatedevent, {
+    new: true,
+  })
+    .then((result) => {
+      response.json(result);
+    })
     .catch((err) => response.json(err));
 };
