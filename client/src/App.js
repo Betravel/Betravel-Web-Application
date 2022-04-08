@@ -4,7 +4,6 @@ import Home from "./components/home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Profil from "./components/Profil";
-import EditProfil from "./components/EditProfil";
 import Contact from "./components/Contact";
 import Confirmed from "./components/Confirmed";
 import ResetPassword from "./components/ResetPassword";
@@ -30,7 +29,6 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
-          <Route path="/Profil/Edit" element={<EditProfil />} />
           <Route path="/Profil" element={<Profil />} />
           <Route path="/Restpass" element={<ResetPassword />} />
           <Route path="/SignUp" element={<SignUp />} />

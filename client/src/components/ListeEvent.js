@@ -46,7 +46,7 @@ function ListeEvent() {
                           alt=""
                         />{" "}
                       </div>
-                      <div className="col-8">{event.date}</div>
+                      <div className="col-8">{event.date.day}</div>
                     </div>
                   </div>
                   <br />

@@ -28,19 +28,25 @@ function RecapEvent() {
           <p style={{ textAlign: "left" }}>
             Date : &ensp;
             <br />
-            <p>{event.date}</p>
-          </p>
-
-          <p style={{ textAlign: "left" }}>
-            Hour : &ensp;
-            <br />
-            <p>{event.hour}</p>
+            <p style={{ textAlign: "center" }}>
+              {event.date.from.getDate() +
+                "/" +
+                (event.date.from.getMonth() + 1) +
+                "/" +
+                event.date.from.getFullYear()}
+              {" ==> "}
+              {event.date.to.getDate() +
+                "/" +
+                (event.date.to.getMonth() + 1) +
+                "/" +
+                event.date.to.getFullYear()}
+            </p>
           </p>
 
           <p style={{ textAlign: "left" }}>
             Duration : &ensp;
             <br />
-            <p>{event.periode}</p>
+            <p style={{ textAlign: "center" }}>{event.periode}</p>
           </p>
 
           <p style={{ textAlign: "left" }}>

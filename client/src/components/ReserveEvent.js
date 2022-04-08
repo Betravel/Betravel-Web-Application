@@ -4,11 +4,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { eventActions } from "../Redux/eventReducer";
 import RecapEvent from "./recapEvent";
 import Radio from "@mui/material/Radio";
@@ -21,7 +18,6 @@ function ReserveEvent() {
   const event = useSelector((state) => state.event);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [availavleP, setavailavleP] = useState("");
 
   useEffect(() => {
     dispatch(eventActions.getUser(auth.user));
@@ -36,10 +32,14 @@ function ReserveEvent() {
     );
   };
 
-  const [value, setValue] = useState("payment at the agency");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const updateDetails = (e, index) => {
+    dispatch(
+      eventActions.updatedetails({
+        type: e.target.name,
+        value: e.target.value,
+        index,
+      })
+    );
   };
 
   return (
@@ -137,6 +137,7 @@ function ReserveEvent() {
                 </div>
               </div>
             </div>
+            <br />
             {/*card persons*/}
             <div class="card">
               <div class="card-body">
@@ -160,89 +161,38 @@ function ReserveEvent() {
                   </div>
                 </div>
                 <br />
-                <div className="row">
-                  <div className="col-4">Person 1 :</div>
-                  <div className="col-4">
-                    <TextField
-                      variant="outlined"
-                      label="First name"
-                      id="firstname"
-                      name="firstname"
-                      // value={adulte.firstname}
-                      // onChange={(event) => {
-                      //   changeDetails(
-                      //     event,
-                      //     "single",
-                      //     indexadulte,
-                      //     indexroom,
-                      //     "adulte"
-                      //   );
-                      // }}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-4">
-                    <TextField
-                      variant="outlined"
-                      label="Last Name"
-                      id="lastname"
-                      name="lastname"
-                      // value={adulte.lastname}
-                      // onChange={(event) => {
-                      //   changeDetails(
-                      //     event,
-                      //     "single",
-                      //     indexadulte,
-                      //     indexroom,
-                      //     "adulte"
-                      //   );
-                      // }}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <br />
-                <div className="row">
-                  <div className="col-4">Person 2 :</div>
-                  <div className="col-4">
-                    <TextField
-                      variant="outlined"
-                      label="First name"
-                      id="firstname"
-                      name="firstname"
-                      // value={adulte.firstname}
-                      // onChange={(event) => {
-                      //   changeDetails(
-                      //     event,
-                      //     "single",
-                      //     indexadulte,
-                      //     indexroom,
-                      //     "adulte"
-                      //   );
-                      // }}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-4">
-                    <TextField
-                      variant="outlined"
-                      label="Last Name"
-                      id="lastname"
-                      name="lastname"
-                      // value={adulte.lastname}
-                      // onChange={(event) => {
-                      //   changeDetails(
-                      //     event,
-                      //     "single",
-                      //     indexadulte,
-                      //     indexroom,
-                      //     "adulte"
-                      //   );
-                      // }}
-                      fullWidth
-                    />
-                  </div>
-                </div>
+                {event.details.map((person, i) => {
+                  return (
+                    <div key={i}>
+                      <div className="row">
+                        <div className="col-4">Person {i + 1} :</div>
+                        <div className="col-4">
+                          <TextField
+                            variant="outlined"
+                            label="First name"
+                            id="firstname"
+                            name="firstname"
+                            value={person.firstname}
+                            onChange={(e) => updateDetails(e, i)}
+                            fullWidth
+                          />
+                        </div>
+                        <div className="col-4">
+                          <TextField
+                            variant="outlined"
+                            label="Last Name"
+                            id="lastname"
+                            name="lastname"
+                            value={person.lastname}
+                            onChange={(e) => updateDetails(e, i)}
+                            fullWidth
+                          />
+                        </div>
+                      </div>
+                      <br />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </form>
@@ -251,6 +201,7 @@ function ReserveEvent() {
           <RecapEvent />
         </div>
       </div>
+      <br />
       <div class="card">
         <div class="card-body">
           <div className="row">
@@ -276,7 +227,7 @@ function ReserveEvent() {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={value}
+                value={event.paiement}
               >
                 <FormControlLabel
                   value="payment at the agency"
@@ -288,6 +239,7 @@ function ReserveEvent() {
           </div>
         </div>
       </div>
+      <br />
       <div className="row">
         <div className="Search__actions">
           <button type="submit">Confirm</button>
