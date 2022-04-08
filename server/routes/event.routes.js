@@ -32,5 +32,10 @@ module.exports = (app) => {
   app.post("/api/event/add", upload.array("images"), EventController.addEvent);
   app.get("/api/event/all", EventController.getAllEvents);
   app.get("/api/event/:id", EventController.getEventById);
+  app.put(
+    "/api/event/update/:id",
+    upload.array("images"),
+    EventController.updateEvent
+  );
   app.delete("/api/event/delete/:id", EventController.deleteEvent);
 };
