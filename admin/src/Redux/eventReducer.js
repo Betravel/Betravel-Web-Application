@@ -70,7 +70,7 @@ const eventSlice = createSlice({
           break;
       }
       let periode = state.date.to - state.date.from;
-      if (state.type === "camping") {
+      if (state.type === "randonne") {
         state.periode = parseInt(periode / (1000 * 60 * 60));
       } else {
         state.periode = parseInt(periode / (1000 * 60 * 60 * 24));

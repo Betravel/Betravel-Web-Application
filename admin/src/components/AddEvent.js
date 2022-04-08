@@ -135,7 +135,7 @@ function AddEvent() {
           </div>
         </div>
         <br />
-        {event.type === "camping" ? (
+        {event.type === "randonne" ? (
           <div className="row">
             <div className="col-4">
               <LocalizationProvider
