@@ -21,8 +21,17 @@ module.exports.cancelReservation = (request, response) => {
 };
 
 module.exports.getReservation = (request, response) => {
-  Reservation.find({ email: request.body.email })
-    .then((res) => response.json(res))
+  Reservation.find()
+    .then((res) => {
+      let reservations = res;
+      let result = [];
+      reservations.forEach((reservation) => {
+        if (reservation.user._id === request.params.id) {
+          result.push(reservation);
+        }
+      });
+      response.json(result);
+    })
     .catch((err) => response.json(err));
 };
 

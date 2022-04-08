@@ -47,6 +47,9 @@ const authSlice = createSlice({
         email: "",
       };
     },
+    updateuser(state, action) {
+      state.user[action.payload.type] = action.payload.value;
+    },
   },
 });
 
