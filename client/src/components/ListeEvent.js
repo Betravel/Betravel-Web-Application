@@ -19,13 +19,14 @@ function ListeEvent() {
     <div className="container" style={{ marginTop: "100px" }}>
       <div className="row">
         {events.map((event, index) => (
-          <div className="col-6">
-            <div className="card">
+          <div className="col-4">
+            <div class="card" style={{ width: "100%", height: "100%" }}>
               <img
                 src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
                 alt=""
-                width="100%"
+                height="100px"
               />
+
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>
                 <div>
@@ -37,41 +38,50 @@ function ListeEvent() {
                   {event.location}
                 </div>
                 <div className="row">
-                  <div className="col-6">
-                    <div align="left">
-                      <img
-                        src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
-                        alt=""
-                      />{" "}
-                      {event.date}
-                    </div>
-                    <br />
-                    <div align="left">
-                      <img
-                        src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/20/000000/external-time-education-xnimrodx-lineal-xnimrodx.png"
-                        alt=""
-                      />{" "}
-                      {event.hour}
-                    </div>
-                    <br />
-                    <div align="left">
-                      <img
-                        src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
-                        alt=""
-                      />{" "}
-                      Circuit de 20 Km
+                  <div align="left">
+                    <div className="row ">
+                      <div className="col-4">
+                        <img
+                          src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
+                          alt=""
+                        />{" "}
+                      </div>
+                      <div className="col-8">{event.date}</div>
                     </div>
                   </div>
-                  <div className="col-6">
-                    <div>
-                      <h3> {event.price} DT</h3>
-
+                  <br />
+                  <div align="left">
+                    <div className="row ">
+                      <div className="col-4">
+                        <img
+                          src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/20/000000/external-time-education-xnimrodx-lineal-xnimrodx.png"
+                          alt=""
+                        />{" "}
+                      </div>
+                      <div className="col-8">{event.hour}</div>
+                    </div>
+                  </div>
+                  <br />
+                  <div align="left">
+                    <div className="row ">
+                      <div className="col-4">
+                        <img
+                          src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
+                          alt=""
+                        />{" "}
+                      </div>
+                      <div className="col-8">Circuit de 20 Km</div>
+                    </div>
+                  </div>
+                  <br />
+                  <br />
+                  <div className="row">
+                    <div className="col-12">
                       <Link to={"/Event/Detail/" + event._id}>
-                            <button className="btn btn-primary">
-                              {" "}
-                              show details
-                            </button>
-                          </Link>
+                        <div className="Search__actions">
+                          <button className="btn button"> show details</button>
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -80,6 +90,7 @@ function ListeEvent() {
           </div>
         ))}
       </div>
+      <br />
       <Stack spacing={2} alignItems="center">
         <Pagination count={5} />
       </Stack>

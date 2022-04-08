@@ -156,10 +156,9 @@ function DetailHotel() {
         </h1>
       </div>
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-4">
+        <div className="col-12" >
           <Box
-            sx={{ width: 1000, height: 700, overflowY: "scroll" }}
+            sx={{ width: "100%", height: 700, overflowY: "scroll" }}
             align="center"
           >
             <ImageList variant="masonry" cols={3} gap={8}>
@@ -1000,6 +999,10 @@ function DetailHotel() {
                     </div>
                   </TableCell>
                   <TableCell align="center">
+                    <img
+                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                      alt=""
+                    />
                     <img
                       src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
                       alt=""

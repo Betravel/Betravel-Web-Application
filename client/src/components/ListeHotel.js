@@ -1,7 +1,8 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { getHotels } from "../Redux/hotelsReducer";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Search2 from "./Search2";
 import Pagination from "@mui/material/Pagination";
@@ -9,20 +10,16 @@ import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
 function ListeHotel() {
-  const [hotels, setHotels] = useState([]);
+  const dispatch = useDispatch();
+  const hotels = useSelector((state) => state.hotels);
 
   const [Destination] = useState(
     JSON.parse(localStorage.getItem("search")).destination
   );
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/hotel/search/" + Destination)
-      .then((res) => {
-        setHotels(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    dispatch(getHotels(Destination));
+  }, [Destination, dispatch]);
 
   return (
     <div className="container" style={{ marginTop: "100px" }}>

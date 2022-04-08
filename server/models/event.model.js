@@ -31,5 +31,8 @@ const EventSchema = new mongoose.Schema({
   images: {
     type: Array,
   },
+  places: {
+    type: Number,
+  },
 });
 module.exports = mongoose.model("Events", EventSchema);
