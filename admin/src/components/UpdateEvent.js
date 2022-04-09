@@ -87,10 +87,12 @@ function UpdateEvent() {
       const element = images[index];
       data.append("images", element);
     }
+    data.append("places", event.places);
     axios
       .put("http://localhost:8000/api/event/update/" + id, data)
       .then((res) => {
         console.log(res);
+        alert("ok");
         setLoading(false);
         history("/");
       })
