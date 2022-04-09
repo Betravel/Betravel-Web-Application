@@ -25,3 +25,9 @@ module.exports.updateUser = (request, response) => {
     .then((updatedUser) => response.json(updatedUser))
     .catch((err) => response.json(err));
 };
+
+module.exports.deleteUser = (request, response) => {
+  User.deleteOne({ _id: request.params.id })
+    .then((res) => response.json(res))
+    .catch((err) => response.json(err));
+};
