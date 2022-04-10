@@ -8,18 +8,20 @@ import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import loc from "../assets/icons8-place-marker.gif";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 function ListePromo() {
+  const dispatch = useDispatch();
   const [hotels, setHotels] = useState([]);
-
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(false));
     axios
       .get("http://localhost:8000/api/hotel/promo")
       .then((res) => {
         setHotels(res.data);
       })
       .catch((err) => console.error(err));
-  }, []);
-
+  }, [dispatch]);
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       {hotels.map((hotel, index) => (

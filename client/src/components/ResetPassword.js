@@ -1,12 +1,17 @@
 import Card from "./Card";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function ResetPassword() {
+  const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const history = useNavigate();
-
+  useEffect(() => {
+    dispatch(navbarActions.updatenavbar(true));
+  }, [dispatch]);
   const Resetpass = (e) => {
     e.preventDefault();
     axios

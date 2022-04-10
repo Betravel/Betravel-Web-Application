@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 import { getAuth, logout } from "../Redux/authReducer";
 import { Link } from "react-router-dom";
 import "../css/Navbar.css";
 function Navbar() {
+  const nav = useSelector((state) => state.navbar);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [navbar, setNavbar] = useState(false);
 
   const changelogout = () => {
     dispatch(logout());
   };
 
   const changeBackground = () => {
-    if (window.scrollY >= 66 || window.innerWidth < 991) {
-      setNavbar(true);
+    if (nav.status === true) {
+      if (window.scrollY >= 66 || window.innerWidth < 991) {
+        dispatch(navbarActions.updatecolor("#21445B"));
+      } else {
+        dispatch(navbarActions.updatecolor("transparent"));
+      }
     } else {
-      setNavbar(false);
+      dispatch(navbarActions.updatecolor("#21445B"));
     }
   };
   useEffect(() => {
@@ -27,9 +32,9 @@ function Navbar() {
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
       style={
-        navbar
-          ? { backgroundColor: "#21445B" }
-          : { backgroundColor: "transparent" }
+        nav.color === "transparent"
+          ? { backgroundColor: "transparent" }
+          : { backgroundColor: "#21445B" }
       }
     >
       <div className="container-fluid">
@@ -38,7 +43,7 @@ function Navbar() {
             <img
               src="https://res.cloudinary.com/betravel/image/upload/v1646934431/BeTravel/Logo/betravel_sn54ad.png"
               alt=""
-              width="40%"
+              width="30%"
             />
           </a>
         </div>

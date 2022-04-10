@@ -17,8 +17,6 @@ export const updateUser = (id, user) => {
   };
 };
 
-
-
 const initialReservationState = {
   hotel: {
     name: "",

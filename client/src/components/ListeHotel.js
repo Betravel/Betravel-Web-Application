@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getHotels } from "../Redux/hotelsReducer";
+import { navbarActions } from "../Redux/navbarReducer";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Search2 from "./Search2";
 import Pagination from "@mui/material/Pagination";
@@ -18,6 +19,7 @@ function ListeHotel() {
   );
 
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(false));
     dispatch(getHotels(Destination));
   }, [Destination, dispatch]);
 
