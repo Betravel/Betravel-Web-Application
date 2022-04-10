@@ -72,7 +72,7 @@ function ListHotels() {
         history("/updateHotel/" + id);
       });
     },
-    []
+    [history]
   );
   const [data, setdata] = useState([]);
   useEffect(() => {

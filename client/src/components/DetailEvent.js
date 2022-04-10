@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getEvent } from "../Redux/eventReducer";
+import { eventActions, getEvent } from "../Redux/eventReducer";
 import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
+  const reservation = useSelector((state) => state.event);
   console.log(event);
   const dispatch = useDispatch();
   let { id } = useParams();
-  const [reservedp, setReservedp] = React.useState("");
 
   const handleChange = (event) => {
-    setReservedp(event.target.value);
+    dispatch(eventActions.updatePlace(event.target.value));
   };
 
   useEffect(() => {
@@ -36,11 +34,13 @@ function DetailEvent() {
           className="col-4"
           style={{ marginLeft: "auto", marginRight: "auto" }}
         >
-          <img
+          {/* <img
             src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
             alt=""
             width="100%"
-          />
+          /> */}
+
+          {event.images[0]}
         </div>
       </div>
       <br />
@@ -67,13 +67,30 @@ function DetailEvent() {
               <div className="col-5" align="left">
                 <h5>Date :</h5>
               </div>
-              <div className="col-7">{event.date}</div>
+              <div className="col-7">
+                {event.date.day.getDate() +
+                  "/" +
+                  (event.date.day.getMonth() + 1) +
+                  "/" +
+                  event.date.day.getFullYear()}
+              </div>
             </div>
             <div className="row">
-              <div className="col-5" align="left">
-                <h5>Hour :</h5>
+              <div className="col-5" align="left"></div>
+              <div className="col-7">
+                {" "}
+                {event.date.from.getDate() +
+                  "/" +
+                  (event.date.from.getMonth() + 1) +
+                  "/" +
+                  event.date.from.getFullYear()}
+                {" ==> "}
+                {event.date.to.getDate() +
+                  "/" +
+                  (event.date.to.getMonth() + 1) +
+                  "/" +
+                  event.date.to.getFullYear()}
               </div>
-              <div className="col-7">{event.hour}</div>
             </div>
             <div className="row">
               <div className="col-5" align="left">
@@ -92,6 +109,7 @@ function DetailEvent() {
           </div>
         </div>
       </div>
+      <br />
       <div className="row">
         <div className="col-12" style={{ textAlign: "left" }}>
           <h3 style={{ textDecoration: "underline" }}>Program</h3>
@@ -102,36 +120,55 @@ function DetailEvent() {
         <div class="card-body">
           <div className="row">
             {event.program.map((prog, i) => {
+              let time = new Date(prog.hour);
+              let hour = time.getHours().toString();
+              let result = "";
+              if (hour.length === 1) {
+                result += "0";
+              }
+              result += hour.toString();
+              result += " : ";
+              let minute = time.getMinutes().toString();
+              if (minute.length === 1) {
+                result += "0";
+              }
+              result += minute.toString();
               return (
                 <div key={i}>
-                  <div className="row">{prog}</div>
+                  <div className="row">{result + " : " + prog.text}</div>
                 </div>
               );
             })}
           </div>
         </div>
       </div>
+      <br />
       <div className="row">
         <div className="col-12" style={{ textAlign: "left" }}>
           <h3 style={{ textDecoration: "underline" }}>Note !</h3>
           <br />
         </div>
       </div>
+      <br />
       <div class="card">
         <div class="card-body">
           <div className="row">
             {" "}
-            {/* {event.note.map((note, i) => {
-        return (
-          <div key={i}>
-            <div className="row">{note}</div>
-          </div>
-        );
-      })} */}
+            {event.note.map((note, i) => {
+              return (
+                <div key={i}>
+                  <div className="row">
+                    <div className="col-12" style={{ textAlign: "left" }}>
+                      --{note}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-
+      <br />
       <div className="row">
         <div className="col-12" style={{ textAlign: "left" }}>
           <h3 style={{ textDecoration: "underline" }}>Availablity</h3>
@@ -142,7 +179,7 @@ function DetailEvent() {
         <div class="card-body">
           <div className="row">
             <div className="col-12" style={{ textAlign: "left" }}>
-              <p>Remaining places : 20 {/*  {event.remaingplaces}*/}</p>
+              <p>Remaining places : 20 {event.remaingplaces}</p>
             </div>
           </div>
           <div className="row">
@@ -151,12 +188,12 @@ function DetailEvent() {
                 place to reserve : &nbsp; &nbsp;
                 <FormControl>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={reservedp}
-                    label="reservedp"
+                    name="reservedplace"
+                    value={reservation.reservedplace}
+                    label="ReservedPlace"
                     onChange={handleChange}
                   >
+                    <MenuItem value={0}>0</MenuItem>
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
@@ -168,7 +205,6 @@ function DetailEvent() {
               </p>
             </div>
           </div>
-
           <Link to="/Event/Reserve">
             <div className="col-12" style={{ textAlign: "right" }}>
               <div className="Search__actions">
