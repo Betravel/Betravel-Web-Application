@@ -5,7 +5,7 @@ export const getEvent = (id) => {
   return async function (dispatch) {
     return await axios
       .get("http://localhost:8000/api/event/" + id)
-      .then((res) => dispatch());
+      .then((res) => dispatch(eventActions.getevent(res.data)));
   };
 };
 
@@ -20,6 +20,7 @@ const initialEventState = {
   program: [{ hour: new Date(), text: "" }],
   note: [""],
   image: [],
+  places: 0,
 };
 
 const eventSlice = createSlice({
@@ -32,12 +33,15 @@ const eventSlice = createSlice({
       state.location = event.location;
       state.type = event.type;
       state.description = event.description;
-      state.date = event.date;
+      state.date.day = new Date(event.date.day);
+      state.date.from = new Date(event.date.from);
+      state.date.to = new Date(event.date.to);
       state.periode = event.periode;
       state.price = event.price;
       state.program = event.program;
       state.note = event.note;
       state.image = event.image;
+      state.places = event.places;
     },
     updateevent(state, action) {
       switch (action.payload.type) {
@@ -64,13 +68,16 @@ const eventSlice = createSlice({
           state.date.to = action.payload.value;
           break;
         case "price":
-          state.price = action.payload.value;
+          state.price = parseInt(action.payload.value);
+          break;
+        case "places":
+          state.places = parseInt(action.payload.value);
           break;
         default:
           break;
       }
       let periode = state.date.to - state.date.from;
-      if (state.type === "camping") {
+      if (state.type === "randonne") {
         state.periode = parseInt(periode / (1000 * 60 * 60));
       } else {
         state.periode = parseInt(periode / (1000 * 60 * 60 * 24));

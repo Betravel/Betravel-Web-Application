@@ -53,12 +53,8 @@ function Events() {
             <Slider {...settings}>
               {events.map((event, index) => (
                 <div key={index}>
-                  <div class="card" style={{ width: "95%" }}>
-                    <img
-                      src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
-                      alt=""
-                      height="100px"
-                    />
+                  <div class="card" style={{ width: "95%" , height: "600px"}}>
+                    <img src={event.images[0].url} alt="" width="100%" />
 
                     <div className="card-body">
                       <h5 className="card-title">{event.name}</h5>
@@ -83,7 +79,7 @@ function Events() {
                           </div>
                         </div>
                         <br />
-                        <div align="left">
+                        {/* <div align="left">
                           <div className="row ">
                             <div className="col-4">
                               <img
@@ -93,7 +89,7 @@ function Events() {
                             </div>
                             <div className="col-8">{event.hour}</div>
                           </div>
-                        </div>
+                        </div> */}
                         <br />
                         <div align="left">
                           <div className="row ">

@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { eventActions } from "../Redux/eventReducer";
+import axios from "axios";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import frLocale from "date-fns/locale/fr";
@@ -11,11 +14,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function AddEvent() {
   const event = useSelector((state) => state.event);
@@ -73,12 +73,17 @@ function AddEvent() {
     data.append("name", event.name);
     data.append("location", event.location);
     data.append("type", event.type);
+    data.append("description", event.description);
     data.append("date", JSON.stringify(event.date));
     data.append("periode", event.periode);
     data.append("price", event.price);
     data.append("program", JSON.stringify(event.program));
     data.append("note", event.note);
-    data.append("images", images);
+    for (let index = 0; index < images.length; index++) {
+      const element = images[index];
+      data.append("images", element);
+    }
+    data.append("places", event.places);
     axios
       .post("http://localhost:8000/api/event/add", data)
       .then((res) => {
@@ -86,7 +91,10 @@ function AddEvent() {
         setLoading(false);
         history("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
   return (
     <div className="container" style={{ marginTop: "100px" }}>
@@ -135,7 +143,7 @@ function AddEvent() {
           </div>
         </div>
         <br />
-        {event.type === "camping" ? (
+        {event.type === "randonne" ? (
           <div className="row">
             <div className="col-4">
               <LocalizationProvider
@@ -354,7 +362,7 @@ function AddEvent() {
           <div className="col-4">
             <h4>Price</h4>
           </div>
-          <div className="col-8">
+          <div className="col-2">
             <TextField
               id="price"
               name="price"
@@ -362,6 +370,21 @@ function AddEvent() {
               variant="outlined"
               type="number"
               value={event.price}
+              onChange={updateEvent}
+              fullWidth
+            />
+          </div>
+          <div className="col-4">
+            <h4>Available Places</h4>
+          </div>
+          <div className="col-2">
+            <TextField
+              id="places"
+              name="places"
+              label="Places"
+              variant="outlined"
+              type="number"
+              value={event.places}
               onChange={updateEvent}
               fullWidth
             />
