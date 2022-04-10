@@ -57,7 +57,15 @@ function Reserve() {
     axios
       .post("http://localhost:8000/api/reservation/add", reservation)
       .then((res) => {
-        history("/");
+        axios
+          .post("http://localhost:8000/reservationdetails", {
+            email: auth.user.email,
+            id: res.data._id,
+          })
+          .then((res) => {
+            history("/");
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };

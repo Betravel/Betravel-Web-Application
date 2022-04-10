@@ -7,7 +7,7 @@ module.exports.addEvent = async (request, response) => {
   let urls = [];
   const files = request.files;
   const uploader = async (path) =>
-    await addimage.addimage(path, "/BeTravel/hotels/" + hotel._id);
+    await addimage.addimage(path, "/BeTravel/Events/" + event._id);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const { path } = file;
@@ -52,18 +52,15 @@ module.exports.deleteEvent = (request, response) => {
 
 module.exports.updateEvent = async (request, response) => {
   const updatedevent = request.body;
-  console.log(updatedevent);
   const uploader = async (path) =>
-    await addimage.addimage(path, "/BeTravel/hotels/" + req.params.id);
+    await addimage.addimage(path, "/BeTravel/Events/" + request.params.id);
   let imgs = [];
   const files = request.files;
-  console.log(files);
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const { path } = file;
     const newPath = await uploader(path);
     imgs.push(newPath);
-    console.log(newPath);
   }
   var newimg = [];
   if (updatedevent.images !== "undefined") {
@@ -90,6 +87,7 @@ module.exports.updateEvent = async (request, response) => {
   })
     .then((result) => {
       response.json(result);
+      console.log(result);
     })
     .catch((err) => response.json(err));
 };

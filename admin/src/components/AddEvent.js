@@ -79,7 +79,11 @@ function AddEvent() {
     data.append("price", event.price);
     data.append("program", JSON.stringify(event.program));
     data.append("note", event.note);
-    data.append("images", images);
+    for (let index = 0; index < images.length; index++) {
+      const element = images[index];
+      data.append("images", element);
+    }
+    data.append("places", event.places);
     axios
       .post("http://localhost:8000/api/event/add", data)
       .then((res) => {
