@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
@@ -18,6 +19,7 @@ function DetailEvent() {
   };
 
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvent(id));
   }, [dispatch, id]);
 

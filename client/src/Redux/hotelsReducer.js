@@ -6,7 +6,7 @@ export const getHotels = (Destination) => {
     return await axios
       .get("http://localhost:8000/api/hotel/search/" + Destination)
       .then((res) => {
-        dispatch(hotelsActions.getHotels(res.data));
+        dispatch(hotelsActions.gethotels(res.data));
       });
   };
 };
@@ -17,7 +17,7 @@ const hotelsSlice = createSlice({
   name: "hotels",
   initialState: initialHotelsState,
   reducers: {
-    getHotels(state, action) {
+    gethotels(state, action) {
       let hotels = action.payload;
       for (let index = 0; index < hotels.length; index++) {
         const element = hotels[index];
@@ -33,7 +33,7 @@ const hotelsSlice = createSlice({
         if (!element.price.quadruple) {
           element.price.quadruple = {};
         }
-        state.push(element);
+        state[index] = element;
       }
     },
   },
