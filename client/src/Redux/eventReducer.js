@@ -8,6 +8,7 @@ export const getEvent = (id) => {
       .then((res) => dispatch(eventActions.getEvent(res.data)));
   };
 };
+
 const initialEventState = {
   event: {
     name: "",

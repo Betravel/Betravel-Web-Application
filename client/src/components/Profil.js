@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function Profil() {
   const [disable, setdisable] = useState(false);
@@ -26,6 +27,7 @@ function Profil() {
   useEffect(() => {
     dispatch(getAuth());
     dispatch(getReservations(user._id));
+    dispatch(navbarActions.updatenavbar(false));
   }, [dispatch, user._id]);
 
   const changeDisabled = (e) => {

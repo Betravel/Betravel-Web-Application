@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/home.css";
 import SearchFormHotel from "./SearchFormHotel";
 import Promos from "./Promos.js";
 import Events from "./Events";
 import Contact from "./Contact";
+import { useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function Home() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(navbarActions.updatenavbar(true));
+  }, [dispatch]);
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
       <div className="row row1">

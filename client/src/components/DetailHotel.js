@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getHotel, reservationActions } from "../Redux/reservationReducer";
+import { navbarActions } from "../Redux/navbarReducer";
 import Rating from "@mui/material/Rating";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -39,6 +40,7 @@ function DetailHotel() {
 
   useEffect(() => {
     dispatch(getHotel(id));
+    dispatch(navbarActions.updatenavbar(false));
   }, [dispatch, id]);
 
   const changeDate = (value) => {
@@ -156,7 +158,7 @@ function DetailHotel() {
         </h1>
       </div>
       <div className="row">
-        <div className="col-12" >
+        <div className="col-12">
           <Box
             sx={{ width: "100%", height: 700, overflowY: "scroll" }}
             align="center"

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
@@ -18,6 +19,7 @@ function DetailEvent() {
   };
 
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvent(id));
   }, [dispatch, id]);
 
@@ -29,18 +31,16 @@ function DetailEvent() {
         <h1> {event.name}</h1>
       </div>
       <div className="row">
-        <div className="col-2"></div>
         <div
-          className="col-4"
+          className="col-12"
           style={{ marginLeft: "auto", marginRight: "auto" }}
+          align="center"
         >
-          {/* <img
-            src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
-            alt=""
-            width="100%"
-          /> */}
-
-          {event.images[0]}
+          {event.images[0] ? (
+            <img src={event.images[0].url} alt="" width="50%" />
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <br />

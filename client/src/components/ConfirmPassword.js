@@ -1,15 +1,20 @@
 import Card from "./Card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 
 function ConfirmPassword() {
+  const dispatch = useDispatch();
   const [password, setpassword] = useState("");
   const [confim, setconfim] = useState("");
   const [error, seterror] = useState(false);
   let { id } = useParams();
   const history = useNavigate();
-
+  useEffect(() => {
+    dispatch(navbarActions.updatenavbar(true));
+  }, [dispatch]);
   const Confirmpass = (e) => {
     e.preventDefault();
 

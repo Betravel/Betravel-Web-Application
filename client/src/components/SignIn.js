@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/SignIn.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { navbarActions } from "../Redux/navbarReducer";
 function SignIn() {
+  const dispatch = useDispatch();
   const history = useNavigate();
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(true));
     if (sessionStorage.getItem("log")) {
       history("/Profil");
     }
