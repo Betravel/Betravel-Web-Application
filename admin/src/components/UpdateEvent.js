@@ -102,9 +102,13 @@ function UpdateEvent() {
       });
   };
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div
+      className="container"
+      style={{ marginTop: "50px", marginBottom: "50px" }}
+    >
       <br />
-      <h4>Add Event</h4>
+      <h1>Update event</h1>
+      <br />
       <form onSubmit={onsubmitform}>
         <div className="row">
           <div className="col-4">
