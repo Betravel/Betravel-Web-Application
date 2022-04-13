@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getHotel, hotelActions } from "../Redux/hotelReducer";
+import { Locations } from "../locations";
 import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
@@ -13,319 +16,159 @@ import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 function UpdateHotel() {
+  const hotel = useSelector((state) => state.hotel);
+  const dispatch = useDispatch();
   const history = useNavigate();
   let { id } = useParams();
-
-  const [Single, setSingle] = useState(false);
-  const [StateSinglelpd, setStateSinglelpd] = useState(false);
-  const [Singlelpd, setSinglelpd] = useState(0);
-  const [StateSingledp, setStateSingledp] = useState(false);
-  const [Singledp, setSingledp] = useState(0);
-  const [StateSinglepc, setStateSinglepc] = useState(false);
-  const [Singlepc, setSinglepc] = useState(0);
-  const [StateSingleai, setStateSingleai] = useState(false);
-  const [Singleai, setSingleai] = useState(0);
-
-  const [Double, setDouble] = useState(false);
-  const [StateDoublelpd, setStateDoublelpd] = useState(false);
-  const [Doublelpd, setDoublelpd] = useState(0);
-  const [StateDoubledp, setStateDoubledp] = useState(false);
-  const [Doubledp, setDoubledp] = useState(0);
-  const [StateDoublepc, setStateDoublepc] = useState(false);
-  const [Doublepc, setDoublepc] = useState(0);
-  const [StateDoubleai, setStateDoubleai] = useState(false);
-  const [Doubleai, setDoubleai] = useState(0);
-
-  const [Triple, setTriple] = useState(false);
-  const [StateTriplelpd, setStateTriplelpd] = useState(false);
-  const [Triplelpd, setTriplelpd] = useState(0);
-  const [StateTripledp, setStateTripledp] = useState(false);
-  const [Tripledp, setTripledp] = useState(0);
-  const [StateTriplepc, setStateTriplepc] = useState(false);
-  const [Triplepc, setTriplepc] = useState(0);
-  const [StateTripleai, setStateTripleai] = useState(false);
-  const [Tripleai, setTripleai] = useState(0);
-
-  const [Quadruple, setQuadruple] = useState(false);
-  const [StateQuadruplelpd, setStateQuadruplelpd] = useState(false);
-  const [Quadruplelpd, setQuadruplelpd] = useState(0);
-  const [StateQuadrupledp, setStateQuadrupledp] = useState(false);
-  const [Quadrupledp, setQuadrupledp] = useState(0);
-  const [StateQuadruplepc, setStateQuadruplepc] = useState(false);
-  const [Quadruplepc, setQuadruplepc] = useState(0);
-  const [StateQuadrupleai, setStateQuadrupleai] = useState(false);
-  const [Quadrupleai, setQuadrupleai] = useState(0);
-
-  const [name, setname] = useState("");
-  const [locations, setlocations] = useState([]);
-  const [location, setlocation] = useState("");
-  const [description, setdescription] = useState("");
-  const [rating, setrating] = useState(0);
-  const [singles, setsingles] = useState(false);
-  const [doubles, setdoubles] = useState(false);
-  const [triples, settriples] = useState(false);
-  const [single, setsingle] = useState(0);
-  const [double, setdouble] = useState(0);
-  const [triple, settriple] = useState(0);
-  const [enfants, setenfants] = useState(false);
-  const [enfant, setenfant] = useState(0);
-  const [promos, setpromos] = useState(false);
-  const [promo, setpromo] = useState(0);
-  const [parking, setparking] = useState(false);
-  const [wifi, setwifi] = useState(false);
-  const [elevator, setelevator] = useState(false);
-  const [restaurant, setrestaurant] = useState(false);
-  const [bar, setbar] = useState(false);
-  const [pool, setpool] = useState(false);
-  const [indoorpool, setindoorpool] = useState(false);
-  const [spa, setspa] = useState(false);
   const [images, setimages] = useState([]);
-  const [oldimages, setoldimages] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => {
-        const hotel = res.data;
-        setname(hotel.name);
-        setlocation(hotel.location);
-        setrating(hotel.rating);
-        setdescription(hotel.description);
+    dispatch(getHotel(id));
+  }, [dispatch, id]);
 
-        if (hotel.price.single) {
-          setSingle(true);
-          if (hotel.price.single.lpd) {
-            setStateSinglelpd(true);
-            setSinglelpd(hotel.price.single.lpd);
-          }
-          if (hotel.price.single.dp) {
-            setStateSingledp(true);
-            setSingledp(hotel.price.single.dp);
-          }
-          if (hotel.price.single.pc) {
-            setStateSinglepc(true);
-            setSinglepc(hotel.price.single.pc);
-          }
-          if (hotel.price.single.ai) {
-            setStateSingleai(true);
-            setSingleai(hotel.price.single.ai);
-          }
-        }
-
-        if (hotel.price.double) {
-          setDouble(true);
-          if (hotel.price.double.lpd) {
-            setStateDoublelpd(true);
-            setDoublelpd(hotel.price.double.lpd);
-          }
-          if (hotel.price.double.dp) {
-            setStateDoubledp(true);
-            setDoubledp(hotel.price.double.dp);
-          }
-          if (hotel.price.double.pc) {
-            setStateDoublepc(true);
-            setDoublepc(hotel.price.double.pc);
-          }
-          if (hotel.price.double.ai) {
-            setStateDoubleai(true);
-            setDoubleai(hotel.price.double.ai);
-          }
-        }
-
-        if (hotel.price.triple) {
-          setTriple(true);
-          if (hotel.price.triple.lpd) {
-            setStateTriplelpd(true);
-            setTriplelpd(hotel.price.triple.lpd);
-          }
-          if (hotel.price.triple.dp) {
-            setStateTripledp(true);
-            setTripledp(hotel.price.triple.dp);
-          }
-          if (hotel.price.triple.pc) {
-            setStateTriplepc(true);
-            setTriplepc(hotel.price.triple.pc);
-          }
-          if (hotel.price.triple.ai) {
-            setStateTripleai(true);
-            setTripleai(hotel.price.triple.ai);
-          }
-        }
-
-        if (hotel.price.quadruple) {
-          setQuadruple(true);
-          if (hotel.price.quadruple.lpd) {
-            setStateQuadruplelpd(true);
-            setQuadruplelpd(hotel.price.quadruple.lpd);
-          }
-          if (hotel.price.quadruple.dp) {
-            setStateQuadrupledp(true);
-            setQuadrupledp(hotel.price.quadruple.dp);
-          }
-          if (hotel.price.quadruple.pc) {
-            setStateQuadruplepc(true);
-            setQuadruplepc(hotel.price.quadruple.pc);
-          }
-          if (hotel.price.quadruple.ai) {
-            setStateQuadrupleai(true);
-            setQuadrupleai(hotel.price.quadruple.ai);
-          }
-        }
-
-        if (hotel.price.kids) {
-          setenfants(true);
-          setenfant(hotel.price.kids);
-        }
-
-        if (hotel.rooms) {
-          if (hotel.rooms.single) {
-            setsingles(true);
-            setsingle(hotel.rooms.single);
-          }
-          if (hotel.rooms.double) {
-            setdoubles(true);
-            setdouble(hotel.rooms.double);
-          }
-          if (hotel.rooms.triple) {
-            settriples(true);
-            settriple(hotel.rooms.triple);
-          }
-        }
-
-        setoldimages(hotel.images);
-        if (hotel.promo) {
-          setpromos(true);
-          setpromo(hotel.promo);
-        }
-        if (hotel.options.parking) {
-          setparking(true);
-        }
-        if (hotel.options.wifi) {
-          setwifi(true);
-        }
-        if (hotel.options.elevator) {
-          setelevator(true);
-        }
-        if (hotel.options.restaurant) {
-          setrestaurant(true);
-        }
-        if (hotel.options.bar) {
-          setbar(true);
-        }
-        if (hotel.options.pool) {
-          setpool(true);
-        }
-        if (hotel.options.indoorpool) {
-          setindoorpool(true);
-        }
-        if (hotel.options.spa) {
-          setspa(true);
-        }
+  const updateHotel = (e) => {
+    dispatch(
+      hotelActions.updatehotel({
+        type: e.target.name,
+        value: e.target.value,
       })
-      .catch();
-    axios
-      .get("http://localhost:8000/api/destinations/all")
-      .then((des) => {
-        setlocations(des.data);
+    );
+  };
+
+  const updateOptions = (e) => {
+    dispatch(
+      hotelActions.updateoptions({
+        type: e.target.name,
+        value: e.target.checked,
       })
-      .catch();
-  }, [id]);
+    );
+  };
+
+  const updateStatus = (e) => {
+    dispatch(
+      hotelActions.updatestatus({
+        type: e.target.name,
+        value: e.target.checked,
+      })
+    );
+  };
+
+  const updatePrice = (e) => {
+    dispatch(
+      hotelActions.updateprice({
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+  };
+  const updateRooms = (e) => {
+    dispatch(
+      hotelActions.updaterooms({
+        type: e.target.name,
+        value: e.target.value,
+      })
+    );
+  };
+
   const onsubmitform = (e) => {
     const data = new FormData();
-    data.append("name", name);
-    data.append("location", location);
-    data.append("rating", rating);
-    data.append("description", description);
+    data.append("name", hotel.name);
+    data.append("location", hotel.location);
+    data.append("rating", hotel.rating);
+    data.append("description", hotel.description);
     const price = {};
 
-    if (Single) {
+    if (hotel.status.single) {
       let single = {};
-      if (StateSinglelpd && Singlelpd !== 0) {
-        single.lpd = Singlelpd;
+      if (hotel.status.singlelpd && hotel.price.single.lpd !== 0) {
+        single.lpd = hotel.price.single.lpd;
       }
-      if (StateSingledp && Singledp !== 0) {
-        single.dp = Singledp;
+      if (hotel.status.singledp && hotel.price.single.dp !== 0) {
+        single.dp = hotel.price.single.dp;
       }
-      if (StateSinglepc && Singlepc !== 0) {
-        single.pc = Singlepc;
+      if (hotel.status.singlepc && hotel.price.single.pc !== 0) {
+        single.pc = hotel.price.single.pc;
       }
-      if (StateSingleai && Singleai !== 0) {
-        single.ai = Singleai;
+      if (hotel.status.singleai && hotel.price.single.ai !== 0) {
+        single.ai = hotel.price.single.ai;
       }
       if (Object.keys(single).length !== 0) {
         price.single = single;
       }
     }
 
-    if (Double) {
+    if (hotel.status.double) {
       let double = {};
-      if (StateDoublelpd && Doublelpd !== 0) {
-        double.lpd = Doublelpd;
+      if (hotel.status.doublelpd && hotel.price.double.lpd !== 0) {
+        double.lpd = hotel.price.double.lpd;
       }
-      if (StateDoubledp && Doubledp !== 0) {
-        double.dp = Doubledp;
+      if (hotel.status.doubledp && hotel.price.double.dp !== 0) {
+        double.dp = hotel.price.double.dp;
       }
-      if (StateDoublepc && Doublepc !== 0) {
-        double.pc = Doublepc;
+      if (hotel.status.doublepc && hotel.price.double.pc !== 0) {
+        double.pc = hotel.price.double.pc;
       }
-      if (StateDoubleai && Doubleai !== 0) {
-        double.ai = Doubleai;
+      if (hotel.status.doubleai && hotel.price.double.ai !== 0) {
+        double.ai = hotel.price.double.ai;
       }
       if (Object.keys(double).length !== 0) {
         price.double = double;
       }
     }
 
-    if (Triple) {
+    if (hotel.status.triple) {
       let triple = {};
-      if (StateTriplelpd && Triplelpd !== 0) {
-        triple.lpd = Triplelpd;
+      if (hotel.status.triplelpd && hotel.price.triple.lpd !== 0) {
+        triple.lpd = hotel.price.triple.lpd;
       }
-      if (StateTripledp && Tripledp !== 0) {
-        triple.dp = Tripledp;
+      if (hotel.status.tripledp && hotel.price.triple.dp !== 0) {
+        triple.dp = hotel.price.triple.dp;
       }
-      if (StateTriplepc && Triplepc !== 0) {
-        triple.pc = Triplepc;
+      if (hotel.status.triplepc && hotel.price.triple.pc !== 0) {
+        triple.pc = hotel.price.triple.pc;
       }
-      if (StateTripleai && Tripleai !== 0) {
-        triple.ai = Tripleai;
+      if (hotel.status.tripleai && hotel.price.triple.ai !== 0) {
+        triple.ai = hotel.price.triple.ai;
       }
       if (Object.keys(triple).length !== 0) {
         price.triple = triple;
       }
     }
 
-    if (Quadruple) {
+    if (hotel.status.triple) {
       let quadruple = {};
-      if (StateQuadruplelpd && Quadruplelpd !== 0) {
-        quadruple.lpd = Quadruplelpd;
+      if (hotel.status.triplelpd && hotel.price.quadruple.lpd !== 0) {
+        quadruple.lpd = hotel.price.quadruple.lpd;
       }
-      if (StateQuadrupledp && Quadrupledp !== 0) {
-        quadruple.dp = Quadrupledp;
+      if (hotel.status.tripledp && hotel.price.quadruple.dp !== 0) {
+        quadruple.dp = hotel.price.quadruple.dp;
       }
-      if (StateQuadruplepc && Quadruplepc !== 0) {
-        quadruple.pc = Quadruplepc;
+      if (hotel.status.triplepc && hotel.price.quadruple.pc !== 0) {
+        quadruple.pc = hotel.price.quadruple.pc;
       }
-      if (StateQuadrupleai && Quadrupleai !== 0) {
-        quadruple.ai = Quadrupleai;
+      if (hotel.status.tripleai && hotel.price.quadruple.ai !== 0) {
+        quadruple.ai = hotel.price.quadruple.ai;
       }
       if (Object.keys(quadruple).length !== 0) {
         price.quadruple = quadruple;
       }
     }
 
-    if (enfants) {
-      price.kids = enfant;
+    if (hotel.status.enfant) {
+      price.kids = hotel.price.kids;
     }
     let rooms = {};
-    if (singles) {
-      rooms.single = single;
+    if (hotel.status.singleroooms) {
+      rooms.single = hotel.rooms.single;
     }
-    if (doubles) {
-      rooms.double = double;
+    if (hotel.status.doublerooms) {
+      rooms.double = hotel.rooms.double;
     }
-    if (triples) {
-      rooms.triple = triple;
+    if (hotel.status.triplerooms) {
+      rooms.triple = hotel.rooms.triple;
+    }
+    if (hotel.status.quadruplerooms) {
+      rooms.quadruple = hotel.rooms.quadruple;
     }
     data.append("rooms", JSON.stringify(rooms));
     data.append("price", JSON.stringify(price));
@@ -333,17 +176,17 @@ function UpdateHotel() {
       const element = images[index];
       data.append("images", element);
     }
-    data.append("images", JSON.stringify(oldimages));
-    data.append("promo", parseInt(promo));
+    data.append("images", JSON.stringify(hotel.images));
+    data.append("promo", parseInt(hotel.promo));
     let options = {
-      parking,
-      wifi,
-      elevator,
-      restaurant,
-      bar,
-      pool,
-      indoorpool,
-      spa,
+      parking: hotel.options.parking,
+      wifi: hotel.options.wifi,
+      elevator: hotel.options.elevator,
+      restaurant: hotel.options.restaurant,
+      bar: hotel.options.bar,
+      pool: hotel.options.pool,
+      indoorpool: hotel.options.indoorpool,
+      spa: hotel.options.spa,
     };
     data.append("options", JSON.stringify(options));
     axios
@@ -360,44 +203,38 @@ function UpdateHotel() {
   };
 
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div
+      className="container"
+      style={{ marginTop: "50px", marginBottom: "50px" }}
+    >
       <br />
-      <h4>Add hotel</h4>
+      <h1>Update hotel</h1>
+      <br />
       <form onSubmit={onsubmitform}>
         <div className="row">
           <div className="col-5">
             <TextField
-              id="name"
               name="name"
               label="Name"
               variant="outlined"
-              value={name}
-              onChange={(e) => setname(e.target.value)}
+              value={hotel.name}
+              onChange={updateHotel}
               fullWidth
             />
           </div>
           <div className="col-2">
             <Typography component="legend">Rating</Typography>
-            <Rating
-              name="rating"
-              value={rating}
-              onChange={(e) => setrating(parseInt(e.target.value))}
-            />
+            <Rating name="rating" value={hotel.rating} onChange={updateHotel} />
           </div>
           <div className="col-5">
             <Autocomplete
-              freeSolo
-              id="location"
-              options={locations}
+              name="location"
+              options={Locations}
+              value={hotel.location}
+              onChange={updateHotel}
               sx={{ width: "auto" }}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Location"
-                  fullWidth
-                  value={location}
-                  onChange={(e) => setlocation(e.target.value)}
-                />
+                <TextField {...params} label="Location" fullWidth />
               )}
             />
           </div>
@@ -406,14 +243,14 @@ function UpdateHotel() {
         <div className="row">
           <div className="col-12">
             <TextField
-              id="description"
+              name="description"
               label="Description"
               variant="outlined"
               multiline
               rows={3}
               style={{ width: "100%" }}
-              value={description}
-              onChange={(e) => setdescription(e.target.value)}
+              value={hotel.description}
+              onChange={updateHotel}
             />
           </div>
         </div>
@@ -425,9 +262,10 @@ function UpdateHotel() {
               value="end"
               control={
                 <Switch
+                  name="single"
                   color="primary"
-                  checked={Single}
-                  onChange={(e) => setSingle(e.target.checked)}
+                  checked={hotel.status.single}
+                  onChange={updateStatus}
                 />
               }
               label="Single"
@@ -435,95 +273,86 @@ function UpdateHotel() {
             />
           </div>
           <div className="col-8">
-            {Single ? (
+            {hotel.status.single ? (
               <div className="row">
-                {" "}
                 {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="Singlelpd"
-                    checked={StateSinglelpd}
-                    onChange={(e) => setStateSinglelpd(e.target.checked)}
+                    name="singlelpd"
+                    checked={hotel.status.singlelpd}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Singlelpd"
+                    name="Singlelpd"
                     label="Logement petit dejeuner"
                     variant="outlined"
                     type="number"
-                    disabled={!StateSinglelpd}
+                    disabled={!hotel.status.singlelpd}
                     fullWidth
-                    value={Singlelpd}
-                    onChange={(e) => {
-                      setSinglelpd(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.single.lpd}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="Singledp"
-                    checked={StateSingledp}
-                    onChange={(e) => setStateSingledp(e.target.checked)}
+                    name="singledp"
+                    checked={hotel.status.singledp}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Singlepd"
+                    name="Singledp"
                     label="Demi pension"
                     variant="outlined"
                     type="number"
-                    disabled={!StateSingledp}
+                    disabled={!hotel.status.singledp}
                     fullWidth
-                    value={Singledp}
-                    onChange={(e) => {
-                      setSingledp(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.single.dp}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="Singlepc"
-                    checked={StateSinglepc}
-                    onChange={(e) => setStateSinglepc(e.target.checked)}
+                    name="singlepc"
+                    checked={hotel.status.singlepc}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Singlepd"
+                    name="Singlepc"
                     label="Pension Complete"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateSinglepc}
-                    value={Singlepc}
-                    onChange={(e) => {
-                      setSinglepc(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.singlepc}
+                    value={hotel.price.single.pc}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* all incl */}
                 <div className="col-1">
                   <Checkbox
-                    name="Singleai"
-                    checked={StateSingleai}
-                    onChange={(e) => setStateSingleai(e.target.checked)}
+                    name="singleai"
+                    checked={hotel.status.singleai}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Singleai"
+                    name="Singleai"
                     label="All inclusif"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateSingleai}
-                    value={Singleai}
-                    onChange={(e) => {
-                      setSingleai(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.singleai}
+                    value={hotel.price.single.ai}
+                    onChange={updatePrice}
                   />
                 </div>
               </div>
@@ -540,9 +369,10 @@ function UpdateHotel() {
               value="end"
               control={
                 <Switch
+                  name="double"
                   color="primary"
-                  checked={Double}
-                  onChange={(e) => setDouble(e.target.checked)}
+                  checked={hotel.status.double}
+                  onChange={updateStatus}
                 />
               }
               label="Double"
@@ -550,95 +380,87 @@ function UpdateHotel() {
             />
           </div>
           <div className="col-8">
-            {Double ? (
+            {hotel.status.double ? (
               <div className="row">
                 {" "}
                 {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="Doublelpd"
-                    checked={StateDoublelpd}
-                    onChange={(e) => setStateDoublelpd(e.target.checked)}
+                    name="doublelpd"
+                    checked={hotel.status.doublelpd}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Doublelpd"
+                    name="Doublelpd"
                     label="Logement petit dejeuner"
                     variant="outlined"
                     type="number"
-                    disabled={!StateDoublelpd}
+                    disabled={!hotel.status.doublelpd}
                     fullWidth
-                    value={Doublelpd}
-                    onChange={(e) => {
-                      setDoublelpd(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.double.lpd}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="Doubledp"
-                    checked={StateDoubledp}
-                    onChange={(e) => setStateDoubledp(e.target.checked)}
+                    name="doubledp"
+                    checked={hotel.status.doubledp}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Doublepd"
+                    name="Doubledp"
                     label="Demi pension"
                     variant="outlined"
                     type="number"
-                    disabled={!StateDoubledp}
+                    disabled={!hotel.status.doubledp}
                     fullWidth
-                    value={Doubledp}
-                    onChange={(e) => {
-                      setDoubledp(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.double.dp}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="Doublepc"
-                    checked={StateDoublepc}
-                    onChange={(e) => setStateDoublepc(e.target.checked)}
+                    name="doublepc"
+                    checked={hotel.status.doublepc}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Doublepd"
+                    name="Doublepc"
                     label="Pension Complete"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateDoublepc}
-                    value={Doublepc}
-                    onChange={(e) => {
-                      setDoublepc(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.doublepc}
+                    value={hotel.price.double.pc}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* all incl */}
                 <div className="col-1">
                   <Checkbox
-                    name="Doubleai"
-                    checked={StateDoubleai}
-                    onChange={(e) => setStateDoubleai(e.target.checked)}
+                    name="doubleai"
+                    checked={hotel.status.doubleai}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Doubleai"
+                    name="Doubleai"
                     label="All inclusif"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateDoubleai}
-                    value={Doubleai}
-                    onChange={(e) => {
-                      setDoubleai(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.doubleai}
+                    value={hotel.price.double.ai}
+                    onChange={updatePrice}
                   />
                 </div>
               </div>
@@ -648,7 +470,6 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
-
         {/* triple */}
         <div className="row">
           <div className="col-4" align="left">
@@ -656,9 +477,10 @@ function UpdateHotel() {
               value="end"
               control={
                 <Switch
+                  name="triple"
                   color="primary"
-                  checked={Triple}
-                  onChange={(e) => setTriple(e.target.checked)}
+                  checked={hotel.status.triple}
+                  onChange={updateStatus}
                 />
               }
               label="Triple"
@@ -666,95 +488,87 @@ function UpdateHotel() {
             />
           </div>
           <div className="col-8">
-            {Triple ? (
+            {hotel.status.triple ? (
               <div className="row">
                 {" "}
                 {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="Triplelpd"
-                    checked={StateTriplelpd}
-                    onChange={(e) => setStateTriplelpd(e.target.checked)}
+                    name="triplelpd"
+                    checked={hotel.status.triplelpd}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Triplelpd"
+                    name="Triplelpd"
                     label="Logement petit dejeuner"
                     variant="outlined"
                     type="number"
-                    disabled={!StateTriplelpd}
+                    disabled={!hotel.status.triplelpd}
                     fullWidth
-                    value={Triplelpd}
-                    onChange={(e) => {
-                      setTriplelpd(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.triple.lpd}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="Tripledp"
-                    checked={StateTripledp}
-                    onChange={(e) => setStateTripledp(e.target.checked)}
+                    name="tripledp"
+                    checked={hotel.status.tripledp}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Triplepd"
+                    name="Tripledp"
                     label="Demi pension"
                     variant="outlined"
                     type="number"
-                    disabled={!StateTripledp}
+                    disabled={!hotel.status.tripledp}
                     fullWidth
-                    value={Tripledp}
-                    onChange={(e) => {
-                      setTripledp(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.triple.dp}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="Triplepc"
-                    checked={StateTriplepc}
-                    onChange={(e) => setStateTriplepc(e.target.checked)}
+                    name="triplepc"
+                    checked={hotel.status.triplepc}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Triplepd"
+                    name="Triplepc"
                     label="Pension Complete"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateTriplepc}
-                    value={Triplepc}
-                    onChange={(e) => {
-                      setTriplepc(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.triplepc}
+                    value={hotel.price.triple.pc}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* all incl */}
                 <div className="col-1">
                   <Checkbox
-                    name="Tripleai"
-                    checked={StateTripleai}
-                    onChange={(e) => setStateTripleai(e.target.checked)}
+                    name="tripleai"
+                    checked={hotel.status.tripleai}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Tripleai"
+                    name="Tripleai"
                     label="All inclusif"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateTripleai}
-                    value={Tripleai}
-                    onChange={(e) => {
-                      setTripleai(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.tripleai}
+                    value={hotel.price.triple.ai}
+                    onChange={updatePrice}
                   />
                 </div>
               </div>
@@ -771,9 +585,10 @@ function UpdateHotel() {
               value="end"
               control={
                 <Switch
+                  name="quadruple"
                   color="primary"
-                  checked={Quadruple}
-                  onChange={(e) => setQuadruple(e.target.checked)}
+                  checked={hotel.status.quadruple}
+                  onChange={updateStatus}
                 />
               }
               label="Quadruple"
@@ -781,95 +596,87 @@ function UpdateHotel() {
             />
           </div>
           <div className="col-8">
-            {Quadruple ? (
+            {hotel.status.quadruple ? (
               <div className="row">
                 {" "}
                 {/* petit déj*/}
                 <div className="col-1">
                   <Checkbox
-                    name="Quadruplelpd"
-                    checked={StateQuadruplelpd}
-                    onChange={(e) => setStateQuadruplelpd(e.target.checked)}
+                    name="quadruplelpd"
+                    checked={hotel.status.quadruplelpd}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Quadruplelpd"
+                    name="Quadruplelpd"
                     label="Logement petit dejeuner"
                     variant="outlined"
                     type="number"
-                    disabled={!StateQuadruplelpd}
+                    disabled={!hotel.status.quadruplelpd}
                     fullWidth
-                    value={Quadruplelpd}
-                    onChange={(e) => {
-                      setQuadruplelpd(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.quadruple.lpd}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* demi pension */}
                 <div className="col-1">
                   <Checkbox
-                    name="Quadrupledp"
-                    checked={StateQuadrupledp}
-                    onChange={(e) => setStateQuadrupledp(e.target.checked)}
+                    name="quadrupledp"
+                    checked={hotel.status.quadrupledp}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Quadruplepd"
+                    name="Quadrupledp"
                     label="Demi pension"
                     variant="outlined"
                     type="number"
-                    disabled={!StateQuadrupledp}
+                    disabled={!hotel.status.quadrupledp}
                     fullWidth
-                    value={Quadrupledp}
-                    onChange={(e) => {
-                      setQuadrupledp(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.quadruple.dp}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* pension complete */}
                 <div className="col-1">
                   <Checkbox
-                    name="Quadruplepc"
-                    checked={StateQuadruplepc}
-                    onChange={(e) => setStateQuadruplepc(e.target.checked)}
+                    name="quadruplepc"
+                    checked={hotel.status.quadruplepc}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Quadruplepd"
+                    name="Quadruplepc"
                     label="Pension Complete"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateQuadruplepc}
-                    value={Quadruplepc}
-                    onChange={(e) => {
-                      setQuadruplepc(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.quadruplepc}
+                    value={hotel.price.quadruple.pc}
+                    onChange={updatePrice}
                   />
                 </div>
                 {/* all incl */}
                 <div className="col-1">
                   <Checkbox
-                    name="Quadrupleai"
-                    checked={StateQuadrupleai}
-                    onChange={(e) => setStateQuadrupleai(e.target.checked)}
+                    name="quadrupleai"
+                    checked={hotel.status.quadrupleai}
+                    onChange={updateStatus}
                   />
                 </div>
                 <div className="col-2">
                   <TextField
-                    id="Quadrupleai"
+                    name="Quadrupleai"
                     label="All inclusif"
                     type="number"
                     variant="outlined"
                     fullWidth
-                    disabled={!StateQuadrupleai}
-                    value={Quadrupleai}
-                    onChange={(e) => {
-                      setQuadrupleai(parseInt(e.target.value));
-                    }}
+                    disabled={!hotel.status.quadrupleai}
+                    value={hotel.price.quadruple.ai}
+                    onChange={updatePrice}
                   />
                 </div>
               </div>
@@ -879,16 +686,16 @@ function UpdateHotel() {
           </div>
         </div>
         <br />
-
         <div className="row">
           <div className="col-4" align="left">
             <FormControlLabel
               value="end"
               control={
                 <Switch
+                  name="enfant"
                   color="primary"
-                  checked={enfants}
-                  onChange={(e) => setenfants(e.target.checked)}
+                  checked={hotel.status.enfant}
+                  onChange={updateStatus}
                 />
               }
               label="Kids"
@@ -896,21 +703,18 @@ function UpdateHotel() {
             />
           </div>
           <div className="col-8">
-            {enfants ? (
+            {hotel.status.enfant ? (
               <div className="row">
                 <div className="col-4"></div>
                 <div className="col-4">
                   <TextField
-                    id="enfant"
+                    name="Enfant"
                     label="Kids"
                     type="number"
                     variant="outlined"
-                    disabled={!enfants}
                     fullWidth
-                    value={enfant}
-                    onChange={(e) => {
-                      setenfant(parseInt(e.target.value));
-                    }}
+                    value={hotel.price.kids}
+                    onChange={updatePrice}
                   />
                 </div>
                 <div className="col-4"></div>
@@ -927,9 +731,10 @@ function UpdateHotel() {
               value="end"
               control={
                 <Switch
+                  name="promo"
                   color="primary"
-                  checked={promos}
-                  onChange={(e) => setpromos(e.target.checked)}
+                  checked={hotel.status.promo}
+                  onChange={updateStatus}
                 />
               }
               label="Promo"
@@ -938,21 +743,21 @@ function UpdateHotel() {
           </div>
           <br />
           <div className="col-8">
-            {promos ? (
+            {hotel.status.promo ? (
               <div className="row">
                 <div className="col-4"></div>
                 <div className="col-4">
                   <TextField
                     label="Promo en %"
-                    id="promo"
+                    name="Promo"
                     fullWidth
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">%</InputAdornment>
                       ),
                     }}
-                    value={promo}
-                    onChange={(e) => setpromo(parseInt(e.target.value))}
+                    value={hotel.promo}
+                    onChange={updatePrice}
                   />
                 </div>
                 <div className="col-4"></div>
@@ -971,60 +776,78 @@ function UpdateHotel() {
             <div className="row">
               <div className="col-1">
                 <Checkbox
-                  name="triples"
-                  checked={triples}
-                  onChange={(e) => settriples(e.target.checked)}
+                  name="quadruplerooms"
+                  checked={hotel.status.quadruplerooms}
+                  onChange={updateStatus}
                 />
               </div>
-              <div className="col-3">
+              <div className="col-2">
                 <TextField
-                  id="triple"
+                  name="QuadrupleRooms"
+                  label="Quadruple"
+                  type="number"
+                  variant="outlined"
+                  disabled={!hotel.status.quadruplerooms}
+                  fullWidth
+                  value={hotel.rooms.quadruple}
+                  onChange={updateRooms}
+                />
+              </div>
+              <div className="col-1">
+                <Checkbox
+                  name="triplerooms"
+                  checked={hotel.status.triplerooms}
+                  onChange={updateStatus}
+                />
+              </div>
+              <div className="col-2">
+                <TextField
+                  name="TripleRooms"
                   label="Triple"
                   type="number"
                   variant="outlined"
-                  disabled={!triples}
+                  disabled={!hotel.status.triplerooms}
                   fullWidth
-                  value={triple}
-                  onChange={(e) => settriple(parseInt(e.target.value))}
+                  value={hotel.rooms.triple}
+                  onChange={updateRooms}
                 />
               </div>
               <div className="col-1">
                 <Checkbox
-                  name="doubles"
-                  checked={doubles}
-                  onChange={(e) => setdoubles(e.target.checked)}
+                  name="doublerooms"
+                  checked={hotel.status.doublerooms}
+                  onChange={updateStatus}
                 />
               </div>
-              <div className="col-3">
+              <div className="col-2">
                 <TextField
-                  id="double"
+                  name="DoubleRooms"
                   label="Double"
                   type="number"
                   variant="outlined"
-                  disabled={!doubles}
+                  disabled={!hotel.status.doublerooms}
                   fullWidth
-                  value={double}
-                  onChange={(e) => setdouble(parseInt(e.target.value))}
+                  value={hotel.rooms.double}
+                  onChange={updateRooms}
                 />
               </div>
               <div className="col-1">
                 <Checkbox
-                  name="singles"
-                  checked={singles}
-                  onChange={(e) => setsingles(e.target.checked)}
+                  name="singlerooms"
+                  checked={hotel.status.singlerooms}
+                  onChange={updateStatus}
                 />
               </div>
-              <div className="col-3">
+              <div className="col-2">
                 <TextField
-                  id="single"
+                  name="SingleRooms"
                   label="Single"
                   variant="outlined"
                   type="number"
                   fullWidth
-                  disabled={!singles}
-                  value={single}
-                  s
-                  onChange={(e) => setsingle(parseInt(e.target.value))}
+                  disabled={!hotel.status.singlerooms}
+                  value={hotel.rooms.single}
+                  onChange={updateRooms}
                 />
               </div>
             </div>
@@ -1036,9 +859,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={parking}
-                  onChange={(e) => setparking(e.target.checked)}
                   name="parking"
+                  checked={hotel.options.parking}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-parking-gas-station-xnimrodx-lineal-xnimrodx.png"
@@ -1060,9 +883,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={wifi}
-                  onChange={(e) => setwifi(e.target.checked)}
                   name="wifi"
+                  checked={hotel.options.wifi}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-wifi-accommodation-and-hotel-xnimrodx-lineal-xnimrodx.png"
@@ -1084,9 +907,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={elevator}
-                  onChange={(e) => setelevator(e.target.checked)}
                   name="elevator"
+                  checked={hotel.options.elevator}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-elevator-shopping-mall-xnimrodx-lineal-xnimrodx.png"
@@ -1108,9 +931,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={restaurant}
-                  onChange={(e) => setrestaurant(e.target.checked)}
                   name="restaurant"
+                  checked={hotel.options.restaurant}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-restaurant-hotel-xnimrodx-lineal-xnimrodx.png"
@@ -1132,9 +955,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={bar}
-                  onChange={(e) => setbar(e.target.checked)}
                   name="bar"
+                  checked={hotel.options.bar}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-bar-beer-xnimrodx-lineal-xnimrodx.png"
@@ -1156,9 +979,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={pool}
-                  onChange={(e) => setpool(e.target.checked)}
                   name="pool"
+                  checked={hotel.options.pool}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/30/000000/external-pool-fitness-and-gym-xnimrodx-lineal-xnimrodx.png"
@@ -1180,9 +1003,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={indoorpool}
-                  onChange={(e) => setindoorpool(e.target.checked)}
                   name="indoorpool"
+                  checked={hotel.options.indoorpool}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/30/000000/external-swimming-pool-interface-kiranshastry-solid-kiranshastry.png"
@@ -1204,9 +1027,9 @@ function UpdateHotel() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={spa}
-                  onChange={(e) => setspa(e.target.checked)}
                   name="spa"
+                  checked={hotel.options.spa}
+                  onChange={updateOptions}
                   icon={
                     <img
                       src="https://img.icons8.com/external-icongeek26-outline-icongeek26/30/000000/external-spa-ayurveda-icongeek26-outline-icongeek26.png"

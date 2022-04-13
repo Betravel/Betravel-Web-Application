@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, getReservations } from "../Redux/userReducer";
 import axios from "axios";
+import frLocale from "date-fns/locale/fr";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -71,89 +72,97 @@ function ListUsers() {
   };
 
   return (
-    <div className="row">
-      <div className="col-6">
-        <h1>List Users</h1>
-        <div style={{ height: 400, width: "100%" }}>
-          <div style={{ height: 350, width: "100%" }}>
-            <DataGrid rows={data} columns={cols} />
+    <div className="row" style={{ minHeight: window.innerHeight }}>
+      <div className="row" style={{ marginTop: "auto", marginBottom: "auto" }}>
+        <div
+          className="col-9"
+          style={{ marginTop: "auto", marginBottom: "auto" }}
+        >
+          <h1>List Users</h1>
+          <div style={{ height: 600, width: "100%" }}>
+            <div style={{ height: 550, width: "100%" }}>
+              <DataGrid rows={data} columns={cols} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-6">
-        <h1>Details User</h1>
-        <div className="row">
-          <div className="col-6">
-            <TextField
-              id="firstname"
-              label="First Name"
-              variant="outlined"
-              name="firstname"
-              value={user.firstname}
-              readOnly
-              fullWidth
-            />
-          </div>
-          <div className="col-6">
-            <TextField
-              id="lastname"
-              label="Last Name"
-              variant="outlined"
-              name="lastname"
-              value={user.lastname}
-              readOnly
-              fullWidth
-            />
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-6">
-            <TextField
-              id="email"
-              label="Email"
-              variant="outlined"
-              name="email"
-              value={user.email}
-              readOnly
-              fullWidth
-            />
-          </div>
-          <div className="col-6">
-            <TextField
-              id="phone"
-              label="Phone"
-              variant="outlined"
-              name="phone"
-              value={user.phone}
-              readOnly
-              fullWidth
-            />
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-6">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Created At"
+        <div className="col-3">
+          <h1>Details User</h1>
+          <div class="card">
+            <div style={{ backgroundColor: "#abc4b1" }}>
+              <img
+                src="https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/150/FFFFFF/external-profile-web-smashingstocks-glyph-smashing-stocks.png"
+                alt=""
+              />
+            </div>
+            <div class="card-body">
+              <TextField
+                name="firstname"
+                label="First Name"
+                variant="outlined"
+                value={user.firstname}
                 fullWidth
                 readOnly
-                value={user.createdat}
-                renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
-          </div>
-          <div className="col-6">
-            <h2>{user.nbReservations} reservations</h2>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-12">
-            <button className="btn btn-danger" onClick={deleteUser}>
-              Delete User
-            </button>
+              <br />
+              <br />
+              <TextField
+                name="lastname"
+                label="Last Name"
+                variant="outlined"
+                value={user.lastname}
+                fullWidth
+                readOnly
+              />
+              <br />
+              <br />
+              <TextField
+                name="email"
+                label="Email"
+                variant="outlined"
+                value={user.email}
+                fullWidth
+                readOnly
+              />
+              <br />
+              <br />
+              <TextField
+                name="phone"
+                label="Phone"
+                variant="outlined"
+                value={user.phone}
+                fullWidth
+                readOnly
+              />
+              <br />
+              <br />
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <DatePicker
+                  label="Created At"
+                  mask={"__/__/____"}
+                  fullWidth
+                  readOnly
+                  value={user.createdat}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <br />
+              <br />
+              <h2>{user.nbReservations} reservations</h2>
+            </div>
+            <div
+              align="right"
+              style={{ marginRight: "20px", marginBottom: "10px" }}
+            >
+              <button className="btn" onClick={deleteUser}>
+                <img
+                  src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/50/000000/external-delete-multimedia-kiranshastry-lineal-kiranshastry.png"
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
