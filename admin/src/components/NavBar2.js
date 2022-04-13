@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "../css/Card.css";
+import { hotelActions } from "../Redux/hotelReducer";
+import { eventActions } from "../Redux/eventReducer";
 function Navbar2() {
+  const dispatch = useDispatch();
+  const clearHotel = () => {
+    dispatch(hotelActions.clearhotel());
+  };
+  const clearEvent = () => {
+    dispatch(eventActions.clearevent());
+  };
   return (
     <div>
       <br />
@@ -41,7 +51,7 @@ function Navbar2() {
             List Hotels
           </Link>
           <hr />
-          <Link to="/AddHotel" className="btn">
+          <Link to="/AddHotel" className="btn" onClick={clearHotel}>
             Add Hotel
           </Link>
         </div>
@@ -64,7 +74,7 @@ function Navbar2() {
             List Events
           </Link>
           <hr />
-          <Link to="/AddEvent" className="btn">
+          <Link to="/AddEvent" className="btn" onClick={clearEvent}>
             Add Event
           </Link>
         </div>

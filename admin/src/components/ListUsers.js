@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, getReservations } from "../Redux/userReducer";
 import axios from "axios";
+import frLocale from "date-fns/locale/fr";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -134,9 +135,13 @@ function ListUsers() {
               />
               <br />
               <br />
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
                 <DatePicker
                   label="Created At"
+                  mask={"__/__/____"}
                   fullWidth
                   readOnly
                   value={user.createdat}
