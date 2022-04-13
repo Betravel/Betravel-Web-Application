@@ -1,0 +1,23 @@
+.err {
+  background: url("../assets/oups.jpg");
+  min-height: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  background-size: cover;
+}
+
+.err2 {
+  position: relative;
+  z-index: 100;
+  justify-content: end;
+  margin-top: 20%;
+  margin-bottom:35%;
+}
+
+.err3 {
+  font-size: 3rem;
+  margin-bottom: 2px;
+  color: #21445B;
+}
+

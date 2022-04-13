@@ -3,13 +3,15 @@ import ReservationsOverview from "./ReservationOverview";
 import UsersOverview from "./UsersOverview";
 import ListUsers from "./ListUsers";
 import ListHotels from "./ListHotels";
-import DetailUser from "./DetailUser";
 import ListEvents from "./ListEvents";
 function DashBoard() {
   return (
     <div className="container-fluid" style={{ marginTop: "120px" }}>
       <div className="row" style={{ backgroundColor: "beige" }}>
-        <div className="container" style={{ marginTop: "50px" }}>
+        <div
+          className="container"
+          style={{ marginTop: "50px", marginBottom: "50px" }}
+        >
           <div className="row">
             <div className="col-4">
               <UsersOverview />
@@ -23,18 +25,17 @@ function DashBoard() {
           </div>
         </div>
       </div>
+      <br />
       <div className="row">
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-12">
               <ListUsers />
-            </div>
-            <div className="col-6">
-              <DetailUser />
             </div>
           </div>
         </div>
       </div>
+      <br />
       <div className="row">
         <div className="col-6">
           <ListHotels />

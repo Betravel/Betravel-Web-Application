@@ -16,6 +16,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
+import { navbarActions } from "../Redux/navbarReducer";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
@@ -27,6 +28,7 @@ function Reserve() {
   const dispatch = useDispatch();
   const history = useNavigate();
   useEffect(() => {
+    dispatch(navbarActions.updatenavbar(false));
     dispatch(reservationActions.getUser(auth.user));
   }, [auth.user, dispatch]);
 

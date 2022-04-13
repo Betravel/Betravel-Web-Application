@@ -4,7 +4,6 @@ import Home from "./components/home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Profil from "./components/Profil";
-import Contact from "./components/Contact";
 import Confirmed from "./components/Confirmed";
 import ResetPassword from "./components/ResetPassword";
 import ConfirmPassword from "./components/ConfirmPassword";
@@ -17,6 +16,7 @@ import "./App.css";
 import ListeEvent from "./components/ListeEvent";
 import DetailEvent from "./components/DetailEvent";
 import ReserveEvent from "./components/ReserveEvent";
+import Erreur404 from "./components/Erreur404";
 
 function App() {
   return (
@@ -26,7 +26,6 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="/Contact" element={<Contact />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
           <Route path="/Profil" element={<Profil />} />
@@ -40,6 +39,7 @@ function App() {
           <Route path="/Event/Liste" element={<ListeEvent />} />
           <Route path="/Event/Detail/:id" element={<DetailEvent />} />
           <Route path="/Event/Reserve" element={<ReserveEvent />} />
+          <Route path="*" element={<Erreur404 />} />
         </Routes>
       </Router>
     </div>

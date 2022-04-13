@@ -1,32 +1,26 @@
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getEvents } from "../Redux/eventsReducer";
 import { Link } from "react-router-dom";
+import { navbarActions } from "../Redux/navbarReducer";
 function ListeEvent() {
-  const [events, setEvents] = useState([]);
+  const dispatch = useDispatch();
+  const events = useSelector((state) => state.events);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/event/all")
-      .then((res) => {
-        setEvents(res.data);
-      })
-      .catch((err) => console.error(err));
-  });
+    dispatch(navbarActions.updatenavbar(false));
+    dispatch(getEvents());
+  }, [dispatch]);
 
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div className="container" style={{ marginTop: "120px" }}>
       <div className="row">
         {events.map((event, index) => (
-          <div className="col-4">
+          <div className="col-4" key={index}>
             <div class="card" style={{ width: "100%", height: "100%" }}>
-              <img
-                src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
-                alt=""
-                height="100px"
-              />
-
+              <img src={event.images[0].url} alt="" width="100%" />
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>
                 <div>
@@ -46,19 +40,23 @@ function ListeEvent() {
                           alt=""
                         />{" "}
                       </div>
-                      <div className="col-8">{event.date.day}</div>
-                    </div>
-                  </div>
-                  <br />
-                  <div align="left">
-                    <div className="row ">
-                      <div className="col-4">
-                        <img
-                          src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/20/000000/external-time-education-xnimrodx-lineal-xnimrodx.png"
-                          alt=""
-                        />{" "}
-                      </div>
-                      <div className="col-8">{event.hour}</div>
+                      {event.type === "randonnee" ? (
+                        <div className="col-8">
+                          {event.date.day.getDate() +
+                            "/" +
+                            (event.date.day.getMonth() + 1) +
+                            "/" +
+                            event.date.day.getFullYear()}
+                        </div>
+                      ) : (
+                        <div className="col-8">
+                          {event.date.from.getDate() +
+                            "/" +
+                            (event.date.from.getMonth() + 1) +
+                            "/" +
+                            event.date.from.getFullYear()}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <br />
