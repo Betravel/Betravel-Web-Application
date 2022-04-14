@@ -31,6 +31,7 @@ var upload = multer({
 module.exports = (app) => {
   app.post("/api/event/add", upload.array("images"), EventController.addEvent);
   app.get("/api/event/all", EventController.getAllEvents);
+  app.post("/api/event/location", EventController.getEventByDestination);
   app.get("/api/event/:id", EventController.getEventById);
   app.put(
     "/api/event/update/:id",
