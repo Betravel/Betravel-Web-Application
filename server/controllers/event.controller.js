@@ -36,6 +36,24 @@ module.exports.getAllEvents = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+module.exports.getEventByDestination = (request, response) => {
+  let dests = request.body;
+  Event.find()
+    .then((res) => {
+      let events = [];
+      res.forEach((event) => {
+        for (let index = 0; index < dests.length; index++) {
+          const element = dests[index];
+          if (event.location === element) {
+            events.push(event);
+          }
+        }
+      });
+      response.json(events);
+    })
+    .catch((err) => response.json(err));
+};
+
 module.exports.getEventById = (request, response) => {
   Event.findOne({ _id: request.params.id })
     .then((event) => {
