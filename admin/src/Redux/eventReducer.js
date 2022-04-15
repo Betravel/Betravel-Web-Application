@@ -127,6 +127,21 @@ const eventSlice = createSlice({
       let index = action.payload.index;
       state.note[index] = action.payload.value;
     },
+    clearevent(state) {
+      state.name = "";
+      state.location = "";
+      state.type = "camping";
+      state.description = "";
+      state.date.day = new Date();
+      state.date.from = new Date();
+      state.date.to = new Date();
+      state.periode = 0;
+      state.price = 0;
+      state.program = [{ hour: new Date(), text: "" }];
+      state.note = [""];
+      state.image = [];
+      state.places = 0;
+    },
   },
 });
 
