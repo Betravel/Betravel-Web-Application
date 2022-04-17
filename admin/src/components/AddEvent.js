@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { eventActions } from "../Redux/eventReducer";
+import { Locations } from "../locations";
 import axios from "axios";
+import Autocomplete from "@mui/material/Autocomplete";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import frLocale from "date-fns/locale/fr";
@@ -23,6 +25,7 @@ function AddEvent() {
   const [images, setimages] = useState([]);
   const history = useNavigate();
   const dispatch = useDispatch();
+
   const updateEvent = (e) => {
     dispatch(
       eventActions.updateevent({
@@ -31,6 +34,11 @@ function AddEvent() {
       })
     );
   };
+
+  const updateLocation = (value) => {
+    dispatch(eventActions.updatelocation(value));
+  };
+
   const updateDate = (type, value) => {
     dispatch(
       eventActions.updateevent({
@@ -68,6 +76,7 @@ function AddEvent() {
       })
     );
   };
+
   const onsubmitform = () => {
     const data = new FormData();
     data.append("name", event.name);
@@ -96,6 +105,7 @@ function AddEvent() {
         setLoading(false);
       });
   };
+
   return (
     <div
       className="container"
@@ -118,14 +128,15 @@ function AddEvent() {
             />
           </div>
           <div className="col-4">
-            <TextField
-              id="location"
+            <Autocomplete
               name="location"
-              label="Location"
-              variant="outlined"
+              options={Locations}
               value={event.location}
-              onChange={updateEvent}
-              fullWidth
+              onChange={(e, value) => updateLocation(value)}
+              sx={{ width: "auto" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Location" fullWidth />
+              )}
             />
           </div>
           <div className="col-4">

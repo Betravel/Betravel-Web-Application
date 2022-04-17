@@ -211,6 +211,9 @@ const hotelSlice = createSlice({
     updatehotel(state, action) {
       state[action.payload.type] = action.payload.value;
     },
+    updatelocation(state, action) {
+      state.location = action.payload;
+    },
     updateoptions(state, action) {
       state.options[action.payload.type] = action.payload.value;
     },
