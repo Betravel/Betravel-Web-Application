@@ -1,4 +1,4 @@
-const Reservation = require("../models/reservation.model");
+const Reservation = require("../models/reservationHotel.model");
 const Hotel = require("../models/hotel.model");
 
 module.exports.addReservation = (request, response) => {

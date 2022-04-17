@@ -1,11 +1,5 @@
-import Card from "./Card";
-
 function AboutUs() {
-  return (
-    <Card>
-      <h1>About us</h1>
-    </Card>
-  );
+  return <h1>About us</h1>;
 }
 
 export default AboutUs;

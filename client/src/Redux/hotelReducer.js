@@ -5,7 +5,7 @@ export const getHotel = (id) => {
   return async function (dispatch) {
     return await axios
       .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => dispatch(reservationActions.getHotel(res.data)));
+      .then((res) => dispatch(hotelActions.getHotel(res.data)));
   };
 };
 
@@ -17,7 +17,7 @@ export const updateUser = (id, user) => {
   };
 };
 
-const initialReservationState = {
+const initialHotelState = {
   hotel: {
     name: "",
     rating: 0,
@@ -54,9 +54,9 @@ const initialReservationState = {
   status: "In Progress",
 };
 
-const reservationSlice = createSlice({
-  name: "reservation",
-  initialState: initialReservationState,
+const hotelSlice = createSlice({
+  name: "hotel",
+  initialState: initialHotelState,
   reducers: {
     getUser(state, action) {
       let user = action.payload;
@@ -551,5 +551,5 @@ const reservationSlice = createSlice({
   },
 });
 
-export const reservationActions = reservationSlice.actions;
-export default reservationSlice;
+export const hotelActions = hotelSlice.actions;
+export default hotelSlice;

@@ -6,10 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
   const reservation = useSelector((state) => state.event);
+  const auth = useSelector((state) => state.auth);
   console.log(event);
   const dispatch = useDispatch();
   let { id } = useParams();
@@ -17,8 +19,12 @@ function DetailEvent() {
   const handleChange = (event) => {
     dispatch(eventActions.updatePlace(event.target.value));
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
+    dispatch(getAuth());
     dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvent(id));
   }, [dispatch, id]);
@@ -205,13 +211,21 @@ function DetailEvent() {
               </p>
             </div>
           </div>
-          <Link to="/Event/Reserve">
-            <div className="col-12" style={{ textAlign: "right" }}>
+          {auth.isAuth ? (
+            <Link to="/Event/Reserve">
+              <div className="col-12" style={{ textAlign: "right" }}>
+                <div className="Search__actions">
+                  <button type="button">Book Now </button>
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link to="/SignIn?path=reserveevent">
               <div className="Search__actions">
                 <button type="button">Book Now </button>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
         </div>
       </div>
 

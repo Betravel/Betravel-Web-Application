@@ -8,6 +8,10 @@ function Promos() {
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     axios
       .get("http://localhost:8000/api/hotel/promo")
       .then((res) => {
@@ -16,7 +20,7 @@ function Promos() {
           const j = Math.floor(Math.random() * (i + 1));
           [hotel[i], hotel[j]] = [hotel[j], hotel[i]];
         }
-        let randomhotels = [hotel[0], hotel[1], hotel[2] ,hotel[3]];
+        let randomhotels = [hotel[0], hotel[1], hotel[2], hotel[3]];
         setHotels(randomhotels);
       })
       .catch((err) => console.error(err));

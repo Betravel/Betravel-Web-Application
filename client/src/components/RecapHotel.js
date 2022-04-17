@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import Rating from "@mui/material/Rating";
 function RecapHotel() {
-  const hotel = useSelector((state) => state.reservation.hotel);
-  const reservation = useSelector((state) => state.reservation);
+  const hotel = useSelector((state) => state.hotel.hotel);
+  const reservation = useSelector((state) => state.hotel);
 
   console.log(reservation.periode);
   return (

@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { reservationActions } from "../Redux/reservationReducer";
+import { hotelActions } from "../Redux/hotelReducer";
 import axios from "axios";
 import RecapHotel from "./RecapHotel";
 import TextField from "@mui/material/TextField";
@@ -17,24 +17,34 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
 function Reserve() {
   const auth = useSelector((state) => state.auth);
-  const rooms = useSelector((state) => state.reservation.rooms);
-  const details = useSelector((state) => state.reservation.details);
-  const reservation = useSelector((state) => state.reservation);
+  const rooms = useSelector((state) => state.hotel.rooms);
+  const details = useSelector((state) => state.hotel.details);
+  const reservation = useSelector((state) => state.hotel);
   const dispatch = useDispatch();
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAuth());
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
-    dispatch(reservationActions.getUser(auth.user));
+    dispatch(hotelActions.getUser(auth.user));
   }, [auth.user, dispatch]);
 
   const UserChangeHandler = (event) => {
     dispatch(
-      reservationActions.updateUser({
+      hotelActions.updateUser({
         type: event.target.name,
         value: event.target.value,
       })
@@ -43,7 +53,7 @@ function Reserve() {
 
   const changeDetails = (event, type, i, index, champs) => {
     dispatch(
-      reservationActions.addDetails({
+      hotelActions.addDetails({
         index,
         type,
         i,

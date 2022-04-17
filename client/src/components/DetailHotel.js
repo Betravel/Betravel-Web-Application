@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getHotel, reservationActions } from "../Redux/reservationReducer";
+import { getHotel, hotelActions } from "../Redux/hotelReducer";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
 import Rating from "@mui/material/Rating";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -26,10 +27,13 @@ import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
+
 function DetailHotel() {
-  const reservation = useSelector((state) => state.reservation);
-  const Hotel = useSelector((state) => state.reservation.hotel);
-  const rooms = useSelector((state) => state.reservation.rooms);
+  const reservation = useSelector((state) => state.hotel);
+  const Hotel = useSelector((state) => state.hotel.hotel);
+  const rooms = useSelector((state) => state.hotel.rooms);
+  const auth = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const [image, setimage] = useState("");
   const [nbRoomSingle, setnbRoomSingle] = useState(0);
@@ -39,93 +43,98 @@ function DetailHotel() {
   let { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAuth());
     dispatch(getHotel(id));
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch, id]);
 
   const changeDate = (value) => {
-    dispatch(reservationActions.getPeriode(value));
-    dispatch(reservationActions.totalSingle());
-    dispatch(reservationActions.totalDouble());
-    dispatch(reservationActions.totalTriple());
-    dispatch(reservationActions.totalQuadruple());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.getPeriode(value));
+    dispatch(hotelActions.totalSingle());
+    dispatch(hotelActions.totalDouble());
+    dispatch(hotelActions.totalTriple());
+    dispatch(hotelActions.totalQuadruple());
+    dispatch(hotelActions.getTotal());
   };
 
   const changeNbsingleRooms = (e) => {
     setnbRoomSingle(parseInt(e.target.value));
-    dispatch(reservationActions.manageSingleRooms(parseInt(e.target.value)));
-    dispatch(reservationActions.totalSingle());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.manageSingleRooms(parseInt(e.target.value)));
+    dispatch(hotelActions.totalSingle());
+    dispatch(hotelActions.getTotal());
   };
 
   const changeNbDoubleRooms = (e) => {
     setnbRoomDouble(parseInt(e.target.value));
-    dispatch(reservationActions.manageDoubleRooms(parseInt(e.target.value)));
-    dispatch(reservationActions.totalDouble());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.manageDoubleRooms(parseInt(e.target.value)));
+    dispatch(hotelActions.totalDouble());
+    dispatch(hotelActions.getTotal());
   };
 
   const changeNbTripleRooms = (e) => {
     setnbRoomTriple(parseInt(e.target.value));
-    dispatch(reservationActions.manageTripleRooms(parseInt(e.target.value)));
-    dispatch(reservationActions.totalTriple());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.manageTripleRooms(parseInt(e.target.value)));
+    dispatch(hotelActions.totalTriple());
+    dispatch(hotelActions.getTotal());
   };
 
   const changeNbQuadrupleRooms = (e) => {
     setnbRoomQuadruple(parseInt(e.target.value));
-    dispatch(reservationActions.manageQuadrupleRooms(parseInt(e.target.value)));
-    dispatch(reservationActions.totalQuadruple());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.manageQuadrupleRooms(parseInt(e.target.value)));
+    dispatch(hotelActions.totalQuadruple());
+    dispatch(hotelActions.getTotal());
   };
 
   const ChangeSingleRooms = (e, i) => {
     dispatch(
-      reservationActions.changeSingleRooms({
+      hotelActions.changeSingleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(reservationActions.totalSingle());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.totalSingle());
+    dispatch(hotelActions.getTotal());
   };
 
   const ChangeDoubleRooms = (e, i) => {
     dispatch(
-      reservationActions.changeDoubleRooms({
+      hotelActions.changeDoubleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(reservationActions.totalDouble());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.totalDouble());
+    dispatch(hotelActions.getTotal());
   };
 
   const ChangeTripleRooms = (e, i) => {
     dispatch(
-      reservationActions.changeTripleRooms({
+      hotelActions.changeTripleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(reservationActions.totalTriple());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.totalTriple());
+    dispatch(hotelActions.getTotal());
   };
 
   const ChangeQuadrupleRooms = (e, i) => {
     dispatch(
-      reservationActions.changeQuadrupleRooms({
+      hotelActions.changeQuadrupleRooms({
         index: i,
         type: e.target.name,
         value: e.target.value,
       })
     );
-    dispatch(reservationActions.totalQuadruple());
-    dispatch(reservationActions.getTotal());
+    dispatch(hotelActions.totalQuadruple());
+    dispatch(hotelActions.getTotal());
   };
 
   const [open, setOpen] = useState(false);
@@ -1034,11 +1043,19 @@ function DetailHotel() {
         </TableContainer>
       </div>
       <br /> <br />
-      <Link to="/Hotel/Reserve">
-        <div className="Search__actions">
-          <button type="button">Book Now </button>
-        </div>
-      </Link>
+      {auth.isAuth ? (
+        <Link to="/Hotel/Reserve">
+          <div className="Search__actions">
+            <button type="button">Book Now </button>
+          </div>
+        </Link>
+      ) : (
+        <Link to="/SignIn?path=reservehotel">
+          <div className="Search__actions">
+            <button type="button">Book Now </button>
+          </div>
+        </Link>
+      )}
     </div>
   );
 }

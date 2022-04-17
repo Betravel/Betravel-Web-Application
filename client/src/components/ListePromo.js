@@ -13,6 +13,11 @@ import { navbarActions } from "../Redux/navbarReducer";
 function ListePromo() {
   const dispatch = useDispatch();
   const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
     axios

@@ -9,6 +9,14 @@ export const getEvent = (id) => {
   };
 };
 
+export const getEventReservations = (id) => {
+  return async function (dispatch) {
+    return await axios
+      .get("http://localhost:8000/api/reservation/get/" + id)
+      .then((res) => dispatch(eventActions.getreservations(res.data)));
+  };
+};
+
 const initialEventState = {
   event: {
     name: "",
@@ -72,6 +80,18 @@ const eventSlice = createSlice({
         state.details[index].lastname = action.payload.value;
       }
     },
+
+    updateUser(state, action) {
+      if (action.payload.type === "firstname") {
+        state.user.firstname = action.payload.value;
+      } else if (action.payload.type === "lastname") {
+        state.user.lastname = action.payload.value;
+      } else if (action.payload.type === "phone") {
+        state.user.phone = action.payload.value;
+      }
+    },
+
+   
   },
 });
 
