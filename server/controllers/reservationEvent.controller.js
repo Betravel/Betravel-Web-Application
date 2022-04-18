@@ -22,3 +22,22 @@ module.exports.getReservation = (request, response) => {
     })
     .catch((err) => response.json(err));
 };
+
+module.exports.getReservedPlacesByEventName = (request, response) => {
+  Reservation.find()
+    .then((res) => {
+      let reservations = res;
+      let result = [];
+      let places = 0;
+      reservations.forEach((reservation) => {
+        if (reservation.event.name === request.params.name) {
+          result.push(reservation);
+        }
+      });
+      result.forEach((element) => {
+        places = places + element.reservedplace;
+      });
+      response.json(places);
+    })
+    .catch((err) => response.json(err));
+};

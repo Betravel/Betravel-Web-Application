@@ -149,7 +149,9 @@ const hotelSlice = createSlice({
         const element = state.rooms.single.room[index];
         total += element.total;
       }
-      state.rooms.single.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.single.total = total;
     },
     manageDoubleRooms(state, action) {
       const i = action.payload;
@@ -240,7 +242,9 @@ const hotelSlice = createSlice({
         const element = state.rooms.double.room[index];
         total += element.total;
       }
-      state.rooms.double.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.double.total = total;
     },
     manageTripleRooms(state, action) {
       const i = action.payload;
@@ -341,7 +345,9 @@ const hotelSlice = createSlice({
         const element = state.rooms.triple.room[index];
         total += element.total;
       }
-      state.rooms.triple.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.triple.total = total;
     },
     manageQuadrupleRooms(state, action) {
       const i = action.payload;
@@ -452,7 +458,9 @@ const hotelSlice = createSlice({
         const element = state.rooms.quadruple.room[index];
         total += element.total;
       }
-      state.rooms.quadruple.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.quadruple.total = total;
     },
     getTotal(state) {
       let total = 0;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getHotel, hotelActions } from "../Redux/hotelReducer";
 import { navbarActions } from "../Redux/navbarReducer";
@@ -41,6 +42,7 @@ function DetailHotel() {
   const [nbRoomTriple, setnbRoomTriple] = useState(0);
   const [nbRoomQuadruple, setnbRoomQuadruple] = useState(0);
   let { id } = useParams();
+  const history = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -158,6 +160,81 @@ function DetailHotel() {
   }
 
   today = mm + "-" + dd + "-" + yyyy;
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    var ok = true;
+
+    if (
+      reservation.periode[0].getDate() === reservation.periode[1].getDate() &&
+      reservation.periode[0].getMonth() === reservation.periode[1].getMonth() &&
+      reservation.periode[0].getFullYear() ===
+        reservation.periode[1].getFullYear() &&
+      ok === true
+    ) {
+      alert("choosing checkin/checkout is required !!");
+      ok = false;
+    }
+
+    if (rooms.total === 0 && ok === true) {
+      alert("PLease choose date and rooms of reservation !!");
+      ok = false;
+    }
+
+    if (rooms.single.room.length !== 0 && ok === true) {
+      rooms.single.room.forEach((element) => {
+        if (element.total === 0) {
+          alert(
+            "Choosing periode and all pensions is required to continue 1 !!",
+            element
+          );
+          ok = false;
+        }
+      });
+    }
+
+    if (rooms.double.room.length !== 0 && ok === true) {
+      rooms.double.room.forEach((element) => {
+        if (element.total === 0) {
+          alert(
+            "Choosing periode and all pensions is required to continue 2 !!",
+            element
+          );
+          ok = false;
+        }
+      });
+    }
+
+    if (rooms.triple.room.length !== 0 && ok === true) {
+      rooms.triple.room.forEach((element) => {
+        if (element.total === 0) {
+          alert(
+            "Choosing periode and all pensions is required to continue 2 !!",
+            element
+          );
+          ok = false;
+        }
+      });
+    }
+
+    if (rooms.quadruple.room.length !== 0 && ok === true) {
+      rooms.quadruple.room.forEach((element) => {
+        if (element.total === 0) {
+          alert(
+            "Choosing periode and all pensions is required to continue 2 !!",
+            element
+          );
+          ok = false;
+        }
+      });
+    }
+
+    if (ok === true) {
+      history("/Hotel/Reserve");
+    }
+  };
+
   return (
     <div className="container" style={{ marginTop: "100px" }}>
       <div className="row">
@@ -326,736 +403,754 @@ function DetailHotel() {
         )}
       </div>
       <br />
-      <div className="row">
-        <h3 style={{ textDecoration: "underline", textAlign: "left" }}>
-          Availablity
-        </h3>
+      <form onSubmit={submitHandler}>
+        <div className="row">
+          <h3 style={{ textDecoration: "underline", textAlign: "left" }}>
+            Availablity
+          </h3>
+          <br />
+        </div>
         <br />
-      </div>
-      <br />
-      <div className="row">
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateRangePicker
-            startText="Check-in"
-            endText="Check-out"
-            value={reservation.periode}
-            minDate={new Date(today)}
-            required
-            onChange={(newValue) => {
-              changeDate(newValue);
-            }}
-            renderInput={(startProps, endProps) => (
-              <React.Fragment>
-                <TextField {...startProps} fullWidth />
-                <Box sx={{ mx: 2 }}> to </Box>
-                <TextField {...endProps} fullWidth />
-              </React.Fragment>
-            )}
-          />
-        </LocalizationProvider>
-      </div>
-      <br />
-      <div className="row">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Room's Detail</TableCell>
-                <TableCell align="center">Occupation</TableCell>
-                <TableCell align="center">Price</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Hotel.price.single ? (
+        <div className="row">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateRangePicker
+              startText="Check-in"
+              endText="Check-out"
+              value={reservation.periode}
+              minDate={new Date(today)}
+              required
+              onChange={(newValue) => {
+                changeDate(newValue);
+              }}
+              renderInput={(startProps, endProps) => (
+                <React.Fragment>
+                  <TextField {...startProps} fullWidth />
+                  <Box sx={{ mx: 2 }}> to </Box>
+                  <TextField {...endProps} fullWidth />
+                </React.Fragment>
+              )}
+            />
+          </LocalizationProvider>
+        </div>
+        <br />
+        <div className="row">
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+              <TableHead>
                 <TableRow>
-                  <TableCell align="center">
-                    <div className="row">
-                      <div
-                        className="col-4"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                        }}
-                      >
-                        <FormControl>
-                          <Select
-                            value={nbRoomSingle}
-                            name="nbRoomSingle"
-                            defaultValue={0}
-                            onChange={changeNbsingleRooms}
-                            inputProps={{ "aria-label": "Without label" }}
-                          >
-                            <MenuItem value={0}>
-                              <em>0</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                          </Select>
-                        </FormControl>
-                        {nbRoomSingle !== 0 ? <h4>single room</h4> : ""}
-                      </div>
-                      <div
-                        className="col-8"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                        }}
-                      >
-                        {nbRoomSingle === 0 ? (
-                          <h4>single room</h4>
-                        ) : (
-                          <div>
-                            {rooms.single.room.map((room, i) => {
-                              return (
-                                <div key={i}>
-                                  <div className="row">
-                                    <div
-                                      className="col-4"
-                                      style={{
-                                        marginTop: "auto",
-                                        marginBottom: "auto",
-                                      }}
-                                    >
-                                      <h6>chambre {i + 1} </h6>
-                                    </div>
-                                    <div className="col-8">
-                                      <div className="row ">
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="adultes">
-                                              adultes
-                                            </InputLabel>
-                                            <Select
-                                              labelId="adultes"
-                                              name="adultes"
-                                              value={room.adulte}
-                                              onChange={(event) => {
-                                                ChangeSingleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={1}>1</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="enfants">
-                                              enfants
-                                            </InputLabel>
-                                            <Select
-                                              labelId="enfants"
-                                              name="enfants"
-                                              value={room.enfant}
-                                              onChange={(event) => {
-                                                ChangeSingleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={0}>0</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="pensions">
-                                              Pension
-                                            </InputLabel>
-                                            <Select
-                                              labelId="pensions"
-                                              value={room.pension}
-                                              name="pensions"
-                                              onChange={(event) => {
-                                                ChangeSingleRooms(event, i);
-                                              }}
-                                            >
-                                              {Hotel.price.single.lpd ? (
-                                                <MenuItem value={"lpd"}>
-                                                  lpd
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.single.dp ? (
-                                                <MenuItem value={"dp"}>
-                                                  dp
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.single.pc ? (
-                                                <MenuItem value={"pc"}>
-                                                  pc
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.single.ai ? (
-                                                <MenuItem value={"ai"}>
-                                                  ai
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                            </Select>
-                                          </FormControl>
+                  <TableCell align="center">Room's Detail</TableCell>
+                  <TableCell align="center">Occupation</TableCell>
+                  <TableCell align="center">Price</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Hotel.price.single ? (
+                  <TableRow>
+                    <TableCell align="center">
+                      <div className="row">
+                        <div
+                          className="col-4"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                          }}
+                        >
+                          <FormControl>
+                            <Select
+                              value={nbRoomSingle}
+                              name="nbRoomSingle"
+                              defaultValue={0}
+                              onChange={changeNbsingleRooms}
+                              inputProps={{ "aria-label": "Without label" }}
+                            >
+                              <MenuItem value={0}>
+                                <em>0</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                            </Select>
+                          </FormControl>
+                          {nbRoomSingle !== 0 ? <h4>single room</h4> : ""}
+                        </div>
+                        <div
+                          className="col-8"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                          }}
+                        >
+                          {nbRoomSingle === 0 ? (
+                            <h4>single room</h4>
+                          ) : (
+                            <div>
+                              {rooms.single.room.map((room, i) => {
+                                return (
+                                  <div key={i}>
+                                    <div className="row">
+                                      <div
+                                        className="col-4"
+                                        style={{
+                                          marginTop: "auto",
+                                          marginBottom: "auto",
+                                        }}
+                                      >
+                                        <h6>chambre {i + 1} </h6>
+                                      </div>
+                                      <div className="col-8">
+                                        <div className="row ">
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="adultes">
+                                                adultes
+                                              </InputLabel>
+                                              <Select
+                                                labelId="adultes"
+                                                name="adultes"
+                                                value={room.adulte}
+                                                onChange={(event) => {
+                                                  ChangeSingleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={1}>1</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="enfants">
+                                                enfants
+                                              </InputLabel>
+                                              <Select
+                                                labelId="enfants"
+                                                name="enfants"
+                                                value={room.enfant}
+                                                onChange={(event) => {
+                                                  ChangeSingleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={0}>0</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="pensions">
+                                                Pension
+                                              </InputLabel>
+                                              <Select
+                                                labelId="pensions"
+                                                value={room.pension}
+                                                name="pensions"
+                                                onChange={(event) => {
+                                                  ChangeSingleRooms(event, i);
+                                                }}
+                                              >
+                                                {Hotel.price.single.lpd ? (
+                                                  <MenuItem value={"lpd"}>
+                                                    lpd
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.single.dp ? (
+                                                  <MenuItem value={"dp"}>
+                                                    dp
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.single.pc ? (
+                                                  <MenuItem value={"pc"}>
+                                                    pc
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.single.ai ? (
+                                                  <MenuItem value={"ai"}>
+                                                    ai
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </Select>
+                                            </FormControl>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+                                    <br />
                                   </div>
-                                  <br />
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell align="center">
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                  </TableCell>
-                  <TableCell align="center">{rooms.single.total}</TableCell>
-                </TableRow>
-              ) : (
-                ""
-              )}
-              {Hotel.price.double ? (
-                <TableRow>
-                  <TableCell align="center">
-                    <div className="row">
-                      <div
-                        className="col-4"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                        }}
-                      >
-                        <FormControl>
-                          <Select
-                            value={nbRoomDouble}
-                            name="nbRoomDouble"
-                            defaultValue={0}
-                            onChange={changeNbDoubleRooms}
-                            inputProps={{ "aria-label": "Without label" }}
-                          >
-                            <MenuItem value={0}>
-                              <em>0</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                          </Select>
-                        </FormControl>
-                        {nbRoomDouble !== 0 ? <h4>double room</h4> : ""}
-                      </div>
-                      <div
-                        className="col-8"
-                        style={{ marginTop: "auto", marginBottom: "auto" }}
-                      >
-                        {nbRoomDouble === 0 ? (
-                          <h4>double room</h4>
-                        ) : (
-                          <div>
-                            {rooms.double.room.map((room, i) => {
-                              return (
-                                <div key={i}>
-                                  <div className="row">
-                                    <div
-                                      className="col-4"
-                                      style={{
-                                        marginTop: "auto",
-                                        marginBottom: "auto",
-                                      }}
-                                    >
-                                      Chambre {i + 1}
-                                    </div>
-                                    <div className="col-8">
-                                      <div className="row ">
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="adulted">
-                                              adultes
-                                            </InputLabel>
-                                            <Select
-                                              labelId="adulted"
-                                              name="adulted"
-                                              value={room.adulte}
-                                              onChange={(event) => {
-                                                ChangeDoubleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="enfantd">
-                                              enfants
-                                            </InputLabel>
-                                            <Select
-                                              labelId="enfantd"
-                                              name="enfantd"
-                                              value={room.enfant}
-                                              onChange={(event) => {
-                                                ChangeDoubleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={0}>0</MenuItem>
-                                              <MenuItem value={1}>1</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="pensiond">
-                                              Pension
-                                            </InputLabel>
-                                            <Select
-                                              labelId="pensiond"
-                                              value={room.pension}
-                                              name="pensiond"
-                                              onChange={(event) => {
-                                                ChangeDoubleRooms(event, i);
-                                              }}
-                                            >
-                                              {Hotel.price.double.lpd ? (
-                                                <MenuItem value={"lpd"}>
-                                                  lpd
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.double.dp ? (
-                                                <MenuItem value={"dp"}>
-                                                  dp
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.double.pc ? (
-                                                <MenuItem value={"pc"}>
-                                                  pc
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.double.ai ? (
-                                                <MenuItem value={"ai"}>
-                                                  ai
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                            </Select>
-                                          </FormControl>
+                    </TableCell>
+                    <TableCell align="center">
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                    </TableCell>
+                    <TableCell align="center">{rooms.single.total}</TableCell>
+                  </TableRow>
+                ) : (
+                  ""
+                )}
+                {Hotel.price.double ? (
+                  <TableRow>
+                    <TableCell align="center">
+                      <div className="row">
+                        <div
+                          className="col-4"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                          }}
+                        >
+                          <FormControl>
+                            <Select
+                              value={nbRoomDouble}
+                              name="nbRoomDouble"
+                              defaultValue={0}
+                              onChange={changeNbDoubleRooms}
+                              inputProps={{ "aria-label": "Without label" }}
+                            >
+                              <MenuItem value={0}>
+                                <em>0</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                            </Select>
+                          </FormControl>
+                          {nbRoomDouble !== 0 ? <h4>double room</h4> : ""}
+                        </div>
+                        <div
+                          className="col-8"
+                          style={{ marginTop: "auto", marginBottom: "auto" }}
+                        >
+                          {nbRoomDouble === 0 ? (
+                            <h4>double room</h4>
+                          ) : (
+                            <div>
+                              {rooms.double.room.map((room, i) => {
+                                return (
+                                  <div key={i}>
+                                    <div className="row">
+                                      <div
+                                        className="col-4"
+                                        style={{
+                                          marginTop: "auto",
+                                          marginBottom: "auto",
+                                        }}
+                                      >
+                                        Chambre {i + 1}
+                                      </div>
+                                      <div className="col-8">
+                                        <div className="row ">
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="adulted">
+                                                adultes
+                                              </InputLabel>
+                                              <Select
+                                                labelId="adulted"
+                                                name="adulted"
+                                                value={room.adulte}
+                                                onChange={(event) => {
+                                                  ChangeDoubleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="enfantd">
+                                                enfants
+                                              </InputLabel>
+                                              <Select
+                                                labelId="enfantd"
+                                                name="enfantd"
+                                                value={room.enfant}
+                                                onChange={(event) => {
+                                                  ChangeDoubleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={0}>0</MenuItem>
+                                                <MenuItem value={1}>1</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="pensiond">
+                                                Pension
+                                              </InputLabel>
+                                              <Select
+                                                labelId="pensiond"
+                                                value={room.pension}
+                                                name="pensiond"
+                                                onChange={(event) => {
+                                                  ChangeDoubleRooms(event, i);
+                                                }}
+                                              >
+                                                {Hotel.price.double.lpd ? (
+                                                  <MenuItem value={"lpd"}>
+                                                    lpd
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.double.dp ? (
+                                                  <MenuItem value={"dp"}>
+                                                    dp
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.double.pc ? (
+                                                  <MenuItem value={"pc"}>
+                                                    pc
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.double.ai ? (
+                                                  <MenuItem value={"ai"}>
+                                                    ai
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </Select>
+                                            </FormControl>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+                                    <br />
                                   </div>
-                                  <br />
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell align="center">
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                  </TableCell>
-                  <TableCell align="center">{rooms.double.total}</TableCell>
-                </TableRow>
-              ) : (
-                ""
-              )}
-              {Hotel.price.triple ? (
-                <TableRow>
-                  <TableCell align="center">
-                    <div className="row">
-                      <div
-                        className="col-4"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                        }}
-                      >
-                        <FormControl>
-                          <Select
-                            value={nbRoomTriple}
-                            name="nbRoomTriple"
-                            defaultValue={0}
-                            onChange={changeNbTripleRooms}
-                            inputProps={{ "aria-label": "Without label" }}
-                          >
-                            <MenuItem value={0}>
-                              <em>0</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                          </Select>
-                        </FormControl>
-                        {nbRoomTriple !== 0 ? <h4>triple room</h4> : ""}
-                      </div>
-                      <div
-                        className="col-8"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                        }}
-                      >
-                        {nbRoomTriple === 0 ? (
-                          <h4>triple room</h4>
-                        ) : (
-                          <div>
-                            {/* {Array.from(Array(nbRoomTriple), (e, i) => {
+                    </TableCell>
+                    <TableCell align="center">
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                    </TableCell>
+                    <TableCell align="center">{rooms.double.total}</TableCell>
+                  </TableRow>
+                ) : (
+                  ""
+                )}
+                {Hotel.price.triple ? (
+                  <TableRow>
+                    <TableCell align="center">
+                      <div className="row">
+                        <div
+                          className="col-4"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                          }}
+                        >
+                          <FormControl>
+                            <Select
+                              value={nbRoomTriple}
+                              name="nbRoomTriple"
+                              defaultValue={0}
+                              onChange={changeNbTripleRooms}
+                              inputProps={{ "aria-label": "Without label" }}
+                            >
+                              <MenuItem value={0}>
+                                <em>0</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                            </Select>
+                          </FormControl>
+                          {nbRoomTriple !== 0 ? <h4>triple room</h4> : ""}
+                        </div>
+                        <div
+                          className="col-8"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                          }}
+                        >
+                          {nbRoomTriple === 0 ? (
+                            <h4>triple room</h4>
+                          ) : (
+                            <div>
+                              {/* {Array.from(Array(nbRoomTriple), (e, i) => {
                               return ( */}
-                            {rooms.triple.room.map((room, i) => {
-                              return (
-                                <div key={i}>
-                                  <div className="row">
-                                    <div
-                                      className="col-4"
-                                      style={{
-                                        marginTop: "auto",
-                                        marginBottom: "auto",
-                                      }}
-                                    >
-                                      <h6>chambre {i + 1}</h6>
-                                    </div>
-                                    <div className="col-8">
-                                      <div className="row ">
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="adultet">
-                                              adultes
-                                            </InputLabel>
-                                            <Select
-                                              labelId="adultet"
-                                              name="adultet"
-                                              value={room.adulte}
-                                              onChange={(event) => {
-                                                ChangeTripleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                              <MenuItem value={3}>3</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="enfantt">
-                                              enfants
-                                            </InputLabel>
-                                            <Select
-                                              labelId="enfantt"
-                                              name="enfantt"
-                                              value={room.enfant}
-                                              onChange={(event) => {
-                                                ChangeTripleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={0}>0</MenuItem>
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="pensiont">
-                                              Pension
-                                            </InputLabel>
-                                            <Select
-                                              labelId="pensiont"
-                                              value={room.pension}
-                                              name="pensiont"
-                                              onChange={(event) => {
-                                                ChangeTripleRooms(event, i);
-                                              }}
-                                            >
-                                              {Hotel.price.triple.lpd ? (
-                                                <MenuItem value={"lpd"}>
-                                                  lpd
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.triple.dp ? (
-                                                <MenuItem value={"dp"}>
-                                                  dp
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.triple.pc ? (
-                                                <MenuItem value={"pc"}>
-                                                  pc
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.triple.ai ? (
-                                                <MenuItem value={"ai"}>
-                                                  ai
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                            </Select>
-                                          </FormControl>
+                              {rooms.triple.room.map((room, i) => {
+                                return (
+                                  <div key={i}>
+                                    <div className="row">
+                                      <div
+                                        className="col-4"
+                                        style={{
+                                          marginTop: "auto",
+                                          marginBottom: "auto",
+                                        }}
+                                      >
+                                        <h6>chambre {i + 1}</h6>
+                                      </div>
+                                      <div className="col-8">
+                                        <div className="row ">
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="adultet">
+                                                adultes
+                                              </InputLabel>
+                                              <Select
+                                                labelId="adultet"
+                                                name="adultet"
+                                                value={room.adulte}
+                                                onChange={(event) => {
+                                                  ChangeTripleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                                <MenuItem value={3}>3</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="enfantt">
+                                                enfants
+                                              </InputLabel>
+                                              <Select
+                                                labelId="enfantt"
+                                                name="enfantt"
+                                                value={room.enfant}
+                                                onChange={(event) => {
+                                                  ChangeTripleRooms(event, i);
+                                                }}
+                                              >
+                                                <MenuItem value={0}>0</MenuItem>
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="pensiont">
+                                                Pension
+                                              </InputLabel>
+                                              <Select
+                                                labelId="pensiont"
+                                                value={room.pension}
+                                                name="pensiont"
+                                                onChange={(event) => {
+                                                  ChangeTripleRooms(event, i);
+                                                }}
+                                              >
+                                                {Hotel.price.triple.lpd ? (
+                                                  <MenuItem value={"lpd"}>
+                                                    lpd
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.triple.dp ? (
+                                                  <MenuItem value={"dp"}>
+                                                    dp
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.triple.pc ? (
+                                                  <MenuItem value={"pc"}>
+                                                    pc
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.triple.ai ? (
+                                                  <MenuItem value={"ai"}>
+                                                    ai
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </Select>
+                                            </FormControl>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+                                    <br />
                                   </div>
-                                  <br />
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell align="center">
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                  </TableCell>
-                  <TableCell align="center">{rooms.triple.total}</TableCell>
-                </TableRow>
-              ) : (
-                ""
-              )}
+                    </TableCell>
+                    <TableCell align="center">
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                    </TableCell>
+                    <TableCell align="center">{rooms.triple.total}</TableCell>
+                  </TableRow>
+                ) : (
+                  ""
+                )}
 
-              {Hotel.price.quadruple ? (
-                <TableRow>
-                  <TableCell align="center">
-                    <div className="row">
-                      <div
-                        className="col-4"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                        }}
-                      >
-                        <FormControl>
-                          <Select
-                            value={nbRoomQuadruple}
-                            name="nbRoomQuadruple"
-                            defaultValue={0}
-                            onChange={changeNbQuadrupleRooms}
-                            inputProps={{ "aria-label": "Without label" }}
-                          >
-                            <MenuItem value={0}>
-                              <em>0</em>
-                            </MenuItem>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                          </Select>
-                        </FormControl>
-                        {nbRoomQuadruple !== 0 ? <h4>Quadruple room</h4> : ""}
-                      </div>
-                      <div
-                        className="col-8"
-                        style={{
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                        }}
-                      >
-                        {nbRoomQuadruple === 0 ? (
-                          <h4>Quadruple room</h4>
-                        ) : (
-                          <div>
-                            {rooms.quadruple.room.map((room, i) => {
-                              return (
-                                <div key={i}>
-                                  <div className="row">
-                                    <div
-                                      className="col-4"
-                                      style={{
-                                        marginTop: "auto",
-                                        marginBottom: "auto",
-                                      }}
-                                    >
-                                      <h6>chambre {i + 1}</h6>
-                                    </div>
-                                    <div className="col-8">
-                                      <div className="row ">
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="adulteq">
-                                              adultes
-                                            </InputLabel>
-                                            <Select
-                                              labelId="adulteq"
-                                              name="adulteq"
-                                              value={room.adulte}
-                                              onChange={(event) => {
-                                                ChangeQuadrupleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                              <MenuItem value={3}>3</MenuItem>
-                                              <MenuItem value={4}>4</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="enfantq">
-                                              enfants
-                                            </InputLabel>
-                                            <Select
-                                              labelId="enfantq"
-                                              name="enfantq"
-                                              value={room.enfant}
-                                              onChange={(event) => {
-                                                ChangeQuadrupleRooms(event, i);
-                                              }}
-                                            >
-                                              <MenuItem value={0}>0</MenuItem>
-                                              <MenuItem value={1}>1</MenuItem>
-                                              <MenuItem value={2}>2</MenuItem>
-                                              <MenuItem value={3}>3</MenuItem>
-                                            </Select>
-                                          </FormControl>
-                                        </div>
-                                        <div className="col-4">
-                                          <FormControl fullWidth>
-                                            <InputLabel id="pensionq">
-                                              Pension
-                                            </InputLabel>
-                                            <Select
-                                              labelId="pensionq"
-                                              value={room.pension}
-                                              name="pensionq"
-                                              onChange={(event) => {
-                                                ChangeQuadrupleRooms(event, i);
-                                              }}
-                                            >
-                                              {Hotel.price.quadruple.lpd ? (
-                                                <MenuItem value={"lpd"}>
-                                                  lpd
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.quadruple.dp ? (
-                                                <MenuItem value={"dp"}>
-                                                  dp
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.quadruple.pc ? (
-                                                <MenuItem value={"pc"}>
-                                                  pc
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                              {Hotel.price.quadruple.ai ? (
-                                                <MenuItem value={"ai"}>
-                                                  ai
-                                                </MenuItem>
-                                              ) : (
-                                                ""
-                                              )}
-                                            </Select>
-                                          </FormControl>
+                {Hotel.price.quadruple ? (
+                  <TableRow>
+                    <TableCell align="center">
+                      <div className="row">
+                        <div
+                          className="col-4"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                          }}
+                        >
+                          <FormControl>
+                            <Select
+                              value={nbRoomQuadruple}
+                              name="nbRoomQuadruple"
+                              defaultValue={0}
+                              onChange={changeNbQuadrupleRooms}
+                              inputProps={{ "aria-label": "Without label" }}
+                            >
+                              <MenuItem value={0}>
+                                <em>0</em>
+                              </MenuItem>
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                            </Select>
+                          </FormControl>
+                          {nbRoomQuadruple !== 0 ? <h4>Quadruple room</h4> : ""}
+                        </div>
+                        <div
+                          className="col-8"
+                          style={{
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                          }}
+                        >
+                          {nbRoomQuadruple === 0 ? (
+                            <h4>Quadruple room</h4>
+                          ) : (
+                            <div>
+                              {rooms.quadruple.room.map((room, i) => {
+                                return (
+                                  <div key={i}>
+                                    <div className="row">
+                                      <div
+                                        className="col-4"
+                                        style={{
+                                          marginTop: "auto",
+                                          marginBottom: "auto",
+                                        }}
+                                      >
+                                        <h6>chambre {i + 1}</h6>
+                                      </div>
+                                      <div className="col-8">
+                                        <div className="row ">
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="adulteq">
+                                                adultes
+                                              </InputLabel>
+                                              <Select
+                                                labelId="adulteq"
+                                                name="adulteq"
+                                                value={room.adulte}
+                                                onChange={(event) => {
+                                                  ChangeQuadrupleRooms(
+                                                    event,
+                                                    i
+                                                  );
+                                                }}
+                                              >
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                                <MenuItem value={3}>3</MenuItem>
+                                                <MenuItem value={4}>4</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="enfantq">
+                                                enfants
+                                              </InputLabel>
+                                              <Select
+                                                labelId="enfantq"
+                                                name="enfantq"
+                                                value={room.enfant}
+                                                onChange={(event) => {
+                                                  ChangeQuadrupleRooms(
+                                                    event,
+                                                    i
+                                                  );
+                                                }}
+                                              >
+                                                <MenuItem value={0}>0</MenuItem>
+                                                <MenuItem value={1}>1</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
+                                                <MenuItem value={3}>3</MenuItem>
+                                              </Select>
+                                            </FormControl>
+                                          </div>
+                                          <div className="col-4">
+                                            <FormControl fullWidth>
+                                              <InputLabel id="pensionq">
+                                                Pension
+                                              </InputLabel>
+                                              <Select
+                                                labelId="pensionq"
+                                                value={room.pension}
+                                                name="pensionq"
+                                                onChange={(event) => {
+                                                  ChangeQuadrupleRooms(
+                                                    event,
+                                                    i
+                                                  );
+                                                }}
+                                              >
+                                                {Hotel.price.quadruple.lpd ? (
+                                                  <MenuItem value={"lpd"}>
+                                                    lpd
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.quadruple.dp ? (
+                                                  <MenuItem value={"dp"}>
+                                                    dp
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.quadruple.pc ? (
+                                                  <MenuItem value={"pc"}>
+                                                    pc
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                                {Hotel.price.quadruple.ai ? (
+                                                  <MenuItem value={"ai"}>
+                                                    ai
+                                                  </MenuItem>
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </Select>
+                                            </FormControl>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+                                    <br />
                                   </div>
-                                  <br />
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    </TableCell>
+                    <TableCell align="center">
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                      <img
+                        src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
+                        alt=""
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      {rooms.quadruple.total}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  ""
+                )}
+                <TableRow>
+                  {reservation.hotel.promo !== 0 ? (
+                    <TableCell colSpan={2} align="right">
+                      - {reservation.hotel.promo} %
+                    </TableCell>
+                  ) : (
+                    ""
+                  )}
+                  <TableCell colSpan={2} align="right">
+                    Total
                   </TableCell>
-                  <TableCell align="center">
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                    <img
-                      src="https://img.icons8.com/material/30/000000/guest-male--v1.png"
-                      alt=""
-                    />
-                  </TableCell>
-                  <TableCell align="center">{rooms.quadruple.total}</TableCell>
+                  <TableCell align="center">{rooms.total} DT</TableCell>
                 </TableRow>
-              ) : (
-                ""
-              )}
-              <TableRow>
-                <TableCell colSpan={2} align="right">
-                  Total
-                </TableCell>
-                <TableCell align="center">{rooms.total}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <br /> <br />
-      {auth.isAuth ? (
-        <Link to="/Hotel/Reserve">
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        <br /> <br />
+        {auth.isAuth ? (
           <div className="Search__actions">
-            <button type="button">Book Now </button>
+            <button type="submit">Book Now </button>
           </div>
-        </Link>
-      ) : (
-        <Link to="/SignIn?path=reservehotel">
-          <div className="Search__actions">
-            <button type="button">Book Now </button>
-          </div>
-        </Link>
-      )}
+        ) : (
+          <Link to="/SignIn?path=reservehotel">
+            <div className="Search__actions">
+              <button type="submit">Book Now </button>
+            </div>
+          </Link>
+        )}
+      </form>
     </div>
   );
 }

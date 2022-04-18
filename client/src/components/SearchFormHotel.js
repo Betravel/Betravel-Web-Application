@@ -25,35 +25,6 @@ function SearchFormHotel() {
     dispatch(searchAction.dest(event.target.value));
   };
 
-  // const AddAdultes = () => {
-  //   dispatch(searchAction.increment({ name: "adulte" }));
-  // };
-
-  // const ReduceAdultes = () => {
-  //   if (search.adulte > 1) {
-  //     dispatch(searchAction.decrement({ name: "adulte" }));
-  //   }
-  // };
-
-  // const AddEnfants = () => {
-  //   dispatch(searchAction.increment({ name: "enfant" }));
-  // };
-
-  // const ReduceEnfants = () => {
-  //   if (search.enfant > 0) {
-  //     dispatch(searchAction.decrement({ name: "enfant" }));
-  //   }
-  // };
-
-  // const AddChambres = () => {
-  //   dispatch(searchAction.increment({ name: "chambre" }));
-  // };
-
-  // const ReduceChambres = () => {
-  //   if (search.chambre > 1) {
-  //     dispatch(searchAction.decrement({ name: "chambre" }));
-  //   }
-  // };
 
   const submitHandler = (event) => {
     event.preventDefault();

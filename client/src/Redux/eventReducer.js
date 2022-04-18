@@ -19,6 +19,7 @@ export const getEventReservations = (id) => {
 
 const initialEventState = {
   event: {
+    _id: "",
     name: "",
     location: "",
     type: "",
@@ -29,6 +30,7 @@ const initialEventState = {
     program: [],
     note: [],
     images: [],
+    places: 0,
   },
   user: {
     firstname: "",
@@ -51,6 +53,7 @@ const eventSlice = createSlice({
     },
     getEvent(state, action) {
       let event = action.payload;
+      state.event._id = event._id;
       state.event.name = event.name;
       state.event.location = event.location;
       state.event.type = event.type;
@@ -63,6 +66,7 @@ const eventSlice = createSlice({
       state.event.program = event.program;
       state.event.note = event.note;
       state.event.images = event.images;
+      state.event.places = event.places;
     },
     updatePlace(state, action) {
       state.reservedplace = action.payload;
@@ -90,8 +94,6 @@ const eventSlice = createSlice({
         state.user.phone = action.payload.value;
       }
     },
-
-   
   },
 });
 
