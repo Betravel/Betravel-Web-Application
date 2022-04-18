@@ -14,6 +14,7 @@ export const getEventReservations = (id) => {
 const initialEventReservationsState = [];
 
 const eventreservationsSlice = createSlice({
+  
   name: "eventreservations",
   initialState: initialEventReservationsState,
   reducers: {
