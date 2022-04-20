@@ -68,6 +68,8 @@ module.exports.deleteEvent = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+
+
 module.exports.updateEvent = async (request, response) => {
   const updatedevent = request.body;
   const uploader = async (path) =>

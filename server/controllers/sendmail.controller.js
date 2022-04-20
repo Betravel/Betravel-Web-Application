@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const Reservation = require("../models/reservation.model");
+const Reservation = require("../models/reservationHotel.model");
 var nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const path = require("path");

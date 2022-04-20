@@ -5,7 +5,7 @@ export const getHotel = (id) => {
   return async function (dispatch) {
     return await axios
       .get("http://localhost:8000/api/hotel/" + id)
-      .then((res) => dispatch(reservationActions.getHotel(res.data)));
+      .then((res) => dispatch(hotelActions.getHotel(res.data)));
   };
 };
 
@@ -17,7 +17,7 @@ export const updateUser = (id, user) => {
   };
 };
 
-const initialReservationState = {
+const initialHotelState = {
   hotel: {
     name: "",
     rating: 0,
@@ -54,9 +54,9 @@ const initialReservationState = {
   status: "In Progress",
 };
 
-const reservationSlice = createSlice({
-  name: "reservation",
-  initialState: initialReservationState,
+const hotelSlice = createSlice({
+  name: "hotel",
+  initialState: initialHotelState,
   reducers: {
     getUser(state, action) {
       let user = action.payload;
@@ -149,7 +149,9 @@ const reservationSlice = createSlice({
         const element = state.rooms.single.room[index];
         total += element.total;
       }
-      state.rooms.single.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.single.total = total;
     },
     manageDoubleRooms(state, action) {
       const i = action.payload;
@@ -240,7 +242,9 @@ const reservationSlice = createSlice({
         const element = state.rooms.double.room[index];
         total += element.total;
       }
-      state.rooms.double.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.double.total = total;
     },
     manageTripleRooms(state, action) {
       const i = action.payload;
@@ -341,7 +345,9 @@ const reservationSlice = createSlice({
         const element = state.rooms.triple.room[index];
         total += element.total;
       }
-      state.rooms.triple.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.triple.total = total;
     },
     manageQuadrupleRooms(state, action) {
       const i = action.payload;
@@ -452,7 +458,9 @@ const reservationSlice = createSlice({
         const element = state.rooms.quadruple.room[index];
         total += element.total;
       }
-      state.rooms.quadruple.total = total * state.nuits;
+      total = total * state.nuits;
+      total = total - (total / 100) * state.hotel.promo;
+      state.rooms.quadruple.total = total;
     },
     getTotal(state) {
       let total = 0;
@@ -551,5 +559,5 @@ const reservationSlice = createSlice({
   },
 });
 
-export const reservationActions = reservationSlice.actions;
-export default reservationSlice;
+export const hotelActions = hotelSlice.actions;
+export default hotelSlice;

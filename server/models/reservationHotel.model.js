@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ReservationSchema = new mongoose.Schema({
+const ReservationHotelSchema = new mongoose.Schema({
   hotel: {
     type: JSON,
   },
@@ -25,5 +25,6 @@ const ReservationSchema = new mongoose.Schema({
   status: {
     type: String,
   },
+  
 });
-module.exports = mongoose.model("Reservations", ReservationSchema);
+module.exports = mongoose.model("ReservationsHotel", ReservationHotelSchema);

@@ -9,6 +9,7 @@ import { navbarActions } from "../Redux/navbarReducer";
 
 function Home() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(true));
   }, [dispatch]);

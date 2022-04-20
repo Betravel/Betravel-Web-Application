@@ -27,6 +27,7 @@ const eventsSlice = createSlice({
         state[index] = element;
       }
     },
+
   },
 });
 

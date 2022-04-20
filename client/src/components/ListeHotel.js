@@ -19,6 +19,10 @@ function ListeHotel() {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
     dispatch(getHotels(Destination));
   }, [Destination, dispatch]);

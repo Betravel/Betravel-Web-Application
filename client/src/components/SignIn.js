@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/SignIn.css";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { navbarActions } from "../Redux/navbarReducer";
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 function SignIn() {
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useNavigate();
+  const path = useQuery();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(true));
-    if (sessionStorage.getItem("log")) {
+    if (auth.isAuth) {
       history("/Profil");
     }
   });
@@ -34,8 +46,15 @@ function SignIn() {
               .then((res) => {
                 console.log("LOGGGIN IN RESPONSE", res);
                 if (res.data.msg === "success!") {
-                  history("/");
-                  window.location.reload(false);
+                  if (path.get("path") === "home") {
+                    history("/");
+                  } else if (path.get("path") === "reservehotel") {
+                    history("/Hotel/Reserve");
+                  } else if (path.get("path") === "reserveevent") {
+                    history("/Event/Reserve");
+                  }else if (path.get("path") === "trip") {
+                    history("/custom-madeTrip");
+                  }
                 } else {
                   seterrorpassword("password incorrect");
                 }

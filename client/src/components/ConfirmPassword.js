@@ -12,6 +12,12 @@ function ConfirmPassword() {
   const [error, seterror] = useState(false);
   let { id } = useParams();
   const history = useNavigate();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch]);
