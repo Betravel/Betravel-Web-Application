@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Card from "./Card";
 function Confirmed() {
   const history = useNavigate();
   let { id } = useParams();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     axios
@@ -19,7 +22,7 @@ function Confirmed() {
           axios
             .put("http://localhost:8000/api/user/" + user._id, user)
             .then((res) => {
-              history("/SignIn");
+              history("/SignIn?path=home");
               alert("Email Confirmed ! 🥳 ");
             })
             .catch((err) => alert("Error Server"));
@@ -29,9 +32,9 @@ function Confirmed() {
   }, [history, id]);
 
   return (
-    <Card>
+    <div>
       <h1>Email Confirmed </h1>
-    </Card>
+    </div>
   );
 }
 export default Confirmed;

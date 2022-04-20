@@ -9,8 +9,17 @@ export const getEvent = (id) => {
   };
 };
 
+export const getEventReservations = (id) => {
+  return async function (dispatch) {
+    return await axios
+      .get("http://localhost:8000/api/reservation/get/" + id)
+      .then((res) => dispatch(eventActions.getreservations(res.data)));
+  };
+};
+
 const initialEventState = {
   event: {
+    _id: "",
     name: "",
     location: "",
     type: "",
@@ -21,6 +30,7 @@ const initialEventState = {
     program: [],
     note: [],
     images: [],
+    places: 0,
   },
   user: {
     firstname: "",
@@ -43,6 +53,7 @@ const eventSlice = createSlice({
     },
     getEvent(state, action) {
       let event = action.payload;
+      state.event._id = event._id;
       state.event.name = event.name;
       state.event.location = event.location;
       state.event.type = event.type;
@@ -55,6 +66,7 @@ const eventSlice = createSlice({
       state.event.program = event.program;
       state.event.note = event.note;
       state.event.images = event.images;
+      state.event.places = event.places;
     },
     updatePlace(state, action) {
       state.reservedplace = action.payload;
@@ -70,6 +82,16 @@ const eventSlice = createSlice({
         state.details[index].firstname = action.payload.value;
       } else if (action.payload.type === "lastname") {
         state.details[index].lastname = action.payload.value;
+      }
+    },
+
+    updateUser(state, action) {
+      if (action.payload.type === "firstname") {
+        state.user.firstname = action.payload.value;
+      } else if (action.payload.type === "lastname") {
+        state.user.lastname = action.payload.value;
+      } else if (action.payload.type === "phone") {
+        state.user.phone = action.payload.value;
       }
     },
   },

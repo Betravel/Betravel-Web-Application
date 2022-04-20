@@ -21,8 +21,10 @@ require("./server/routes/auth.routes")(app);
 require("./server/routes/send.routes")(app);
 require("./server/routes/user.routes")(app);
 require("./server/routes/hotel.routes")(app);
-require("./server/routes/reservation.routes")(app);
+require("./server/routes/reservationHotel.routes")(app);
 require("./server/routes/event.routes")(app);
+require("./server/routes/trip.routes")(app);
+require("./server/routes/reservationEvent.routes")(app);
 
 port = 8000;
 app.listen(port, () => {

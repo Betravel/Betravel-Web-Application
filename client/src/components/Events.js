@@ -9,6 +9,11 @@ function Events() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
+
   useEffect(() => {
     dispatch(getEvents());
   }, [dispatch]);

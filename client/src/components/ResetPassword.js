@@ -9,6 +9,11 @@ function ResetPassword() {
   const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch]);

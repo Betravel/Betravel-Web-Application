@@ -8,6 +8,11 @@ import { navbarActions } from "../Redux/navbarReducer";
 function SignUp() {
   const dispatch = useDispatch();
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(true));
     if (sessionStorage.getItem("log")) {
@@ -55,7 +60,7 @@ function SignUp() {
                   })
                   .then((res) => {
                     alert("Confirm your account , link sent by mail !");
-                    history("/SignIn");
+                    history("/SignIn?path=home");
                   })
                   .catch((err) => alert("Error Server"));
               }

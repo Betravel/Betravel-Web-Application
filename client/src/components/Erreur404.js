@@ -1,6 +1,12 @@
 import "../css/Erreur404.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
 function Erreur404() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="row err">

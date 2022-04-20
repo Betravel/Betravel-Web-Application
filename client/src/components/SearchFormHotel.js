@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { searchAction, getDestinations } from "../Redux/searchReducer";
-import { reservationActions } from "../Redux/reservationReducer";
+import { hotelActions } from "../Redux/hotelReducer";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -25,35 +25,6 @@ function SearchFormHotel() {
     dispatch(searchAction.dest(event.target.value));
   };
 
-  // const AddAdultes = () => {
-  //   dispatch(searchAction.increment({ name: "adulte" }));
-  // };
-
-  // const ReduceAdultes = () => {
-  //   if (search.adulte > 1) {
-  //     dispatch(searchAction.decrement({ name: "adulte" }));
-  //   }
-  // };
-
-  // const AddEnfants = () => {
-  //   dispatch(searchAction.increment({ name: "enfant" }));
-  // };
-
-  // const ReduceEnfants = () => {
-  //   if (search.enfant > 0) {
-  //     dispatch(searchAction.decrement({ name: "enfant" }));
-  //   }
-  // };
-
-  // const AddChambres = () => {
-  //   dispatch(searchAction.increment({ name: "chambre" }));
-  // };
-
-  // const ReduceChambres = () => {
-  //   if (search.chambre > 1) {
-  //     dispatch(searchAction.decrement({ name: "chambre" }));
-  //   }
-  // };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -121,7 +92,7 @@ function SearchFormHotel() {
                   required
                   onChange={(newValue) => {
                     dispatch(searchAction.periode(newValue));
-                    dispatch(reservationActions.getPeriode(newValue));
+                    dispatch(hotelActions.getPeriode(newValue));
                   }}
                   renderInput={(startProps, endProps) => (
                     <React.Fragment>

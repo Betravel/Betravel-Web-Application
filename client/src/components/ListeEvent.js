@@ -9,6 +9,10 @@ function ListeEvent() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvents());

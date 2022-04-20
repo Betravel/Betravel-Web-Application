@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions, getAuth } from "../Redux/authReducer";
-import { getReservations } from "../Redux/reservationsReducer";
+import { getHotelReservations } from "../Redux/hotelreservationsReducer";
+import { getEventReservations } from "../Redux/eventreservationsReducer";
+import { navbarActions } from "../Redux/navbarReducer";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Table from "@mui/material/Table";
@@ -12,7 +14,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
-import { navbarActions } from "../Redux/navbarReducer";
 
 function Profil() {
   const [disable, setdisable] = useState(false);
@@ -20,13 +21,19 @@ function Profil() {
   const [confim, setconfim] = useState("");
   const [error, seterror] = useState(false);
   const user = useSelector((state) => state.auth.user);
-  const reservations = useSelector((state) => state.reservations);
+  const reservations = useSelector((state) => state.hotelreservations);
+  const reservationsEvent = useSelector((state) => state.eventreservations);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     dispatch(getAuth());
-    dispatch(getReservations(user._id));
+    dispatch(getHotelReservations(user._id));
+    dispatch(getEventReservations(user._id));
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch, user._id]);
 
@@ -176,6 +183,8 @@ function Profil() {
           <h2 style={{ textDecoration: "underline", marginBottom: "70px" }}>
             Booking history
           </h2>
+
+          <h4>Hotel's reservations</h4>
           {reservations.length === 0 ? (
             <h5>No Reservation 😞 </h5>
           ) : (
@@ -266,6 +275,80 @@ function Profil() {
                       </TableCell>
                       <TableCell component="th" scope="row">
                         {reservation.rooms.total} DT
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+
+          <br />
+          <h4>Event's reservations</h4>
+          <br />
+
+          {reservationsEvent.length === 0 ? (
+            <h5>No Reservation 😞 </h5>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 650 }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Reservation id</TableCell>
+                    <TableCell align="center">event Name</TableCell>
+                    <TableCell align="center">Type </TableCell>
+                    <TableCell align="center">Location </TableCell>
+                    <TableCell align="center">Date</TableCell>
+                    <TableCell align="center">PlaceReserved</TableCell>
+                    <TableCell align="center">Price</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {reservationsEvent.map((reservation) => (
+                    <TableRow
+                      key={reservation.event.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {reservation._id}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.event.name}{" "}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.event.type}{" "}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.event.location}{" "}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.event.date.from.getDate() +
+                          "/" +
+                          (reservation.event.date.from.getMonth() + 1) +
+                          "/" +
+                          reservation.event.date.from.getFullYear()}{" "}
+                        {" to "}{" "}
+                        {reservation.event.date.to.getDate() +
+                          "/" +
+                          (reservation.event.date.to.getMonth() + 1) +
+                          "/" +
+                          reservation.event.date.to.getFullYear()}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.reservedplace}
+                      </TableCell>
+
+                      <TableCell component="th" scope="row">
+                        {reservation.event.price} DT
                       </TableCell>
                     </TableRow>
                   ))}

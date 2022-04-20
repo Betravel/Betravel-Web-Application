@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { eventActions, getEvent } from "../Redux/eventReducer";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,10 +6,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
+import axios from "axios";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
   const reservation = useSelector((state) => state.event);
+  const auth = useSelector((state) => state.auth);
+  const [places, setPlaces] = useState([]);
+
   console.log(event);
   const dispatch = useDispatch();
   let { id } = useParams();
@@ -19,9 +24,25 @@ function DetailEvent() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAuth());
     dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvent(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/getreservationEvent/" + event.name)
+      .then((res) => {
+        const Remainingp = event.places - res.data;
+        setPlaces(Remainingp);
+        console.log(Remainingp);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="container" style={{ marginTop: "100px" }}>
@@ -179,39 +200,57 @@ function DetailEvent() {
         <div class="card-body">
           <div className="row">
             <div className="col-12" style={{ textAlign: "left" }}>
-              <p>Remaining places : 20 {event.remaingplaces}</p>
+              <p>Remaining places : {places} </p>
             </div>
           </div>
           <div className="row">
             <div className="col-12" style={{ textAlign: "center" }}>
-              <p>
-                place to reserve : &nbsp; &nbsp;
-                <FormControl>
-                  <Select
-                    name="reservedplace"
-                    value={reservation.reservedplace}
-                    label="ReservedPlace"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={6}>6</MenuItem>
-                  </Select>
-                </FormControl>
-              </p>
+              {places === 0 ? (
+                <h4> plus de place a resrver </h4>
+              ) : (
+                <p>
+                  place to reserve : &nbsp; &nbsp;
+                  <FormControl>
+                    <Select
+                      name="reservedplace"
+                      value={reservation.reservedplace}
+                      label="ReservedPlace"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value={0}>0</MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                    </Select>
+                  </FormControl>
+                </p>
+              )}
             </div>
           </div>
-          <Link to="/Event/Reserve">
-            <div className="col-12" style={{ textAlign: "right" }}>
-              <div className="Search__actions">
-                <button type="button">Book Now </button>
-              </div>
+          {reservation.reservedplace > places ? (
+            <h4>il reste que {places} places !!!!</h4>
+          ) : (
+            <div>
+              {auth.isAuth ? (
+                <Link to="/Event/Reserve">
+                  <div className="col-12" style={{ textAlign: "right" }}>
+                    <div className="Search__actions">
+                      <button type="button">Book Now </button>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <Link to="/SignIn?path=reserveevent">
+                  <div className="Search__actions">
+                    <button type="button">Book Now </button>
+                  </div>
+                </Link>
+              )}
             </div>
-          </Link>
+          )}
         </div>
       </div>
 

@@ -33,6 +33,7 @@ module.exports = (app) => {
   app.get("/api/hotels/all", HotelController.getAllHotels);
   app.get("/api/destinations/all", HotelController.getDestinations);
   app.get("/api/hotel/promo", HotelController.getHotelByPromo);
+  app.get("/api/hotel/sort", HotelController.sortHotelByPrice);
   app.get("/api/hotel/:id", HotelController.getHotelById);
   app.post("/api/hotel", upload.array("images"), HotelController.setHotel);
   app.put(

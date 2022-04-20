@@ -82,6 +82,25 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
+              {auth.isAuth ? (
+                <Link
+                  to="/custom-madeTrip"
+                  className="btn"
+                  style={{ color: "white", fontSize: "25px" }}
+                >
+                  Trip
+                </Link>
+              ) : (
+                <Link
+                  to="/SignIn?path=trip"
+                  className="btn"
+                  style={{ color: "white", fontSize: "25px" }}
+                >
+                  Trip
+                </Link>
+              )}
+            </li>
+            <li className="nav-item">
               <a
                 className="btn"
                 style={{ color: "white", fontSize: "25px" }}
@@ -133,7 +152,7 @@ function Navbar() {
               ) : (
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <Link to="/SignIn" className="dropdown-item">
+                    <Link to="/SignIn?path=home" className="dropdown-item">
                       {" "}
                       Sign In{" "}
                     </Link>
