@@ -9,9 +9,6 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateRangePicker from "@mui/lab/DateRangePicker";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import "../css/SearchFormHotel.css";
 
 function SearchFormHotel() {
@@ -28,35 +25,35 @@ function SearchFormHotel() {
     dispatch(searchAction.dest(event.target.value));
   };
 
-  const AddAdultes = () => {
-    dispatch(searchAction.increment({ name: "adulte" }));
-  };
+  // const AddAdultes = () => {
+  //   dispatch(searchAction.increment({ name: "adulte" }));
+  // };
 
-  const ReduceAdultes = () => {
-    if (search.adulte > 1) {
-      dispatch(searchAction.decrement({ name: "adulte" }));
-    }
-  };
+  // const ReduceAdultes = () => {
+  //   if (search.adulte > 1) {
+  //     dispatch(searchAction.decrement({ name: "adulte" }));
+  //   }
+  // };
 
-  const AddEnfants = () => {
-    dispatch(searchAction.increment({ name: "enfant" }));
-  };
+  // const AddEnfants = () => {
+  //   dispatch(searchAction.increment({ name: "enfant" }));
+  // };
 
-  const ReduceEnfants = () => {
-    if (search.enfant > 0) {
-      dispatch(searchAction.decrement({ name: "enfant" }));
-    }
-  };
+  // const ReduceEnfants = () => {
+  //   if (search.enfant > 0) {
+  //     dispatch(searchAction.decrement({ name: "enfant" }));
+  //   }
+  // };
 
-  const AddChambres = () => {
-    dispatch(searchAction.increment({ name: "chambre" }));
-  };
+  // const AddChambres = () => {
+  //   dispatch(searchAction.increment({ name: "chambre" }));
+  // };
 
-  const ReduceChambres = () => {
-    if (search.chambre > 1) {
-      dispatch(searchAction.decrement({ name: "chambre" }));
-    }
-  };
+  // const ReduceChambres = () => {
+  //   if (search.chambre > 1) {
+  //     dispatch(searchAction.decrement({ name: "chambre" }));
+  //   }
+  // };
 
   const submitHandler = (event) => {
     event.preventDefault();

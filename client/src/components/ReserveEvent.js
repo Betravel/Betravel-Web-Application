@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -5,13 +6,12 @@ import StepLabel from "@mui/material/StepLabel";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { eventActions } from "../Redux/eventReducer";
+import { navbarActions } from "../Redux/navbarReducer";
 import RecapEvent from "./recapEvent";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { navbarActions } from "../Redux/navbarReducer";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 

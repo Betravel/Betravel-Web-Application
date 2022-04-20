@@ -83,6 +83,9 @@ const eventSlice = createSlice({
         state.periode = parseInt(periode / (1000 * 60 * 60 * 24));
       }
     },
+    updatelocation(state, action) {
+      state.location = action.payload;
+    },
     manageProgram(state, action) {
       let program = [];
       let i = action.payload.index;

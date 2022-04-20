@@ -30,6 +30,10 @@ function AddHotel() {
     );
   };
 
+  const updateLocation = (value) => {
+    dispatch(hotelActions.updatelocation(value));
+  };
+
   const updateOptions = (e) => {
     dispatch(
       hotelActions.updateoptions({
@@ -220,7 +224,7 @@ function AddHotel() {
               name="location"
               options={Locations}
               value={hotel.location}
-              onChange={updateHotel}
+              onChange={(e, value) => updateLocation(value)}
               sx={{ width: "auto" }}
               renderInput={(params) => (
                 <TextField {...params} label="Location" fullWidth />

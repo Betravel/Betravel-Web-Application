@@ -6,7 +6,7 @@ const initialnavbarState = {
 };
 
 const navbarSlice = createSlice({
-  name: "hotels",
+  name: "navbar",
   initialState: initialnavbarState,
   reducers: {
     updatenavbar(state, action) {
