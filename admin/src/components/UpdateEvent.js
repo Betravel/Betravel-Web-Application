@@ -2,7 +2,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvent, eventActions } from "../Redux/eventReducer";
+import { Locations } from "../locations";
 import axios from "axios";
+import Autocomplete from "@mui/material/Autocomplete";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -26,6 +28,7 @@ function UpdateEvent() {
   useEffect(() => {
     dispatch(getEvent(id));
   }, [dispatch, id]);
+
   const updateEvent = (e) => {
     dispatch(
       eventActions.updateevent({
@@ -34,6 +37,11 @@ function UpdateEvent() {
       })
     );
   };
+
+  const updateLocation = (value) => {
+    dispatch(eventActions.updatelocation(value));
+  };
+
   const updateDate = (type, value) => {
     dispatch(
       eventActions.updateevent({
@@ -123,14 +131,15 @@ function UpdateEvent() {
             />
           </div>
           <div className="col-4">
-            <TextField
-              id="location"
+            <Autocomplete
               name="location"
-              label="Location"
-              variant="outlined"
+              options={Locations}
               value={event.location}
-              onChange={updateEvent}
-              fullWidth
+              onChange={(e, value) => updateLocation(value)}
+              sx={{ width: "auto" }}
+              renderInput={(params) => (
+                <TextField {...params} label="Location" fullWidth />
+              )}
             />
           </div>
           <div className="col-4">

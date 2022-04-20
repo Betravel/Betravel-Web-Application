@@ -5,10 +5,13 @@ import AddHotel from "./components/AddHotel";
 import AddEvent from "./components/AddEvent";
 import UpdateHotel from "./components/UpdateHotel";
 import UpdateEvent from "./components/UpdateEvent";
-import Navbar2 from "./components/NavBar2";
+import Navbar from "./components/Navbar";
 import ListUsers from "./components/ListUsers";
 import ListHotels from "./components/ListHotels";
 import ListEvents from "./components/ListEvents";
+import ListHotelReservations from "./components/ListHotelReservations";
+import ListEventReservations from "./components/ListEventReservations";
+import ListCustomReservations from "./components/ListCustomReservations";
 
 function App() {
   let height = window.innerHeight;
@@ -19,7 +22,7 @@ function App() {
         <div className="row" style={{ minHeight: height }}>
           <Router>
             <div className="col-2" style={{ backgroundColor: "#21445B" }}>
-              <Navbar2 />
+              <Navbar />
             </div>
             <div className="col-10" style={{ backgroundColor: "#E9FBF3" }}>
               <Routes>
@@ -31,6 +34,18 @@ function App() {
                 <Route path="/AddEvent" element={<AddEvent />} />
                 <Route path="/UpdateHotel/:id" element={<UpdateHotel />} />
                 <Route path="/UpdateEvent/:id" element={<UpdateEvent />} />
+                <Route
+                  path="/Reservations/Hotel"
+                  element={<ListHotelReservations />}
+                />
+                <Route
+                  path="/Reservations/Event"
+                  element={<ListEventReservations />}
+                />
+                <Route
+                  path="/Reservations/CustomTrip"
+                  element={<ListCustomReservations />}
+                />
               </Routes>
             </div>
           </Router>
