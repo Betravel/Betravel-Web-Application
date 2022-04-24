@@ -14,8 +14,6 @@ function DetailEvent() {
   const reservation = useSelector((state) => state.event);
   const auth = useSelector((state) => state.auth);
   const [places, setPlaces] = useState([]);
-
-  console.log(event);
   const dispatch = useDispatch();
   let { id } = useParams();
 
@@ -39,10 +37,9 @@ function DetailEvent() {
       .then((res) => {
         const Remainingp = event.places - res.data;
         setPlaces(Remainingp);
-        console.log(Remainingp);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [event.name, event.places]);
 
   return (
     <div className="container" style={{ marginTop: "100px" }}>
@@ -71,8 +68,8 @@ function DetailEvent() {
           <br />
         </div>{" "}
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             <div className="row">
               <p>{event.description}</p>
@@ -137,8 +134,8 @@ function DetailEvent() {
           <br />
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             {event.program.map((prog, i) => {
               let time = new Date(prog.hour);
@@ -171,8 +168,8 @@ function DetailEvent() {
         </div>
       </div>
       <br />
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             {" "}
             {event.note.map((note, i) => {
@@ -196,8 +193,8 @@ function DetailEvent() {
           <br />
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             <div className="col-12" style={{ textAlign: "left" }}>
               <p>Remaining places : {places} </p>

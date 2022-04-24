@@ -9,14 +9,6 @@ export const getEvent = (id) => {
   };
 };
 
-export const getEventReservations = (id) => {
-  return async function (dispatch) {
-    return await axios
-      .get("http://localhost:8000/api/reservation/get/" + id)
-      .then((res) => dispatch(eventActions.getreservations(res.data)));
-  };
-};
-
 const initialEventState = {
   event: {
     _id: "",
@@ -41,6 +33,8 @@ const initialEventState = {
   reservedplace: 0,
   paiement: "payment at the agency",
   details: [],
+  status: "processing",
+  price: 0,
 };
 
 const eventSlice = createSlice({
@@ -70,6 +64,7 @@ const eventSlice = createSlice({
     },
     updatePlace(state, action) {
       state.reservedplace = action.payload;
+      state.price = parseInt(action.payload) * state.event.price;
       let details = [];
       for (let index = 0; index < state.reservedplace; index++) {
         details.push({ firstname: "", lastname: "" });

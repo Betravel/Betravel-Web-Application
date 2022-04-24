@@ -19,6 +19,7 @@ export const updateUser = (id, user) => {
 
 const initialHotelState = {
   hotel: {
+    id: "",
     name: "",
     rating: 0,
     description: "",
@@ -51,7 +52,8 @@ const initialHotelState = {
   periode: [new Date(), new Date()],
   nuits: 0,
   price: 0,
-  status: "In Progress",
+  status: "processing",
+  paiement: "payment at the agency",
 };
 
 const hotelSlice = createSlice({
@@ -64,6 +66,7 @@ const hotelSlice = createSlice({
     },
     getHotel(state, action) {
       let hotel = action.payload;
+      state.hotel.id = hotel._id;
       state.hotel.name = hotel.name;
       state.hotel.rating = hotel.rating;
       state.hotel.description = hotel.description;
@@ -79,6 +82,9 @@ const hotelSlice = createSlice({
       state.periode = periode;
       let nuits = periode[1] - periode[0];
       state.nuits = nuits / (1000 * 60 * 60 * 24);
+    },
+    updatepaiement(state, action) {
+      state.paiement = action.payload;
     },
     manageSingleRooms(state, action) {
       const i = action.payload;

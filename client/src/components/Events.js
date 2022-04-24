@@ -9,10 +9,9 @@ function Events() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     dispatch(getEvents());
@@ -44,8 +43,13 @@ function Events() {
           <Slider {...settings}>
             {events.map((event, index) => (
               <div key={index}>
-                <div class="card" style={{ width: "95%", height: "600px" }}>
-                  <img src={event.images[0].url} alt="" width="100%" height="300px" />
+                <div className="card" style={{ width: "95%", height: "600px" }}>
+                  <img
+                    src={event.images[0].url}
+                    alt=""
+                    width="100%"
+                    height="300px"
+                  />
                   <div className="card-body">
                     <h5 className="card-title">{event.name}</h5>
                     <div>

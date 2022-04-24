@@ -4,7 +4,7 @@ import axios from "axios";
 export const getEventReservations = (id) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/reservationEvent/get/" + id)
+      .get("http://localhost:8000/api/reservationEvent/getuser/" + id)
       .then((res) =>
         dispatch(eventreservationsActions.getreservations(res.data))
       );
@@ -14,7 +14,6 @@ export const getEventReservations = (id) => {
 const initialEventReservationsState = [];
 
 const eventreservationsSlice = createSlice({
-  
   name: "eventreservations",
   initialState: initialEventReservationsState,
   reducers: {

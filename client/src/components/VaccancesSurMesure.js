@@ -131,8 +131,8 @@ function VanccancesSurMesure() {
                   <br />
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
+              <div className="card">
+                <div className="card-body">
                   <br />
                   <div className="row">
                     <div className="col-6">
@@ -194,8 +194,8 @@ function VanccancesSurMesure() {
                   <br />
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
+              <div className="card">
+                <div className="card-body">
                   <div className="row">
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DateRangePicker
@@ -309,8 +309,8 @@ function VanccancesSurMesure() {
                   <br />
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
+              <div className="card">
+                <div className="card-body">
                   <div
                     className="row"
                     style={{ marginLeft: "20px", marginRight: "20px" }}
@@ -381,8 +381,8 @@ function VanccancesSurMesure() {
                   <br />
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
+              <div className="card">
+                <div className="card-body">
                   {trip.listevents.length === 0 ? (
                     <h5>No available events </h5>
                   ) : (
@@ -393,7 +393,7 @@ function VanccancesSurMesure() {
                             <div className="col-4">
                               <div key={index}>
                                 <div
-                                  class="card"
+                                  className="card"
                                   style={{ width: "95%", height: "600px" }}
                                 >
                                   <div align="right">
@@ -498,8 +498,8 @@ function VanccancesSurMesure() {
                   <br />
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
+              <div className="card">
+                <div className="card-body">
                   <FormGroup>
                     <FormControlLabel
                       control={

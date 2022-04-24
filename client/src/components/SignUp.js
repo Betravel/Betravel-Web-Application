@@ -79,14 +79,14 @@ function SignUp() {
         <div className="container">
           <div className="row Register2">
             <div
-              class="card"
+              className="card"
               style={{
                 backdropFilter: "blur(30px)",
                 marginTop: "50px",
                 backgroundColor: "#E9FBF3",
               }}
             >
-              <div class="card-body">
+              <div className="card-body">
                 <form onSubmit={onSubmitHandler}>
                   <h1>Register </h1>
                   <br />

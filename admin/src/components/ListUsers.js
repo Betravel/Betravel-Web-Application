@@ -8,6 +8,12 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function renameKey(obj, oldKey, newKey) {
   obj[newKey] = obj[oldKey];
@@ -15,6 +21,11 @@ function renameKey(obj, oldKey, newKey) {
 }
 
 function ListUsers() {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const cols = [
@@ -87,14 +98,14 @@ function ListUsers() {
         </div>
         <div className="col-3">
           <h1>Details User</h1>
-          <div class="card">
+          <div className="card">
             <div style={{ backgroundColor: "#abc4b1" }}>
               <img
                 src="https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/150/FFFFFF/external-profile-web-smashingstocks-glyph-smashing-stocks.png"
                 alt=""
               />
             </div>
-            <div class="card-body">
+            <div className="card-body">
               <TextField
                 name="firstname"
                 label="First Name"
@@ -156,12 +167,35 @@ function ListUsers() {
               align="right"
               style={{ marginRight: "20px", marginBottom: "10px" }}
             >
-              <button className="btn" onClick={deleteUser}>
+              <button className="btn" onClick={() => setOpen(true)}>
                 <img
                   src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/50/000000/external-delete-multimedia-kiranshastry-lineal-kiranshastry.png"
                   alt=""
                 />
               </button>
+            </div>
+            <div>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete User?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this User?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={deleteUser} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </div>

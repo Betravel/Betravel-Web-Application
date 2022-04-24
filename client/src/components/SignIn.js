@@ -48,11 +48,12 @@ function SignIn() {
                 if (res.data.msg === "success!") {
                   if (path.get("path") === "home") {
                     history("/");
+                    window.location.reload(false);
                   } else if (path.get("path") === "reservehotel") {
                     history("/Hotel/Reserve");
                   } else if (path.get("path") === "reserveevent") {
                     history("/Event/Reserve");
-                  }else if (path.get("path") === "trip") {
+                  } else if (path.get("path") === "trip") {
                     history("/custom-madeTrip");
                   }
                 } else {
@@ -77,14 +78,14 @@ function SignIn() {
           <div className="row Login2">
             {" "}
             <div
-              class="card"
+              className="card"
               style={{
                 backdropFilter: "blur(30px)",
                 marginTop: "50px",
                 backgroundColor: "#E9FBF3",
               }}
             >
-              <div class="card-body">
+              <div className="card-body">
                 <form onSubmit={login}>
                   <h1>Log In </h1>
                   <br />

@@ -77,7 +77,7 @@ function Profil() {
       <br />
       <div className="row">
         <div className="col-4">
-          <div class="card">
+          <div className="card">
             <div style={{ backgroundColor: "#abc4b1" }}>
               {" "}
               <img
@@ -85,7 +85,7 @@ function Profil() {
                 alt=""
               />
             </div>
-            <div class="card-body">
+            <div className="card-body">
               <TextField
                 name="firstname"
                 label="First Name"

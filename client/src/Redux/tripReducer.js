@@ -12,6 +12,12 @@ export const getEvents = (destinations) => {
 };
 
 const initialTripState = {
+  user: {
+    firstname: "",
+    lastname: "",
+    phone: 0,
+    email: "",
+  },
   typeDestination: "uni",
   nbrDestination: 1,
   destinations: [""],
@@ -22,12 +28,7 @@ const initialTripState = {
   listevents: [],
   events: [],
   options: [],
-  user: {
-    firstname: "",
-    lastname: "",
-    phone: 0,
-    email: "",
-  },
+  status: "processing",
 };
 
 const tripSlice = createSlice({

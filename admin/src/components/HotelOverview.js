@@ -2,7 +2,7 @@ import { alpha, styled } from "@mui/material/styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function PromosOverview() {
+function HotelOverview() {
   const IconWrapperStyle = styled("div")(({ theme }) => ({
     margin: "auto",
     display: "flex",
@@ -18,8 +18,16 @@ function PromosOverview() {
       0
     )} 0%, ${alpha(theme.palette.info.dark, 0.24)} 100%)`,
   }));
+  const [hotels, sethotels] = useState(0);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/hotels/all")
+      .then((res) => {
+        sethotels(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   const [promos, setpromos] = useState(0);
-  const [reservations, setreservations] = useState(0);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/hotel/promo")
@@ -28,14 +36,7 @@ function PromosOverview() {
       })
       .catch((err) => console.log(err));
   }, []);
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/reservationHotel/getPromos")
-      .then((res) => {
-        setreservations(res.data.length);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+
   return (
     <div
       className="card"
@@ -48,16 +49,16 @@ function PromosOverview() {
       <div className="card-body">
         <IconWrapperStyle>
           <img
-            src="https://img.icons8.com/ios-filled/40/01579b/winter-sales.png"
+            src="https://img.icons8.com/ios-filled/40/01579b/3-star-hotel.png"
             alt=""
           />
         </IconWrapperStyle>
-        <h5 className="card-title">{promos}</h5>
-        <h6 className="card-subtitle mb-2 text-muted">Active Promotions</h6>
-        <p className="card-text">{reservations} reservations on promos</p>
+        <h5 className="card-title">{hotels}</h5>
+        <h6 className="card-subtitle mb-2 text-muted">Hotels</h6>
+        <p className="card-text">{promos} Hotels on promos</p>
       </div>
     </div>
   );
 }
 
-export default PromosOverview;
+export default HotelOverview;

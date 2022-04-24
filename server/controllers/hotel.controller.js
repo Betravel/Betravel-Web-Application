@@ -233,18 +233,6 @@ module.exports.getHotelByPromo = (req, res) => {
     .catch((err) => res.json(err));
 };
 
-module.exports.sortHotelByPrice = (req, res) => {
-  Hotel.find({})
-    .then((hotels) => {
-      let sorted = [];
-      sorted = hotels.sort(function (a, b) {
-        return a.price.best - b.price.best;
-      });
-      res.json(sorted);
-    })
-    .catch((err) => res.json(err));
-};
-
 module.exports.deleteHotel = (request, response) => {
   Hotel.deleteOne({ _id: request.params.id })
     .then((res) => response.json(res))

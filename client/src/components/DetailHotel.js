@@ -550,28 +550,28 @@ function DetailHotel() {
                                               >
                                                 {Hotel.price.single.lpd ? (
                                                   <MenuItem value={"lpd"}>
-                                                    lpd
+                                                    Breakfast
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.single.dp ? (
                                                   <MenuItem value={"dp"}>
-                                                    dp
+                                                    Half Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.single.pc ? (
                                                   <MenuItem value={"pc"}>
-                                                    pc
+                                                    Full Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.single.ai ? (
                                                   <MenuItem value={"ai"}>
-                                                    ai
+                                                    All Inclusif
                                                   </MenuItem>
                                                 ) : (
                                                   ""
@@ -705,28 +705,28 @@ function DetailHotel() {
                                               >
                                                 {Hotel.price.double.lpd ? (
                                                   <MenuItem value={"lpd"}>
-                                                    lpd
+                                                    Breakfast
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.double.dp ? (
                                                   <MenuItem value={"dp"}>
-                                                    dp
+                                                    Half Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.double.pc ? (
                                                   <MenuItem value={"pc"}>
-                                                    pc
+                                                    Full Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.double.ai ? (
                                                   <MenuItem value={"ai"}>
-                                                    ai
+                                                    All Inclusif
                                                   </MenuItem>
                                                 ) : (
                                                   ""
@@ -873,28 +873,28 @@ function DetailHotel() {
                                               >
                                                 {Hotel.price.triple.lpd ? (
                                                   <MenuItem value={"lpd"}>
-                                                    lpd
+                                                    Breakfast
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.triple.dp ? (
                                                   <MenuItem value={"dp"}>
-                                                    dp
+                                                    Half Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.triple.pc ? (
                                                   <MenuItem value={"pc"}>
-                                                    pc
+                                                    Full Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.triple.ai ? (
                                                   <MenuItem value={"ai"}>
-                                                    ai
+                                                    All Inclusif
                                                   </MenuItem>
                                                 ) : (
                                                   ""
@@ -1055,28 +1055,28 @@ function DetailHotel() {
                                               >
                                                 {Hotel.price.quadruple.lpd ? (
                                                   <MenuItem value={"lpd"}>
-                                                    lpd
+                                                    Breakfast
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.quadruple.dp ? (
                                                   <MenuItem value={"dp"}>
-                                                    dp
+                                                    Half Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.quadruple.pc ? (
                                                   <MenuItem value={"pc"}>
-                                                    pc
+                                                    Full Board
                                                   </MenuItem>
                                                 ) : (
                                                   ""
                                                 )}
                                                 {Hotel.price.quadruple.ai ? (
                                                   <MenuItem value={"ai"}>
-                                                    ai
+                                                    All Inclusif
                                                   </MenuItem>
                                                 ) : (
                                                   ""

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -20,7 +20,12 @@ import { navbarActions } from "../Redux/navbarReducer";
 import { getAuth } from "../Redux/authReducer";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
-
+const pension = {
+  lpd: "Breakfast",
+  dp: "Half Board",
+  pc: "Full Board",
+  ai: "All Inclusif",
+};
 function Reserve() {
   const auth = useSelector((state) => state.auth);
   const rooms = useSelector((state) => state.hotel.rooms);
@@ -82,10 +87,8 @@ function Reserve() {
       .catch((err) => console.log(err));
   };
 
-  const [value, setValue] = useState("payment at the agency");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const updatePaiement = (event) => {
+    dispatch(hotelActions.updatepaiement(event.target.value));
   };
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
@@ -110,8 +113,8 @@ function Reserve() {
           <div className="col-8">
             <br />
             {/*card personal info*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -183,8 +186,8 @@ function Reserve() {
               </div>
             </div>
             {/*card rooms*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 {" "}
                 <div
                   className="row"
@@ -213,7 +216,9 @@ function Reserve() {
                         <h4>Single room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
@@ -371,7 +376,9 @@ function Reserve() {
                         <h4> Double room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
@@ -530,7 +537,9 @@ function Reserve() {
                         <h4> Triple room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
@@ -691,7 +700,9 @@ function Reserve() {
                         <h4> Quadruple room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
@@ -850,8 +861,8 @@ function Reserve() {
             <RecapHotel />
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
+        <div className="card">
+          <div className="card-body">
             <div className="row">
               <div className="col-12">
                 <h2
@@ -875,8 +886,8 @@ function Reserve() {
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value}
-                  onChange={handleChange}
+                  value={reservation.paiement}
+                  onChange={updatePaiement}
                 >
                   <FormControlLabel
                     value="payment at the agency"

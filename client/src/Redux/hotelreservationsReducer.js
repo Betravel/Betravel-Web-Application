@@ -4,7 +4,7 @@ import axios from "axios";
 export const getHotelReservations = (id) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/reservation/get/" + id)
+      .get("http://localhost:8000/api/reservationHotel/getuser/" + id)
       .then((res) =>
         dispatch(hotelreservationsActions.getreservations(res.data))
       );

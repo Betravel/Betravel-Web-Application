@@ -46,7 +46,7 @@ function ResetPassword() {
       <div className="container">
         <div className="row">
           <div
-            class="card"
+            className="card"
             style={{
               backdropFilter: "blur(30px)",
               marginTop: "200px",
@@ -54,7 +54,7 @@ function ResetPassword() {
               backgroundColor: "white",
             }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <form onSubmit={Resetpass}>
                 <br />
                 <h3>Find your account </h3>

@@ -5,14 +5,14 @@ function RecapEvent() {
 
   return (
     <div className="container">
-      <div class="card">
+      <div className="card">
         <img
           src="https://res.cloudinary.com/betravel/image/upload/v1647176972/BeTravel/assets/Image_e9917i.jpg"
           alt=""
           width="100%"
         />
 
-        <div class="card-body">
+        <div className="card-body">
           <img
             src="https://img.icons8.com/android/20/000000/marker.png"
             alt=""

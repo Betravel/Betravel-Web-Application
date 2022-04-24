@@ -9,9 +9,9 @@ function ListeEvent() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -23,8 +23,13 @@ function ListeEvent() {
       <div className="row">
         {events.map((event, index) => (
           <div className="col-4" key={index}>
-            <div class="card" style={{ width: "100%", height: "100%" }}>
-              <img src={event.images[0].url} alt="" width="100%" />
+            <div className="card" style={{ width: "100%", height: "100%" }}>
+              <img
+                src={event.images[0].url}
+                alt=""
+                width="100%"
+                height="300px"
+              />
               <div className="card-body">
                 <h5 className="card-title">{event.name}</h5>
                 <div>

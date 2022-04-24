@@ -53,7 +53,7 @@ function Promos() {
           <Slider {...settings}>
             {hotels.map((hotel, index) => (
               <div key={index}>
-                <div class="card" style={{ width: "95%", height: "600px" }}>
+                <div className="card" style={{ width: "95%", height: "600px" }}>
                   {hotel.images[0] ? (
                     <img src={hotel.images[0].url} alt="" height="100%" />
                   ) : (
@@ -63,10 +63,10 @@ function Promos() {
                       height="100px"
                     />
                   )}
-                  <div class="card-body">
-                    <h3 class="card-title">{hotel.name}</h3>
-                    <h5 class="card-title">{hotel.location}</h5>
-                    <p class="card-text">
+                  <div className="card-body">
+                    <h3 className="card-title">{hotel.name}</h3>
+                    <h5 className="card-title">{hotel.location}</h5>
+                    <p className="card-text">
                       <div>
                         <h3>
                           {" "}

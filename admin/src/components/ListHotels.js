@@ -3,6 +3,12 @@ import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function renameKey(obj, oldKey, newKey) {
   obj[newKey] = obj[oldKey];
@@ -14,10 +20,16 @@ function renderRating(params) {
 }
 
 function ListHotels() {
+  const [open, setOpen] = useState(false);
+  const [id, setid] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const history = useNavigate();
   let height = window.innerHeight;
   const cols = [
-    { field: "name", headerName: "Name", width: "200" },
+    { field: "name", headerName: "Name", width: "400" },
     {
       field: "rating",
       headerName: "Rating",
@@ -39,7 +51,10 @@ function ListHotels() {
         <GridActionsCellItem
           icon={<img src="https://img.icons8.com/nolan/48/cancel.png" alt="" />}
           label="Delete"
-          onClick={deleteHotel(params.id)}
+          onClick={() => {
+            setid(params.id);
+            setOpen(true);
+          }}
         />,
         <GridActionsCellItem
           icon={
@@ -96,6 +111,25 @@ function ListHotels() {
             <DataGrid rows={data} columns={cols} />
           </div>
         </div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Delete Hotel?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this hotel?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={deleteHotel(id)} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Link to="/AddHotel">
           <button className="btn">
             <img

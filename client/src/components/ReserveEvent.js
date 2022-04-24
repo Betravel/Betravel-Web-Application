@@ -98,8 +98,8 @@ function ReserveEvent() {
           <div className="col-8">
             <br />
             {/*card personal info*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -172,8 +172,8 @@ function ReserveEvent() {
             </div>
             <br />
             {/*card persons*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 {" "}
                 <div
                   className="row"
@@ -234,8 +234,8 @@ function ReserveEvent() {
           </div>
         </div>
         <br />
-        <div class="card">
-          <div class="card-body">
+        <div className="card">
+          <div className="card-body">
             <div className="row">
               <div className="col-12">
                 <h2

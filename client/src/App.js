@@ -7,7 +7,6 @@ import Profil from "./components/Profil";
 import Confirmed from "./components/Confirmed";
 import ResetPassword from "./components/ResetPassword";
 import ConfirmPassword from "./components/ConfirmPassword";
-import AboutUs from "./components/AboutUs";
 import DetailHotel from "./components/DetailHotel";
 import ListeHotel from "./components/ListeHotel";
 import ListePromo from "./components/ListePromo";
@@ -26,7 +25,6 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
           <Route path="/Profil" element={<Profil />} />
