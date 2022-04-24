@@ -40,7 +40,7 @@ function Reserve() {
 
   useEffect(() => {
     dispatch(getAuth());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -75,7 +75,7 @@ function Reserve() {
       .post("http://localhost:8000/api/reservation/add", reservation)
       .then((res) => {
         axios
-          .post("http://localhost:8000/reservationdetails", {
+          .post("http://localhost:8000/reservationdetails/hotel", {
             email: auth.user.email,
             id: res.data._id,
           })
@@ -87,9 +87,6 @@ function Reserve() {
       .catch((err) => console.log(err));
   };
 
-  const updatePaiement = (event) => {
-    dispatch(hotelActions.updatepaiement(event.target.value));
-  };
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
       <br />
@@ -185,6 +182,7 @@ function Reserve() {
                 </div>
               </div>
             </div>
+            <br />
             {/*card rooms*/}
             <div className="card">
               <div className="card-body">
@@ -861,6 +859,7 @@ function Reserve() {
             <RecapHotel />
           </div>
         </div>
+        <br />
         <div className="card">
           <div className="card-body">
             <div className="row">
@@ -887,7 +886,6 @@ function Reserve() {
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={reservation.paiement}
-                  onChange={updatePaiement}
                 >
                   <FormControlLabel
                     value="payment at the agency"
@@ -899,6 +897,7 @@ function Reserve() {
             </div>
           </div>
         </div>
+        <br />
         <div className="row">
           <div className="Search__actions">
             <button type="submit">Confirm</button>

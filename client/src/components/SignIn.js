@@ -39,6 +39,10 @@ function SignIn() {
       .then((res) => {
         if (res.data !== null) {
           if (res.data.confirmed) {
+            let type = "user";
+            if (res.data.type === "admin") {
+              type = "admin";
+            }
             axios
               .post("http://localhost:8000/api/login", loginInfo, {
                 withCredentials: true,
@@ -46,7 +50,9 @@ function SignIn() {
               .then((res) => {
                 console.log("LOGGGIN IN RESPONSE", res);
                 if (res.data.msg === "success!") {
-                  if (path.get("path") === "home") {
+                  if (type === "admin") {
+                    window.location.href = "http://localhost:3001/";
+                  } else if (path.get("path") === "home") {
                     history("/");
                     window.location.reload(false);
                   } else if (path.get("path") === "reservehotel") {

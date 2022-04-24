@@ -26,7 +26,7 @@ function ResetPassword() {
           alert("email not correct !!");
         } else {
           axios
-            .post("http://localhost:8000/send", {
+            .post("http://localhost:8000/account", {
               email,
               type: "reset",
             })

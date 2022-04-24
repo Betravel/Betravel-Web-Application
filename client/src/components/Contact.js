@@ -28,7 +28,7 @@ function Contact() {
       message +
       "</p>";
     axios
-      .post("http://localhost:8000/send", {
+      .post("http://localhost:8000/contact", {
         email,
         msg,
         sjt,

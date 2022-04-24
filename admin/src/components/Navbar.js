@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "../css/Card.css";
 import { hotelActions } from "../Redux/hotelReducer";
@@ -13,7 +13,7 @@ function Navbar() {
       })
       .then((res) => {
         if (res.data.type === "user") {
-          window.location.href = "http://localhost:3000/SignIn?path=home";
+          window.location.href = "http://localhost:3000/";
         }
       })
       .catch(
@@ -22,15 +22,14 @@ function Navbar() {
       );
   }, []);
   const dispatch = useDispatch();
-  const history = useNavigate();
   const logout = () => {
     axios
       .get("http://localhost:8000/api/logout", {
         withCredentials: true,
       })
       .then((res) => {
-        history("/");
-        window.location.reload(false);
+        window.location.href = "http://localhost:3000/";
+        // window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
@@ -136,14 +135,13 @@ function Navbar() {
         </div>
       </div>
       <hr />
-      <Link
-        to="/"
+      <button
         className="btn"
         style={{ color: "white", fontSize: "25px" }}
         onClick={logout}
       >
         Logout
-      </Link>
+      </button>
       <hr />
     </div>
   );

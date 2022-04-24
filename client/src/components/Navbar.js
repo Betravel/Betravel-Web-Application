@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { navbarActions } from "../Redux/navbarReducer";
 import { getAuth, logout } from "../Redux/authReducer";
@@ -26,8 +26,8 @@ function Navbar() {
   };
   useEffect(() => {
     dispatch(getAuth());
-    window.addEventListener("scroll", changeBackground);
   }, [dispatch]);
+  window.addEventListener("scroll", changeBackground);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "

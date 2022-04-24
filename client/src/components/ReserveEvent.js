@@ -30,7 +30,7 @@ function ReserveEvent() {
 
   useEffect(() => {
     dispatch(getAuth());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -61,15 +61,15 @@ function ReserveEvent() {
     axios
       .post("http://localhost:8000/api/reservationEvent/add", event)
       .then((res) => {
-        // axios
-        //   .post("http://localhost:8000/reservationdetails", {
-        //     email: auth.user.email,
-        //     id: res.data._id,
-        //   })
-        //   .then((res) => {
-        //     history("/");
-        //   })
-        // .catch((err) => console.log(err));
+        axios
+          .post("http://localhost:8000/reservationdetails/event", {
+            email: auth.user.email,
+            id: res.data._id,
+          })
+          .then((res) => {
+            history("/");
+          })
+          .catch((err) => console.log(err));
         history("/");
       })
       .catch((err) => console.log(err));

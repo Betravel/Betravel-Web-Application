@@ -54,7 +54,7 @@ function SignUp() {
                 setErrors(res.data.errors);
               } else {
                 axios
-                  .post("http://localhost:8000/send", {
+                  .post("http://localhost:8000/account", {
                     email,
                     type: "welcome",
                   })
