@@ -22,8 +22,13 @@ function ListeEvent() {
     <div className="container" style={{ marginTop: "120px" }}>
       <div className="row">
         {events.map((event, index) => (
-          <div className="col-4" key={index}>
-            <div className="card" style={{ width: "100%", height: "100%" }}>
+          <div className="col-lg-4 col-sm-12" key={index}>
+            <div
+              className="card"
+              style={{
+                marginBottom: "20px",
+              }}
+            >
               <img
                 src={event.images[0].url}
                 alt=""
@@ -40,56 +45,50 @@ function ListeEvent() {
                   />
                   {event.location}
                 </div>
+                <br />
+                <div className="row" align="left">
+                  <div className="col-4">
+                    <img
+                      src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
+                      alt=""
+                    />{" "}
+                  </div>
+                  {event.type === "randonnee" ? (
+                    <div className="col-8">
+                      {event.date.day.getDate() +
+                        "/" +
+                        (event.date.day.getMonth() + 1) +
+                        "/" +
+                        event.date.day.getFullYear()}
+                    </div>
+                  ) : (
+                    <div className="col-8">
+                      {event.date.from.getDate() +
+                        "/" +
+                        (event.date.from.getMonth() + 1) +
+                        "/" +
+                        event.date.from.getFullYear()}
+                    </div>
+                  )}
+                </div>
+                <br />
+                <div className="row" align="left">
+                  <div className="col-4">
+                    <img
+                      src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
+                      alt=""
+                    />{" "}
+                  </div>
+                  <div className="col-8">Circuit de 20 Km</div>
+                </div>
+                <br />
                 <div className="row">
-                  <div align="left">
-                    <div className="row ">
-                      <div className="col-4">
-                        <img
-                          src="https://img.icons8.com/ios/20/000000/calendar--v1.png"
-                          alt=""
-                        />{" "}
+                  <div className="col-12">
+                    <Link to={"/Event/Detail/" + event._id}>
+                      <div className="Search__actions">
+                        <button className="btn button"> show details</button>
                       </div>
-                      {event.type === "randonnee" ? (
-                        <div className="col-8">
-                          {event.date.day.getDate() +
-                            "/" +
-                            (event.date.day.getMonth() + 1) +
-                            "/" +
-                            event.date.day.getFullYear()}
-                        </div>
-                      ) : (
-                        <div className="col-8">
-                          {event.date.from.getDate() +
-                            "/" +
-                            (event.date.from.getMonth() + 1) +
-                            "/" +
-                            event.date.from.getFullYear()}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <br />
-                  <div align="left">
-                    <div className="row ">
-                      <div className="col-4">
-                        <img
-                          src="https://img.icons8.com/ios-filled/20/000000/trainers.png"
-                          alt=""
-                        />{" "}
-                      </div>
-                      <div className="col-8">Circuit de 20 Km</div>
-                    </div>
-                  </div>
-                  <br />
-                  <br />
-                  <div className="row">
-                    <div className="col-12">
-                      <Link to={"/Event/Detail/" + event._id}>
-                        <div className="Search__actions">
-                          <button className="btn button"> show details</button>
-                        </div>
-                      </Link>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </div>

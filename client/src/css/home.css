@@ -7,16 +7,6 @@
   background-size: cover;
 }
 
-.row2 {
-  position: relative;
-  z-index: 100;
-  justify-content: end;
-  margin-top: 250px;
-  margin-left: 300px;
-  margin-right: 300px;
-  margin-bottom: 150px;
-}
-
 .title {
   font-size: 3rem;
   margin-bottom: 2px;

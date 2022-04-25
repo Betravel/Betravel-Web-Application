@@ -246,7 +246,7 @@ function DetailHotel() {
       <div className="row">
         <div className="col-12">
           <Box
-            sx={{ width: "100%", height: 700, overflowY: "scroll" }}
+            sx={{ width: "100%", height: 400, overflowY: "scroll" }}
             align="center"
           >
             <ImageList variant="masonry" cols={3} gap={8}>
@@ -291,7 +291,7 @@ function DetailHotel() {
         </h3>
         <br /> <br />
         {Hotel.options.wifi ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Free wifi &nbsp;
@@ -305,7 +305,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.pool ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               * Pool &nbsp;
               <img
@@ -318,7 +318,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.restaurant ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Restaurant &nbsp;
@@ -332,7 +332,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.parking ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Parking &nbsp;
@@ -346,7 +346,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.bar ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Bar &nbsp;
@@ -360,7 +360,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.indoorpool ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Indoorpool &nbsp;
@@ -374,7 +374,7 @@ function DetailHotel() {
           ""
         )}
         {Hotel.options.spa ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Beauty & Spa &nbsp;
@@ -388,7 +388,7 @@ function DetailHotel() {
           ""
         )}{" "}
         {Hotel.options.elevator ? (
-          <div className="col-3">
+          <div className="col-lg-3 col-sm-4">
             <h6 align="left">
               {" "}
               * Elevator &nbsp;
@@ -491,9 +491,9 @@ function DetailHotel() {
                                   <div key={i}>
                                     <div className="row">
                                       <div
-                                        className="col-4"
+                                        className="col-lg-4 col-sm-12"
                                         style={{
-                                          marginTop: "auto",
+                                          marginTop: "30px",
                                           marginBottom: "auto",
                                         }}
                                       >
@@ -501,7 +501,12 @@ function DetailHotel() {
                                       </div>
                                       <div className="col-8">
                                         <div className="row ">
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="adultes">
                                                 adultes
@@ -518,7 +523,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="enfants">
                                                 enfants
@@ -535,7 +545,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="pensions">
                                                 Pension
@@ -644,9 +659,9 @@ function DetailHotel() {
                                   <div key={i}>
                                     <div className="row">
                                       <div
-                                        className="col-4"
+                                        className="col-lg-4 col-sm-12"
                                         style={{
-                                          marginTop: "auto",
+                                          marginTop: "30px",
                                           marginBottom: "auto",
                                         }}
                                       >
@@ -654,7 +669,12 @@ function DetailHotel() {
                                       </div>
                                       <div className="col-8">
                                         <div className="row ">
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="adulted">
                                                 adultes
@@ -672,7 +692,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="enfantd">
                                                 enfants
@@ -690,7 +715,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="pensiond">
                                                 Pension
@@ -810,9 +840,9 @@ function DetailHotel() {
                                   <div key={i}>
                                     <div className="row">
                                       <div
-                                        className="col-4"
+                                        className="col-lg-4 col-sm-12"
                                         style={{
-                                          marginTop: "auto",
+                                          marginTop: "30px",
                                           marginBottom: "auto",
                                         }}
                                       >
@@ -820,7 +850,12 @@ function DetailHotel() {
                                       </div>
                                       <div className="col-8">
                                         <div className="row ">
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="adultet">
                                                 adultes
@@ -839,7 +874,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="enfantt">
                                                 enfants
@@ -858,7 +898,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="pensiont">
                                                 Pension
@@ -981,9 +1026,9 @@ function DetailHotel() {
                                   <div key={i}>
                                     <div className="row">
                                       <div
-                                        className="col-4"
+                                        className="col-lg-4 col-sm-12"
                                         style={{
-                                          marginTop: "auto",
+                                          marginTop: "30px",
                                           marginBottom: "auto",
                                         }}
                                       >
@@ -991,7 +1036,12 @@ function DetailHotel() {
                                       </div>
                                       <div className="col-8">
                                         <div className="row ">
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="adulteq">
                                                 adultes
@@ -1014,7 +1064,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="enfantq">
                                                 enfants
@@ -1037,7 +1092,12 @@ function DetailHotel() {
                                               </Select>
                                             </FormControl>
                                           </div>
-                                          <div className="col-4">
+                                          <div
+                                            className="col-lg-4 col-sm-12"
+                                            style={{
+                                              marginTop: "20px",
+                                            }}
+                                          >
                                             <FormControl fullWidth>
                                               <InputLabel id="pensionq">
                                                 Pension
@@ -1123,15 +1183,13 @@ function DetailHotel() {
                 )}
                 <TableRow>
                   {reservation.hotel.promo !== 0 ? (
-                    <TableCell colSpan={2} align="right">
+                    <TableCell align="right">
                       - {reservation.hotel.promo} %
                     </TableCell>
                   ) : (
                     ""
                   )}
-                  <TableCell colSpan={2} align="right">
-                    Total
-                  </TableCell>
+                  <TableCell align="right">Total</TableCell>
                   <TableCell align="center">{rooms.total} DT</TableCell>
                 </TableRow>
               </TableBody>

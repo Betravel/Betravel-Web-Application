@@ -70,60 +70,55 @@ function DetailEvent() {
       </div>
       <div className="card">
         <div className="card-body">
+          <div className="row" style={{ textAlign: "left" }}>
+            <p>{event.description}</p>
+          </div>
           <div className="row">
-            <div className="row">
-              <p>{event.description}</p>
+            <div className="col-5" align="left">
+              <h5>Location :</h5>
             </div>
-
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Location :</h5>
-              </div>
-              <div className="col-7">{event.location}</div>
+            <div className="col-7">{event.location}</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Date :</h5>
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Date :</h5>
-              </div>
-              <div className="col-7">
-                {event.date.day.getDate() +
-                  "/" +
-                  (event.date.day.getMonth() + 1) +
-                  "/" +
-                  event.date.day.getFullYear()}
-              </div>
+            <div className="col-7">
+              {event.date.day.getDate() +
+                "/" +
+                (event.date.day.getMonth() + 1) +
+                "/" +
+                event.date.day.getFullYear()}
             </div>
-            <div className="row">
-              <div className="col-5" align="left"></div>
-              <div className="col-7">
-                {" "}
-                {event.date.from.getDate() +
-                  "/" +
-                  (event.date.from.getMonth() + 1) +
-                  "/" +
-                  event.date.from.getFullYear()}
-                {" ==> "}
-                {event.date.to.getDate() +
-                  "/" +
-                  (event.date.to.getMonth() + 1) +
-                  "/" +
-                  event.date.to.getFullYear()}
-              </div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left"></div>
+            <div className="col-7">
+              {" "}
+              {event.date.from.getDate() +
+                "/" +
+                (event.date.from.getMonth() + 1) +
+                "/" +
+                event.date.from.getFullYear()}
+              {" ==> "}
+              {event.date.to.getDate() +
+                "/" +
+                (event.date.to.getMonth() + 1) +
+                "/" +
+                event.date.to.getFullYear()}
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Duration :</h5>
-              </div>
-              <div className="col-7">{event.periode} day</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Duration :</h5>
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Price :</h5>
-              </div>
-              <div className="col-7">{event.price} DT</div>
+            <div className="col-7">{event.periode} day</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Price :</h5>
             </div>
-            <br />
-            <br />
+            <div className="col-7">{event.price} DT</div>
           </div>
         </div>
       </div>
@@ -164,7 +159,6 @@ function DetailEvent() {
       <div className="row">
         <div className="col-12" style={{ textAlign: "left" }}>
           <h3 style={{ textDecoration: "underline" }}>Note !</h3>
-          <br />
         </div>
       </div>
       <br />
@@ -177,7 +171,7 @@ function DetailEvent() {
                 <div key={i}>
                   <div className="row">
                     <div className="col-12" style={{ textAlign: "left" }}>
-                      --{note}
+                      -- {note}
                     </div>
                   </div>
                 </div>
@@ -250,7 +244,6 @@ function DetailEvent() {
           )}
         </div>
       </div>
-
       <br />
       <br />
     </div>

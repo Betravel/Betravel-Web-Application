@@ -17,6 +17,7 @@ import DetailEvent from "./components/DetailEvent";
 import ReserveEvent from "./components/ReserveEvent";
 import Erreur404 from "./components/Erreur404";
 import VanccancesSurMesure from "./components/VaccancesSurMesure";
+import "./css/Card.css";
 
 function App() {
   return (

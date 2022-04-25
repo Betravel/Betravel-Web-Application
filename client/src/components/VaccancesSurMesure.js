@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, tripActions } from "../Redux/tripReducer";
 import { Locations } from "../locations";
@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { navbarActions } from "../Redux/navbarReducer";
 import { authActions } from "../Redux/authReducer";
 import { getAuth } from "../Redux/authReducer";
+import Slider from "react-slick";
 
 function VanccancesSurMesure() {
   const trip = useSelector((state) => state.trip);
@@ -115,12 +116,47 @@ function VanccancesSurMesure() {
     mm = "0" + mm;
   }
   today = mm + "-" + dd + "-" + yyyy;
+
+  const [slides, setslides] = useState(3);
+  useEffect(() => {
+    if (window.innerWidth < 719) {
+      setslides(1);
+    } else if (window.innerWidth < 991) {
+      if (trip.listevents.length < 2) {
+        setslides(1);
+      } else {
+        setslides(2);
+      }
+    } else if (window.innerWidth < 1400) {
+      if (trip.listevents.length < 3) {
+        setslides(trip.listevents.length);
+      } else {
+        setslides(3);
+      }
+    } else {
+      if (trip.listevents.length < 4) {
+        setslides(trip.listevents.length);
+      } else {
+        setslides(4);
+      }
+    }
+  }, [trip.listevents.length]);
+
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: slides,
+    slidesToScroll: 1,
+  };
   return (
     <div className="container-fluid">
       <div className="row ">
         <div className="col-12" style={{ marginTop: "100px" }}>
           <h1>Custom-made Trip </h1>
           <form onSubmit={onSubmit}>
+            {/* Personal informations */}
             <div className="container">
               <div className="row">
                 <div className="col-12" style={{ textAlign: "left" }}>
@@ -135,7 +171,7 @@ function VanccancesSurMesure() {
                 <div className="card-body">
                   <br />
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-lg-6 col-sm-12">
                       <TextField
                         id="firstname"
                         label="First Name"
@@ -146,7 +182,13 @@ function VanccancesSurMesure() {
                         fullWidth
                       />
                     </div>
-                    <div className="col-6">
+
+                    <div
+                      className="col-lg-6 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       <TextField
                         id="lastname"
                         label="Last Name"
@@ -158,9 +200,14 @@ function VanccancesSurMesure() {
                       />
                     </div>
                   </div>
-                  <br />
+
                   <div className="row">
-                    <div className="col-6">
+                    <div
+                      className="col-lg-6 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       <TextField
                         id="email"
                         label="Email"
@@ -171,7 +218,12 @@ function VanccancesSurMesure() {
                         fullWidth
                       />
                     </div>
-                    <div className="col-6">
+                    <div
+                      className="col-lg-6 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       <TextField
                         id="phone"
                         label="Phone"
@@ -187,6 +239,9 @@ function VanccancesSurMesure() {
                 </div>
               </div>
             </div>
+            <br />
+
+            {/* Destination */}
             <div className="container">
               <div className="row">
                 <div className="col-12" style={{ textAlign: "left" }}>
@@ -222,7 +277,12 @@ function VanccancesSurMesure() {
                     className="row"
                     style={{ marginLeft: "20px", marginRight: "20px" }}
                   >
-                    <div className="col-3">
+                    <div
+                      className="col-lg-3 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       <FormControl fullWidth>
                         <InputLabel id="type">Type Destination</InputLabel>
                         <Select
@@ -237,7 +297,12 @@ function VanccancesSurMesure() {
                         </Select>
                       </FormControl>
                     </div>
-                    <div className="col-3">
+                    <div
+                      className="col-lg-3 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       <FormControl fullWidth>
                         <InputLabel id="nbr">Nombre Destinations</InputLabel>
                         {trip.typeDestination === "uni" ? (
@@ -267,7 +332,12 @@ function VanccancesSurMesure() {
                         )}
                       </FormControl>
                     </div>
-                    <div className="col-6">
+                    <div
+                      className="col-lg-6 col-sm-12"
+                      style={{
+                        marginTop: "20px",
+                      }}
+                    >
                       {trip.destinations.map((destination, i) => {
                         return (
                           <div key={i}>
@@ -295,13 +365,12 @@ function VanccancesSurMesure() {
                       })}
                     </div>
                   </div>
-                  <br />
-
-                  <br />
                 </div>
               </div>
             </div>
             <br />
+
+            {/* Personnes */}
             <div className="container">
               <div className="row">
                 <div className="col-12" style={{ textAlign: "left" }}>
@@ -315,7 +384,7 @@ function VanccancesSurMesure() {
                     className="row"
                     style={{ marginLeft: "20px", marginRight: "20px" }}
                   >
-                    <div className="col-6">
+                    <div className="col-lg-6 col-sm-8">
                       <FormControl fullWidth>
                         <InputLabel id="Personnes">Nombre Personnes</InputLabel>
                         <Select
@@ -344,8 +413,10 @@ function VanccancesSurMesure() {
                     return (
                       <div key={i}>
                         <div className="row">
-                          <div className="col-4">Person {i + 1}</div>
-                          <div className="col-4">
+                          <div className="col-lg-4 col-sm-12">
+                            Person {i + 1}
+                          </div>
+                          <div className="col-lg-4 col-sm-12">
                             <TextField
                               variant="outlined"
                               label="Firstname"
@@ -355,7 +426,12 @@ function VanccancesSurMesure() {
                               fullWidth
                             />
                           </div>
-                          <div className="col-4">
+                          <div
+                            className="col-lg-4 col-sm-12"
+                            style={{
+                              marginTop: "7px",
+                            }}
+                          >
                             <TextField
                               variant="outlined"
                               label="Lastname"
@@ -374,6 +450,8 @@ function VanccancesSurMesure() {
               </div>
             </div>
             <br />
+
+            {/* events */}
             <div className="container">
               <div className="row">
                 <div className="col-12" style={{ textAlign: "left" }}>
@@ -388,9 +466,10 @@ function VanccancesSurMesure() {
                   ) : (
                     <div className="container">
                       <div className="row">
+                      <Slider {...settings}>
                         {trip.listevents.map((event, index) => {
                           return (
-                            <div className="col-4">
+                            <div className="col-lg-4 col-sm-12">
                               <div key={index}>
                                 <div
                                   className="card"
@@ -482,7 +561,8 @@ function VanccancesSurMesure() {
                               </div>
                             </div>
                           );
-                        })}{" "}
+                        })}
+                        </Slider>
                       </div>
                     </div>
                   )}
@@ -491,6 +571,8 @@ function VanccancesSurMesure() {
               </div>
             </div>
             <br />
+
+            {/* options */}
             <div className="container">
               <div className="row">
                 <div className="col-12" style={{ textAlign: "left" }}>
@@ -519,6 +601,7 @@ function VanccancesSurMesure() {
               </div>
             </div>
             <br />
+
             <div className="row">
               <div className="Search__actions">
                 <button type="submit">Send Request</button>

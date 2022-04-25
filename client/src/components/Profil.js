@@ -72,14 +72,11 @@ function Profil() {
   };
 
   return (
-    <div className=" container" style={{ marginTop: "100px" }}>
-      <br />
-      <br />
+    <div className=" container" style={{ marginTop: "120px" }}>
       <div className="row">
-        <div className="col-4">
-          <div className="card">
+        <div className="col-lg-4 col-sm-12">
+          <div className="card" style={{ marginBottom: "50px" }}>
             <div style={{ backgroundColor: "#abc4b1" }}>
-              {" "}
               <img
                 src="https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/150/FFFFFF/external-profile-web-smashingstocks-glyph-smashing-stocks.png"
                 alt=""
@@ -179,11 +176,10 @@ function Profil() {
             </div>
           </div>
         </div>
-        <div className="col-8">
+        <div className="col-lg-8 col-sm-12">
           <h2 style={{ textDecoration: "underline", marginBottom: "70px" }}>
             Booking history
           </h2>
-
           <h4>Hotel's reservations</h4>
           {reservations.length === 0 ? (
             <h5>No Reservation 😞 </h5>

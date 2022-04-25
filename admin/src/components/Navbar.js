@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import "../css/Card.css";
 import { hotelActions } from "../Redux/hotelReducer";
 import { eventActions } from "../Redux/eventReducer";
 import { useEffect } from "react";

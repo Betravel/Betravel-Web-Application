@@ -77,22 +77,21 @@ function Contact() {
             </h2>
           </div>
           <br />
-
           <div className="row">
             <div
-              className="col-5"
+              className="col-lg-5 col-sm-12"
               style={{ marginTop: "auto", marginBottom: "auto" }}
             >
               <img src={img} alt="" width="100%" />
             </div>
-            <div className="col-7">
+            <div className="col-lg-7 col-sm-12">
               <div className="container">
                 <form className="row g-3" onSubmit={send}>
-                  <div className="col-md-6">
+                  <div className="col-lg-6 col-sm-12">
                     <Box
                       component="form"
                       sx={{
-                        "& > :not(style)": { m: 1, width: "25ch" },
+                        "& > :not(style)": { m: 1, width: "100%" },
                         input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
@@ -107,11 +106,11 @@ function Contact() {
                       />
                     </Box>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-lg-6 col-sm-12">
                     <Box
                       component="form"
                       sx={{
-                        "& > :not(style)": { m: 1, width: "25ch" },
+                        "& > :not(style)": { m: 1, width: "100%" },
                         input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
@@ -126,11 +125,11 @@ function Contact() {
                       />
                     </Box>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-lg-6 col-sm-12">
                     <Box
                       component="form"
                       sx={{
-                        "& > :not(style)": { m: 1, width: "25ch" },
+                        "& > :not(style)": { m: 1, width: "100%" },
                         input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
@@ -145,11 +144,11 @@ function Contact() {
                       />
                     </Box>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-lg-6 col-sm-12">
                     <Box
                       component="form"
                       sx={{
-                        "& > :not(style)": { m: 1, width: "25ch" },
+                        "& > :not(style)": { m: 1, width: "100%" },
                         input: { backgroundColor: "white", opacity: "50%" },
                       }}
                       noValidate
@@ -170,15 +169,26 @@ function Contact() {
                     </Box>
                   </div>
                   <div className="col-12">
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="message"
-                      multiline
-                      rows={4}
-                      onChange={(e) => setmessage(e.target.value)}
-                      required
-                      fullWidth
-                    />
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "100%" },
+                        input: { backgroundColor: "white", opacity: "50%" },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="message"
+                        multiline
+                        rows={4}
+                        onChange={(e) => setmessage(e.target.value)}
+                        required
+                        fullWidth
+                        style={{ backgroundColor: "white", opacity: "50%" }}
+                      />
+                    </Box>
                   </div>
                   <br />
                   <div className="col-12">
