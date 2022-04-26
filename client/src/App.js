@@ -18,6 +18,7 @@ import ReserveEvent from "./components/ReserveEvent";
 import Erreur404 from "./components/Erreur404";
 import VanccancesSurMesure from "./components/VaccancesSurMesure";
 import "./css/Card.css";
+import ReservationsHistory from "./components/ReservationsHistory";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
           <Route path="/Profil" element={<Profil />} />
+          <Route
+            path="/Reservations/History"
+            element={<ReservationsHistory />}
+          />
           <Route path="/Restpass" element={<ResetPassword />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />

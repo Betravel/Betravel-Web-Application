@@ -11,6 +11,7 @@ function Navbar() {
 
   const changelogout = () => {
     dispatch(logout());
+    window.location.reload(false);
   };
 
   const changeBackground = () => {
@@ -139,10 +140,28 @@ function Navbar() {
                       </a>
                     </li>
                   )}
-
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
+                  {auth.user.type === "user" ? (
+                    <li>
+                      <Link
+                        to="/Reservations/History"
+                        className="dropdown-item"
+                      >
+                        Reservations
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  {auth.user.type === "user" ? (
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                  ) : (
+                    ""
+                  )}
                   <li>
                     <button className="dropdown-item" onClick={changelogout}>
                       Logout

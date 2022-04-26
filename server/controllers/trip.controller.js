@@ -8,6 +8,21 @@ module.exports.addTrip = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+module.exports.getTrip = (request, response) => {
+  Trip.find()
+    .then((res) => {
+      let reservations = res;
+      let result = [];
+      reservations.forEach((reservation) => {
+        if (reservation.user._id === request.params.id) {
+          result.push(reservation);
+        }
+      });
+      response.json(result);
+    })
+    .catch((err) => response.json(err));
+};
+
 module.exports.getTripByID = (request, response) => {
   Trip.findById(request.params.id)
     .then((result) => response.json(result))
