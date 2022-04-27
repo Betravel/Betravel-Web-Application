@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { eventActions, getEvent } from "../Redux/eventReducer";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,11 +6,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
+import axios from "axios";
 
 function DetailEvent() {
   const event = useSelector((state) => state.event.event);
   const reservation = useSelector((state) => state.event);
-  console.log(event);
+  const auth = useSelector((state) => state.auth);
+  const [places, setPlaces] = useState([]);
   const dispatch = useDispatch();
   let { id } = useParams();
 
@@ -19,9 +22,24 @@ function DetailEvent() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAuth());
     dispatch(navbarActions.updatenavbar(false));
     dispatch(getEvent(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/getreservationEvent/" + event.name)
+      .then((res) => {
+        const Remainingp = event.places - res.data;
+        setPlaces(Remainingp);
+      })
+      .catch((err) => console.error(err));
+  }, [event.name, event.places]);
 
   return (
     <div className="container" style={{ marginTop: "100px" }}>
@@ -50,62 +68,57 @@ function DetailEvent() {
           <br />
         </div>{" "}
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
+          <div className="row" style={{ textAlign: "left" }}>
+            <p>{event.description}</p>
+          </div>
           <div className="row">
-            <div className="row">
-              <p>{event.description}</p>
+            <div className="col-5" align="left">
+              <h5>Location :</h5>
             </div>
-
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Location :</h5>
-              </div>
-              <div className="col-7">{event.location}</div>
+            <div className="col-7">{event.location}</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Date :</h5>
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Date :</h5>
-              </div>
-              <div className="col-7">
-                {event.date.day.getDate() +
-                  "/" +
-                  (event.date.day.getMonth() + 1) +
-                  "/" +
-                  event.date.day.getFullYear()}
-              </div>
+            <div className="col-7">
+              {event.date.day.getDate() +
+                "/" +
+                (event.date.day.getMonth() + 1) +
+                "/" +
+                event.date.day.getFullYear()}
             </div>
-            <div className="row">
-              <div className="col-5" align="left"></div>
-              <div className="col-7">
-                {" "}
-                {event.date.from.getDate() +
-                  "/" +
-                  (event.date.from.getMonth() + 1) +
-                  "/" +
-                  event.date.from.getFullYear()}
-                {" ==> "}
-                {event.date.to.getDate() +
-                  "/" +
-                  (event.date.to.getMonth() + 1) +
-                  "/" +
-                  event.date.to.getFullYear()}
-              </div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left"></div>
+            <div className="col-7">
+              {" "}
+              {event.date.from.getDate() +
+                "/" +
+                (event.date.from.getMonth() + 1) +
+                "/" +
+                event.date.from.getFullYear()}
+              {" ==> "}
+              {event.date.to.getDate() +
+                "/" +
+                (event.date.to.getMonth() + 1) +
+                "/" +
+                event.date.to.getFullYear()}
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Duration :</h5>
-              </div>
-              <div className="col-7">{event.periode} day</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Duration :</h5>
             </div>
-            <div className="row">
-              <div className="col-5" align="left">
-                <h5>Price :</h5>
-              </div>
-              <div className="col-7">{event.price} DT</div>
+            <div className="col-7">{event.periode} day</div>
+          </div>
+          <div className="row">
+            <div className="col-5" align="left">
+              <h5>Price :</h5>
             </div>
-            <br />
-            <br />
+            <div className="col-7">{event.price} DT</div>
           </div>
         </div>
       </div>
@@ -116,8 +129,8 @@ function DetailEvent() {
           <br />
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             {event.program.map((prog, i) => {
               let time = new Date(prog.hour);
@@ -146,12 +159,11 @@ function DetailEvent() {
       <div className="row">
         <div className="col-12" style={{ textAlign: "left" }}>
           <h3 style={{ textDecoration: "underline" }}>Note !</h3>
-          <br />
         </div>
       </div>
       <br />
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             {" "}
             {event.note.map((note, i) => {
@@ -159,7 +171,7 @@ function DetailEvent() {
                 <div key={i}>
                   <div className="row">
                     <div className="col-12" style={{ textAlign: "left" }}>
-                      --{note}
+                      -- {note}
                     </div>
                   </div>
                 </div>
@@ -175,46 +187,63 @@ function DetailEvent() {
           <br />
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             <div className="col-12" style={{ textAlign: "left" }}>
-              <p>Remaining places : 20 {event.remaingplaces}</p>
+              <p>Remaining places : {places} </p>
             </div>
           </div>
           <div className="row">
             <div className="col-12" style={{ textAlign: "center" }}>
-              <p>
-                place to reserve : &nbsp; &nbsp;
-                <FormControl>
-                  <Select
-                    name="reservedplace"
-                    value={reservation.reservedplace}
-                    label="ReservedPlace"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={0}>0</MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={6}>6</MenuItem>
-                  </Select>
-                </FormControl>
-              </p>
+              {places === 0 ? (
+                <h4> plus de place a resrver </h4>
+              ) : (
+                <p>
+                  place to reserve : &nbsp; &nbsp;
+                  <FormControl>
+                    <Select
+                      name="reservedplace"
+                      value={reservation.reservedplace}
+                      label="ReservedPlace"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value={0}>0</MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                    </Select>
+                  </FormControl>
+                </p>
+              )}
             </div>
           </div>
-          <Link to="/Event/Reserve">
-            <div className="col-12" style={{ textAlign: "right" }}>
-              <div className="Search__actions">
-                <button type="button">Book Now </button>
-              </div>
+          {reservation.reservedplace > places ? (
+            <h4>il reste que {places} places !!!!</h4>
+          ) : (
+            <div>
+              {auth.isAuth ? (
+                <Link to="/Event/Reserve">
+                  <div className="col-12" style={{ textAlign: "right" }}>
+                    <div className="Search__actions">
+                      <button type="button">Book Now </button>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <Link to="/SignIn?path=reserveevent">
+                  <div className="Search__actions">
+                    <button type="button">Book Now </button>
+                  </div>
+                </Link>
+              )}
             </div>
-          </Link>
+          )}
         </div>
       </div>
-
       <br />
       <br />
     </div>

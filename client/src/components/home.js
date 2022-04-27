@@ -9,19 +9,27 @@ import { navbarActions } from "../Redux/navbarReducer";
 
 function Home() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(true));
   }, [dispatch]);
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
       <div className="row row1">
-        <div className="container">
-          <div className="row row2">
-            <h1 className="title">Enjoy your trip </h1>
+        <div className="col-12">
+          <div
+            className="container"
+            style={{ marginTop: "250px", marginBottom: "150px" }}
+          >
+            <div className="row">
+              <h1 className="title">Enjoy your trip </h1>
+            </div>
             <br />
             <br />
             <br />
-            <SearchFormHotel />
+            <div className="row">
+              <SearchFormHotel />
+            </div>
           </div>
         </div>
       </div>
@@ -36,7 +44,10 @@ function Home() {
           </div>
           <br />
           <div className="row row3">
-            <div className="col-4">
+            <div
+              className="col-sm-12 col-md-4"
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+            >
               <div className="cercle">
                 <img
                   src="https://img.icons8.com/external-filled-outline-satawat-anukul/100/000000/external-summer-summer-filled-outline-filled-outline-satawat-anukul-43.png"
@@ -46,7 +57,10 @@ function Home() {
                 <p>Best destinations</p>
               </div>
             </div>
-            <div className="col-4">
+            <div
+              className="col-sm-12 col-md-4"
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+            >
               <div className="cercle">
                 <img
                   src="https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/100/000000/external-wallet-customer-review-xnimrodx-lineal-color-xnimrodx.png"
@@ -56,7 +70,10 @@ function Home() {
                 <p>Best prices</p>
               </div>
             </div>
-            <div className="col-4">
+            <div
+              className="col-sm-12 col-md-4"
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+            >
               <div className="cercle">
                 <img
                   src="https://img.icons8.com/external-itim2101-lineal-color-itim2101/100/000000/external-support-services-contact-and-message-itim2101-lineal-color-itim2101-2.png"

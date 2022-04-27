@@ -12,7 +12,7 @@ export const getUser = (id) => {
 export const getReservations = (id) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/reservation/get/" + id)
+      .get("http://localhost:8000/api/reservation/getuser/" + id)
       .then((res) => dispatch(userActions.getreservations(res.data)));
   };
 };

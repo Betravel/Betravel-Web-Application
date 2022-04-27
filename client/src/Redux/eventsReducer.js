@@ -4,7 +4,7 @@ import axios from "axios";
 export const getEvents = (Destination) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/event/all")
+      .get("http://localhost:8000/api/event/new")
       .then((res) => {
         dispatch(eventsActions.getevents(res.data));
       });

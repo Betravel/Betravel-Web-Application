@@ -185,7 +185,6 @@ function AddHotel() {
     axios
       .post("http://localhost:8000/api/hotel", data)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         history("/");
       })

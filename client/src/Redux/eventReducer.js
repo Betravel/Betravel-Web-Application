@@ -11,6 +11,7 @@ export const getEvent = (id) => {
 
 const initialEventState = {
   event: {
+    _id: "",
     name: "",
     location: "",
     type: "",
@@ -21,6 +22,7 @@ const initialEventState = {
     program: [],
     note: [],
     images: [],
+    places: 0,
   },
   user: {
     firstname: "",
@@ -31,6 +33,8 @@ const initialEventState = {
   reservedplace: 0,
   paiement: "payment at the agency",
   details: [],
+  status: "processing",
+  price: 0,
 };
 
 const eventSlice = createSlice({
@@ -43,6 +47,7 @@ const eventSlice = createSlice({
     },
     getEvent(state, action) {
       let event = action.payload;
+      state.event._id = event._id;
       state.event.name = event.name;
       state.event.location = event.location;
       state.event.type = event.type;
@@ -55,9 +60,11 @@ const eventSlice = createSlice({
       state.event.program = event.program;
       state.event.note = event.note;
       state.event.images = event.images;
+      state.event.places = event.places;
     },
     updatePlace(state, action) {
       state.reservedplace = action.payload;
+      state.price = parseInt(action.payload) * state.event.price;
       let details = [];
       for (let index = 0; index < state.reservedplace; index++) {
         details.push({ firstname: "", lastname: "" });
@@ -70,6 +77,16 @@ const eventSlice = createSlice({
         state.details[index].firstname = action.payload.value;
       } else if (action.payload.type === "lastname") {
         state.details[index].lastname = action.payload.value;
+      }
+    },
+
+    updateUser(state, action) {
+      if (action.payload.type === "firstname") {
+        state.user.firstname = action.payload.value;
+      } else if (action.payload.type === "lastname") {
+        state.user.lastname = action.payload.value;
+      } else if (action.payload.type === "phone") {
+        state.user.phone = action.payload.value;
       }
     },
   },

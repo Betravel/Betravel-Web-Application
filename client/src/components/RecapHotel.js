@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import Rating from "@mui/material/Rating";
 function RecapHotel() {
-  const hotel = useSelector((state) => state.reservation.hotel);
-  const reservation = useSelector((state) => state.reservation);
+  const hotel = useSelector((state) => state.hotel.hotel);
+  const reservation = useSelector((state) => state.hotel);
 
   console.log(reservation.periode);
   return (
     <div className="container">
-      <div class="card">
+      <div className="card">
         {hotel.images[0] ? (
           <img src={hotel.images[0].url} alt="" width="100%" />
         ) : (
@@ -17,7 +17,7 @@ function RecapHotel() {
             width="100%"
           />
         )}
-        <div class="card-body">
+        <div className="card-body">
           <img
             src="https://img.icons8.com/android/20/000000/marker.png"
             alt=""

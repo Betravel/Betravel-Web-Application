@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -8,10 +9,12 @@ import FormControl from "@mui/material/FormControl";
 import { useDispatch, useSelector } from "react-redux";
 import { eventActions } from "../Redux/eventReducer";
 import { navbarActions } from "../Redux/navbarReducer";
+import { getAuth } from "../Redux/authReducer";
 import RecapEvent from "./recapEvent";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import axios from "axios";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
 
@@ -19,6 +22,15 @@ function ReserveEvent() {
   const event = useSelector((state) => state.event);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAuth());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -44,6 +56,25 @@ function ReserveEvent() {
     );
   };
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8000/api/reservationEvent/add", event)
+      .then((res) => {
+        axios
+          .post("http://localhost:8000/reservationdetails/event", {
+            email: auth.user.email,
+            id: res.data._id,
+          })
+          .then((res) => {
+            history("/");
+          })
+          .catch((err) => console.log(err));
+        history("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
       <br />
@@ -62,13 +93,16 @@ function ReserveEvent() {
       <div className="col-12">
         <h1>BOOKING FORM</h1>
       </div>
-      <div className="row">
-        <div className="col-8">
-          <form>
+      <form onSubmit={onSubmitHandler}>
+        <div className="row">
+          <div className="col-lg-4 col-sm-12">
+            <RecapEvent />
+          </div>
+          <div className="col-lg-8 col-sm-12">
             <br />
             {/*card personal info*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -89,7 +123,9 @@ function ReserveEvent() {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-lg-6 col-sm-12"  style={{
+                                              marginTop: "20px",
+                                            }}jh >
                     <TextField
                       id="firstname"
                       label="First Name"
@@ -100,7 +136,12 @@ function ReserveEvent() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="lastname"
                       label="Last Name"
@@ -114,7 +155,9 @@ function ReserveEvent() {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-lg-6 col-sm-12"  style={{
+                                              marginTop: "20px",
+                                            }}>
                     <TextField
                       id="email"
                       label="Email"
@@ -125,7 +168,12 @@ function ReserveEvent() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="phone"
                       label="Phone"
@@ -141,8 +189,8 @@ function ReserveEvent() {
             </div>
             <br />
             {/*card persons*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 {" "}
                 <div
                   className="row"
@@ -167,8 +215,15 @@ function ReserveEvent() {
                   return (
                     <div key={i}>
                       <div className="row">
-                        <div className="col-4">Person {i + 1} :</div>
-                        <div className="col-4">
+                        <div className="col-lg-4 col-sm-12">
+                          Person {i + 1} :
+                        </div>
+                        <div
+                          className="col-lg-4 col-sm-12"
+                          style={{
+                            marginTop: "20px",
+                          }}
+                        >
                           <TextField
                             variant="outlined"
                             label="First name"
@@ -179,7 +234,12 @@ function ReserveEvent() {
                             fullWidth
                           />
                         </div>
-                        <div className="col-4">
+                        <div
+                          className="col-lg-4 col-sm-12"
+                          style={{
+                            marginTop: "20px",
+                          }}
+                        >
                           <TextField
                             variant="outlined"
                             label="Last Name"
@@ -197,56 +257,53 @@ function ReserveEvent() {
                 })}
               </div>
             </div>
-          </form>
+          </div>
         </div>
-        <div className="col-4">
-          <RecapEvent />
-        </div>
-      </div>
-      <br />
-      <div class="card">
-        <div class="card-body">
-          <div className="row">
-            <div className="col-12">
-              <h2
-                style={{
-                  textDecoration: "underline",
-                  textAlign: "left",
-                }}
-              >
-                Payment
-              </h2>
+        <br />
+        <div className="card">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-12">
+                <h2
+                  style={{
+                    textDecoration: "underline",
+                    textAlign: "left",
+                  }}
+                >
+                  Payment
+                </h2>
+              </div>
+            </div>
+            <div
+              className="row"
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={event.paiement}
+                >
+                  <FormControlLabel
+                    value="payment at the agency"
+                    control={<Radio />}
+                    label="Payment at the agency"
+                  />
+                </RadioGroup>
+              </FormControl>
             </div>
           </div>
-          <div
-            className="row"
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={event.paiement}
-              >
-                <FormControlLabel
-                  value="payment at the agency"
-                  control={<Radio />}
-                  label="Payment at the agency"
-                />
-              </RadioGroup>
-            </FormControl>
+        </div>
+        <br />
+        <div className="row">
+          <div className="Search__actions">
+            <button type="submit">Confirm</button>
           </div>
         </div>
-      </div>
-      <br />
-      <div className="row">
-        <div className="Search__actions">
-          <button type="submit">Confirm</button>
-        </div>
-      </div>
+      </form>
     </div>
   );
 }

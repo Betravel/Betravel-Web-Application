@@ -12,6 +12,12 @@ export const getEvents = (destinations) => {
 };
 
 const initialTripState = {
+  user: {
+    firstname: "",
+    lastname: "",
+    phone: 0,
+    email: "",
+  },
   typeDestination: "uni",
   nbrDestination: 1,
   destinations: [""],
@@ -19,19 +25,40 @@ const initialTripState = {
   nuits: 0,
   nbrPersonnes: 1,
   personnes: [{ firstname: "", lastname: "" }],
+  listevents: [],
   events: [],
   options: [],
+  status: "processing",
 };
 
 const tripSlice = createSlice({
   name: "trip",
   initialState: initialTripState,
   reducers: {
+    getUser(state, action) {
+      let user = action.payload;
+      state.user = user;
+    },
+
     destinations(state, action) {
       state.listdestinations = action.payload;
     },
     events(state, action) {
-      state.events = action.payload;
+      state.listevents = action.payload;
+    },
+    updateevents(state, action) {
+      let event = action.payload.value;
+      if (action.payload.type === true) {
+        state.events.push(event);
+      } else {
+        for (let index = 0; index < state.events.length; index++) {
+          const element = state.events[index];
+          if (element._id === event._id) {
+            state.events.splice(index, 1);
+            index--;
+          }
+        }
+      }
     },
     updateTrip(state, action) {
       switch (action.payload.type) {
@@ -116,6 +143,16 @@ const tripSlice = createSlice({
             index--;
           }
         }
+      }
+    },
+
+    updateUser(state, action) {
+      if (action.payload.type === "firstname") {
+        state.user.firstname = action.payload.value;
+      } else if (action.payload.type === "lastname") {
+        state.user.lastname = action.payload.value;
+      } else if (action.payload.type === "phone") {
+        state.user.phone = action.payload.value;
       }
     },
   },

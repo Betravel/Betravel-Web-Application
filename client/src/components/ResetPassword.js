@@ -9,6 +9,11 @@ function ResetPassword() {
   const dispatch = useDispatch();
   const [email, setemail] = useState("");
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch]);
@@ -21,7 +26,7 @@ function ResetPassword() {
           alert("email not correct !!");
         } else {
           axios
-            .post("http://localhost:8000/send", {
+            .post("http://localhost:8000/account", {
               email,
               type: "reset",
             })
@@ -41,7 +46,7 @@ function ResetPassword() {
       <div className="container">
         <div className="row">
           <div
-            class="card"
+            className="card"
             style={{
               backdropFilter: "blur(30px)",
               marginTop: "200px",
@@ -49,7 +54,7 @@ function ResetPassword() {
               backgroundColor: "white",
             }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <form onSubmit={Resetpass}>
                 <br />
                 <h3>Find your account </h3>

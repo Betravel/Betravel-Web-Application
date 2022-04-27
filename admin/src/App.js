@@ -15,7 +15,6 @@ import ListCustomReservations from "./components/ListCustomReservations";
 
 function App() {
   let height = window.innerHeight;
-  console.log(height);
   return (
     <div className="App">
       <div className="container-fluid">

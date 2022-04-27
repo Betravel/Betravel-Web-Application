@@ -1,20 +1,34 @@
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import "../css/Card.css";
 import { hotelActions } from "../Redux/hotelReducer";
 import { eventActions } from "../Redux/eventReducer";
+import { useEffect } from "react";
 function Navbar() {
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users/getloggedinuser", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.type === "user") {
+          window.location.href = "http://localhost:3000/";
+        }
+      })
+      .catch(
+        (err) =>
+          (window.location.href = "http://localhost:3000/SignIn?path=home")
+      );
+  }, []);
   const dispatch = useDispatch();
-  const history = useNavigate();
   const logout = () => {
     axios
       .get("http://localhost:8000/api/logout", {
         withCredentials: true,
       })
       .then((res) => {
-        history("/");
-        window.location.reload(false);
+        window.location.href = "http://localhost:3000/";
+        // window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
@@ -29,7 +43,7 @@ function Navbar() {
       <br />
       <img
         src="https://res.cloudinary.com/betravel/image/upload/v1646934431/BeTravel/Logo/betravel_sn54ad.png"
-        class="card-img-top"
+        className="card-img-top"
         alt=""
       />
       <hr />
@@ -48,7 +62,7 @@ function Navbar() {
       </Link>
       <hr />
       <button
-        class="btn"
+        className="btn"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#hotels"
@@ -58,8 +72,8 @@ function Navbar() {
       >
         Hotels
       </button>
-      <div class="collapse" id="hotels">
-        <div class="card card-body">
+      <div className="collapse" id="hotels">
+        <div className="card card-body">
           <Link to="/Hotels" className="btn">
             List Hotels
           </Link>
@@ -71,7 +85,7 @@ function Navbar() {
       </div>
       <hr />
       <button
-        class="btn"
+        className="btn"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#events"
@@ -81,8 +95,8 @@ function Navbar() {
       >
         Events
       </button>
-      <div class="collapse" id="events">
-        <div class="card card-body">
+      <div className="collapse" id="events">
+        <div className="card card-body">
           <Link to="/Events" className="btn">
             List Events
           </Link>
@@ -94,7 +108,7 @@ function Navbar() {
       </div>
       <hr />
       <button
-        class="btn"
+        className="btn"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#reservations"
@@ -104,8 +118,8 @@ function Navbar() {
       >
         Reservations
       </button>
-      <div class="collapse" id="reservations">
-        <div class="card card-body">
+      <div className="collapse" id="reservations">
+        <div className="card card-body">
           <Link to="/Reservations/Hotel" className="btn">
             Hotel's Reservations
           </Link>
@@ -114,20 +128,19 @@ function Navbar() {
             Event's Reservations
           </Link>
           <hr />
-          <Link to="/Reservations/Custom" className="btn">
+          <Link to="/Reservations/CustomTrip" className="btn">
             Custom Trip's Reservations
           </Link>
         </div>
       </div>
       <hr />
-      <Link
-        to="/"
+      <button
         className="btn"
         style={{ color: "white", fontSize: "25px" }}
         onClick={logout}
       >
         Logout
-      </Link>
+      </button>
       <hr />
     </div>
   );

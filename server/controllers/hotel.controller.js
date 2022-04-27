@@ -209,7 +209,13 @@ module.exports.updateHotel = async (req, res) => {
 
 module.exports.getHotelByLocation = (req, res) => {
   Hotel.find({ location: req.params.location })
-    .then((hotels) => res.json(hotels))
+    .then((hotels) => {
+      let sorted = [];
+      sorted = hotels.sort(function (a, b) {
+        return a.price.best - b.price.best;
+      });
+      res.json(sorted);
+    })
     .catch((err) => res.json(err));
 };
 

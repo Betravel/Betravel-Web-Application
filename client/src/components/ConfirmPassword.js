@@ -12,6 +12,11 @@ function ConfirmPassword() {
   const [error, seterror] = useState(false);
   let { id } = useParams();
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
   }, [dispatch]);
@@ -27,7 +32,7 @@ function ConfirmPassword() {
           axios
             .put("http://localhost:8000/api/user/update", user)
             .then((response) => {
-              history("/SignIn");
+              history("/SignIn?path=home");
             })
             .catch((err) => alert("Error Server"));
         })
@@ -41,7 +46,7 @@ function ConfirmPassword() {
       <div className="container">
         <div className="row">
           <div
-            class="card"
+            className="card"
             style={{
               backdropFilter: "blur(30px)",
               marginTop: "200px",
@@ -49,7 +54,7 @@ function ConfirmPassword() {
               backgroundColor: "white",
             }}
           >
-            <div class="card-body">
+            <div className="card-body">
               <form onSubmit={Confirmpass}>
                 <h3>Enter your new Password </h3>
                 <br />

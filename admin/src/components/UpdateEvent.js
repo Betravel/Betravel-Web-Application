@@ -99,7 +99,6 @@ function UpdateEvent() {
     axios
       .put("http://localhost:8000/api/event/update/" + id, data)
       .then((res) => {
-        console.log(res);
         alert("ok");
         setLoading(false);
         history("/");

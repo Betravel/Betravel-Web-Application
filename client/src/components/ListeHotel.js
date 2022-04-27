@@ -13,10 +13,20 @@ import { Link } from "react-router-dom";
 function ListeHotel() {
   const dispatch = useDispatch();
   const hotels = useSelector((state) => state.hotels);
-
+  const [width, setwidth] = useState("300px");
   const [Destination] = useState(
     JSON.parse(localStorage.getItem("search")).destination
   );
+
+  useEffect(() => {
+    if (window.innerWidth < 920) {
+      setwidth("auto");
+    }
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -24,28 +34,28 @@ function ListeHotel() {
   }, [Destination, dispatch]);
 
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div className="container" style={{ marginTop: "120px" }}>
       <div className="row">
-        <div className="col-4">
-          {" "}
-          <div className="hotel">
-            <Search2 />
-          </div>
+        <div className="col-lg-4 col-sm-12">
+          <Search2 />
         </div>
-        <div className="col-8">
+        <div className="col-lg-8 col-sm-12">
           {hotels.map((hotel, index) => (
             <div
               className="card"
               style={{
-                height: "300px",
+                height: width,
                 width: "100%",
                 backgroundColor: "#E9FBF3",
+                marginBottom: "20px",
+                marginLeft: "5px",
+                marginRight: "5px",
               }}
             >
               <div className="card-body">
                 <div className="row">
                   <div
-                    className="col-4"
+                    className="col-lg-4 col-sm-12"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                   >
                     {hotel.images[0] ? (
@@ -58,7 +68,7 @@ function ListeHotel() {
                       />
                     )}
                   </div>
-                  <div className="col-8">
+                  <div className="col-lg-8 col-sm-12">
                     {" "}
                     <h3>
                       {hotel.name} &nbsp;
