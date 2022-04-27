@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const TripSchema = new mongoose.Schema(
   {
+    user: {
+      type: JSON,
+    },
     typeDestination: {
       type: String,
     },
@@ -28,8 +31,8 @@ const TripSchema = new mongoose.Schema(
     options: {
       type: Array,
     },
-    user: {
-      type: JSON,
+    status: {
+      type: String,
     },
   },
   { timestamps: true }

@@ -96,7 +96,6 @@ function AddEvent() {
     axios
       .post("http://localhost:8000/api/event/add", data)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         history("/");
       })

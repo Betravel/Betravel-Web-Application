@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { authActions, getAuth } from "../Redux/authReducer";
-import { getHotelReservations } from "../Redux/hotelreservationsReducer";
-import { getEventReservations } from "../Redux/eventreservationsReducer";
+import { authActions, getAuth, logout } from "../Redux/authReducer";
 import { navbarActions } from "../Redux/navbarReducer";
-import TextField from "@mui/material/TextField";
 import axios from "axios";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Rating from "@mui/material/Rating";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Profil() {
   const [disable, setdisable] = useState(false);
@@ -21,9 +17,10 @@ function Profil() {
   const [confim, setconfim] = useState("");
   const [error, seterror] = useState(false);
   const user = useSelector((state) => state.auth.user);
-  const reservations = useSelector((state) => state.hotelreservations);
-  const reservationsEvent = useSelector((state) => state.eventreservations);
-
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,10 +29,8 @@ function Profil() {
 
   useEffect(() => {
     dispatch(getAuth());
-    dispatch(getHotelReservations(user._id));
-    dispatch(getEventReservations(user._id));
     dispatch(navbarActions.updatenavbar(false));
-  }, [dispatch, user._id]);
+  }, [dispatch]);
 
   const changeDisabled = (e) => {
     e.preventDefault();
@@ -71,86 +66,119 @@ function Profil() {
     }
   };
 
+  const deleteUser = () => {
+    axios
+      .delete("http://localhost:8000/api/user/delete/" + user._id)
+      .then((res) => {
+        dispatch(logout());
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <div className=" container" style={{ marginTop: "100px" }}>
-      <br />
-      <br />
+    <div className=" container" style={{ marginTop: "120px" }}>
       <div className="row">
-        <div className="col-4">
-          <div class="card">
-            <div style={{ backgroundColor: "#abc4b1" }}>
-              {" "}
+        <div className="col-12">
+          <div className="card" style={{ marginBottom: "50px" }}>
+            <div
+              style={{
+                backgroundColor: "#abc4b1",
+                marginBottom: "20px",
+              }}
+            >
               <img
                 src="https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/150/FFFFFF/external-profile-web-smashingstocks-glyph-smashing-stocks.png"
                 alt=""
               />
             </div>
-            <div class="card-body">
-              <TextField
-                name="firstname"
-                label="First Name"
-                variant="outlined"
-                value={user.firstname}
-                fullWidth
-                disabled={!disable}
-                onChange={updateUser}
-              />
+            <div className="card-body">
+              <div className="row">
+                <div
+                  className="col-lg-6 col-sm-12"
+                  style={{ marginBottom: "20px" }}
+                >
+                  <TextField
+                    name="firstname"
+                    label="First Name"
+                    variant="outlined"
+                    value={user.firstname}
+                    fullWidth
+                    disabled={!disable}
+                    onChange={updateUser}
+                  />
+                </div>
+                <div className="col-lg-6 col-sm-12">
+                  <TextField
+                    name="lastname"
+                    label="Last Name"
+                    variant="outlined"
+                    value={user.lastname}
+                    fullWidth
+                    disabled={!disable}
+                    onChange={updateUser}
+                  />
+                </div>
+              </div>
               <br />
+              <div className="row">
+                <div
+                  className="col-lg-6 col-sm-12"
+                  style={{ marginBottom: "20px" }}
+                >
+                  <TextField
+                    name="email"
+                    label="Email"
+                    variant="outlined"
+                    value={user.email}
+                    fullWidth
+                    disabled={!disable}
+                    onChange={updateUser}
+                  />
+                </div>
+                <div className="col-lg-6 col-sm-12">
+                  <TextField
+                    name="phone"
+                    label="Phone"
+                    variant="outlined"
+                    value={user.phone}
+                    fullWidth
+                    disabled={!disable}
+                    onChange={updateUser}
+                  />
+                </div>
+              </div>
               <br />
-              <TextField
-                name="lastname"
-                label="Last Name"
-                variant="outlined"
-                value={user.lastname}
-                fullWidth
-                disabled={!disable}
-                onChange={updateUser}
-              />
-              <br />
-              <br />
-              <TextField
-                name="email"
-                label="Email"
-                variant="outlined"
-                value={user.email}
-                fullWidth
-                disabled={!disable}
-                onChange={updateUser}
-              />
-              <br />
-              <br />
-              <TextField
-                name="phone"
-                label="Phone"
-                variant="outlined"
-                value={user.phone}
-                fullWidth
-                disabled={!disable}
-                onChange={updateUser}
-              />
               {disable ? (
                 <div>
+                  <div className="row">
+                    <div
+                      className="col-lg-6 col-sm-12"
+                      style={{ marginBottom: "20px" }}
+                    >
+                      <TextField
+                        id="password"
+                        label="Password"
+                        variant="outlined"
+                        value={password}
+                        fullWidth
+                        disabled={!disable}
+                        onChange={(e) => setpassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-lg-6 col-sm-12">
+                      <TextField
+                        id="confim"
+                        label="Confirm Password"
+                        variant="outlined"
+                        value={confim}
+                        fullWidth
+                        disabled={!disable}
+                        onChange={(e) => setconfim(e.target.value)}
+                      />
+                    </div>
+                  </div>
                   <br />
-                  <TextField
-                    id="password"
-                    label="Password"
-                    variant="outlined"
-                    value={password}
-                    fullWidth
-                    disabled={!disable}
-                    onChange={(e) => setpassword(e.target.value)}
-                  />
-                  <br />
-                  <br />
-                  <TextField
-                    id="confim"
-                    label="Confirm Password"
-                    variant="outlined"
-                    value={confim}
-                    fullWidth
-                    disabled={!disable}
-                    onChange={(e) => setconfim(e.target.value)}
-                  />
                   {error ? <p className="text-danger">Doesn't match </p> : ""}
                 </div>
               ) : (
@@ -161,6 +189,12 @@ function Profil() {
               align="right"
               style={{ marginRight: "20px", marginBottom: "10px" }}
             >
+              <button className="btn" onClick={() => setOpen(true)}>
+                <img
+                  src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/50/000000/external-delete-multimedia-kiranshastry-lineal-kiranshastry.png"
+                  alt=""
+                />
+              </button>
               {disable ? (
                 <button className="btn" onClick={confirmUpdateUser}>
                   <img
@@ -176,186 +210,29 @@ function Profil() {
                   />
                 </button>
               )}
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete User?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this User?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={deleteUser} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
-        </div>
-        <div className="col-8">
-          <h2 style={{ textDecoration: "underline", marginBottom: "70px" }}>
-            Booking history
-          </h2>
-
-          <h4>Hotel's reservations</h4>
-          {reservations.length === 0 ? (
-            <h5>No Reservation 😞 </h5>
-          ) : (
-            <TableContainer component={Paper}>
-              <Table
-                sx={{ minWidth: 650 }}
-                size="small"
-                aria-label="a dense table"
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Reservation id</TableCell>
-                    <TableCell align="center">Hotel Name</TableCell>
-                    <TableCell align="center">Location </TableCell>
-                    <TableCell align="center">Date</TableCell>
-                    <TableCell align="center">Rooms</TableCell>
-                    <TableCell align="center">Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {reservations.map((reservation) => (
-                    <TableRow
-                      key={reservation.hotel.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {reservation._id}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {reservation.hotel.name}{" "}
-                        <Rating
-                          name="read-only"
-                          value={reservation.hotel.rating}
-                          size="small"
-                          readOnly
-                        />
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.hotel.location}{" "}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {reservation.periode[0].getDate() +
-                          "/" +
-                          (reservation.periode[0].getMonth() + 1) +
-                          "/" +
-                          reservation.periode[0].getFullYear()}{" "}
-                        {" to "}{" "}
-                        {reservation.periode[1].getDate() +
-                          "/" +
-                          (reservation.periode[1].getMonth() + 1) +
-                          "/" +
-                          reservation.periode[1].getFullYear()}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {reservation.rooms.single.room.length !== 0 ? (
-                          <p style={{ textAlign: "center" }}>
-                            {reservation.rooms.single.room.length} Single
-                            room(s)
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                        {reservation.rooms.double.room.length !== 0 ? (
-                          <p style={{ textAlign: "center" }}>
-                            {reservation.rooms.double.room.length} Double
-                            room(s)
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                        {reservation.rooms.triple.room.length !== 0 ? (
-                          <p style={{ textAlign: "center" }}>
-                            {reservation.rooms.triple.room.length} Triple
-                            room(s)
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                        {reservation.rooms.quadruple.room.length !== 0 ? (
-                          <p style={{ textAlign: "center" }}>
-                            {reservation.rooms.quadruple.room.length} Quadruple
-                            room(s)
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {reservation.rooms.total} DT
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-
-          <br />
-          <h4>Event's reservations</h4>
-          <br />
-
-          {reservationsEvent.length === 0 ? (
-            <h5>No Reservation 😞 </h5>
-          ) : (
-            <TableContainer component={Paper}>
-              <Table
-                sx={{ minWidth: 650 }}
-                size="small"
-                aria-label="a dense table"
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Reservation id</TableCell>
-                    <TableCell align="center">event Name</TableCell>
-                    <TableCell align="center">Type </TableCell>
-                    <TableCell align="center">Location </TableCell>
-                    <TableCell align="center">Date</TableCell>
-                    <TableCell align="center">PlaceReserved</TableCell>
-                    <TableCell align="center">Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {reservationsEvent.map((reservation) => (
-                    <TableRow
-                      key={reservation.event.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {reservation._id}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.event.name}{" "}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.event.type}{" "}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.event.location}{" "}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.event.date.from.getDate() +
-                          "/" +
-                          (reservation.event.date.from.getMonth() + 1) +
-                          "/" +
-                          reservation.event.date.from.getFullYear()}{" "}
-                        {" to "}{" "}
-                        {reservation.event.date.to.getDate() +
-                          "/" +
-                          (reservation.event.date.to.getMonth() + 1) +
-                          "/" +
-                          reservation.event.date.to.getFullYear()}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.reservedplace}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {reservation.event.price} DT
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
         </div>
       </div>
     </div>

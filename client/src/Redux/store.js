@@ -9,6 +9,7 @@ import eventsSlice from "./eventsReducer";
 import navbarSlice from "./navbarReducer";
 import tripSlice from "./tripReducer";
 import eventreservationsSlice from "./eventreservationsReducer";
+import tripreservationsSlice from "./tripreservationsReducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     events: eventsSlice.reducer,
     eventreservations: eventreservationsSlice.reducer,
     trip: tripSlice.reducer,
+    tripreservations: tripreservationsSlice.reducer,
   },
 });
 

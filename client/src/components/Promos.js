@@ -6,6 +6,18 @@ import axios from "axios";
 
 function Promos() {
   const [hotels, setHotels] = useState([]);
+  const [slides, setslides] = useState(3);
+  useEffect(() => {
+    if (window.innerWidth < 719) {
+      setslides(1);
+    } else if (window.innerWidth < 991) {
+      setslides(2);
+    } else if (window.innerWidth < 1400) {
+      setslides(3);
+    } else {
+      setslides(4);
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,30 +42,29 @@ function Promos() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: slides,
     slidesToScroll: 1,
   };
 
   return (
-    <div>
-      <div className="container">
-        <div className="row">
-          <h1
-            style={{
-              color: "#2a211c",
-            }}
-          >
-            Best deals{" "}
-          </h1>
-          <br />
-          <br />
-        </div>
-
-        <div className="row">
+    <div className="container">
+      <div className="row">
+        <h1
+          style={{
+            color: "#2a211c",
+          }}
+        >
+          Best deals
+        </h1>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col"></div>
+        <div className="col-10">
           <Slider {...settings}>
             {hotels.map((hotel, index) => (
               <div key={index}>
-                <div class="card" style={{ width: "95%", height: "600px" }}>
+                <div className="card" style={{ width: "95%", height: "600px" }}>
                   {hotel.images[0] ? (
                     <img src={hotel.images[0].url} alt="" height="100%" />
                   ) : (
@@ -63,10 +74,10 @@ function Promos() {
                       height="100px"
                     />
                   )}
-                  <div class="card-body">
-                    <h3 class="card-title">{hotel.name}</h3>
-                    <h5 class="card-title">{hotel.location}</h5>
-                    <p class="card-text">
+                  <div className="card-body">
+                    <h3 className="card-title">{hotel.name}</h3>
+                    <h5 className="card-title">{hotel.location}</h5>
+                    <p className="card-text">
                       <div>
                         <h3>
                           {" "}
@@ -93,25 +104,23 @@ function Promos() {
               </div>
             ))}
           </Slider>
-
-          <div className="col-1"></div>
         </div>
-        <br />
-        <div className="row">
-          <Link to="/Hotel/Promos">
-            <button
-              className="btn "
-              style={{
-                fontWeight: "bolder",
-                fontSize: "30px",
-                " textdecoration": "underline",
-              }}
-            >
-              {" "}
-              see more <DoubleArrowIcon />
-            </button>
-          </Link>
-        </div>
+        <div className="col"></div>
+      </div>
+      <br />
+      <div className="row">
+        <Link to="/Hotel/Promos">
+          <button
+            className="btn "
+            style={{
+              fontWeight: "bolder",
+              fontSize: "30px",
+              " textdecoration": "underline",
+            }}
+          >
+            see more <DoubleArrowIcon />
+          </button>
+        </Link>
       </div>
     </div>
   );

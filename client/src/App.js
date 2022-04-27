@@ -7,7 +7,6 @@ import Profil from "./components/Profil";
 import Confirmed from "./components/Confirmed";
 import ResetPassword from "./components/ResetPassword";
 import ConfirmPassword from "./components/ConfirmPassword";
-import AboutUs from "./components/AboutUs";
 import DetailHotel from "./components/DetailHotel";
 import ListeHotel from "./components/ListeHotel";
 import ListePromo from "./components/ListePromo";
@@ -18,6 +17,8 @@ import DetailEvent from "./components/DetailEvent";
 import ReserveEvent from "./components/ReserveEvent";
 import Erreur404 from "./components/Erreur404";
 import VanccancesSurMesure from "./components/VaccancesSurMesure";
+import "./css/Card.css";
+import ReservationsHistory from "./components/ReservationsHistory";
 
 function App() {
   return (
@@ -26,10 +27,13 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/Confirmed/:id" element={<Confirmed />} />
           <Route path="/Confirmpass/:id" element={<ConfirmPassword />} />
           <Route path="/Profil" element={<Profil />} />
+          <Route
+            path="/Reservations/History"
+            element={<ReservationsHistory />}
+          />
           <Route path="/Restpass" element={<ResetPassword />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />

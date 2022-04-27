@@ -30,7 +30,7 @@ function ReserveEvent() {
 
   useEffect(() => {
     dispatch(getAuth());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -61,15 +61,15 @@ function ReserveEvent() {
     axios
       .post("http://localhost:8000/api/reservationEvent/add", event)
       .then((res) => {
-        // axios
-        //   .post("http://localhost:8000/reservationdetails", {
-        //     email: auth.user.email,
-        //     id: res.data._id,
-        //   })
-        //   .then((res) => {
-        //     history("/");
-        //   })
-        // .catch((err) => console.log(err));
+        axios
+          .post("http://localhost:8000/reservationdetails/event", {
+            email: auth.user.email,
+            id: res.data._id,
+          })
+          .then((res) => {
+            history("/");
+          })
+          .catch((err) => console.log(err));
         history("/");
       })
       .catch((err) => console.log(err));
@@ -95,11 +95,14 @@ function ReserveEvent() {
       </div>
       <form onSubmit={onSubmitHandler}>
         <div className="row">
-          <div className="col-8">
+          <div className="col-lg-4 col-sm-12">
+            <RecapEvent />
+          </div>
+          <div className="col-lg-8 col-sm-12">
             <br />
             {/*card personal info*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -120,7 +123,9 @@ function ReserveEvent() {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-lg-6 col-sm-12"  style={{
+                                              marginTop: "20px",
+                                            }}jh >
                     <TextField
                       id="firstname"
                       label="First Name"
@@ -131,7 +136,12 @@ function ReserveEvent() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="lastname"
                       label="Last Name"
@@ -145,7 +155,9 @@ function ReserveEvent() {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-lg-6 col-sm-12"  style={{
+                                              marginTop: "20px",
+                                            }}>
                     <TextField
                       id="email"
                       label="Email"
@@ -156,7 +168,12 @@ function ReserveEvent() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="phone"
                       label="Phone"
@@ -172,8 +189,8 @@ function ReserveEvent() {
             </div>
             <br />
             {/*card persons*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 {" "}
                 <div
                   className="row"
@@ -198,8 +215,15 @@ function ReserveEvent() {
                   return (
                     <div key={i}>
                       <div className="row">
-                        <div className="col-4">Person {i + 1} :</div>
-                        <div className="col-4">
+                        <div className="col-lg-4 col-sm-12">
+                          Person {i + 1} :
+                        </div>
+                        <div
+                          className="col-lg-4 col-sm-12"
+                          style={{
+                            marginTop: "20px",
+                          }}
+                        >
                           <TextField
                             variant="outlined"
                             label="First name"
@@ -210,7 +234,12 @@ function ReserveEvent() {
                             fullWidth
                           />
                         </div>
-                        <div className="col-4">
+                        <div
+                          className="col-lg-4 col-sm-12"
+                          style={{
+                            marginTop: "20px",
+                          }}
+                        >
                           <TextField
                             variant="outlined"
                             label="Last Name"
@@ -229,13 +258,10 @@ function ReserveEvent() {
               </div>
             </div>
           </div>
-          <div className="col-4">
-            <RecapEvent />
-          </div>
         </div>
         <br />
-        <div class="card">
-          <div class="card-body">
+        <div className="card">
+          <div className="card-body">
             <div className="row">
               <div className="col-12">
                 <h2

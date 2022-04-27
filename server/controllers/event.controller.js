@@ -36,6 +36,25 @@ module.exports.getAllEvents = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+module.exports.getNewEvents = (request, response) => {
+  Event.find({})
+    .then((events) => {
+      let result = [];
+      events.forEach((event) => {
+        let date = new Date(event.date.day);
+        let today = new Date();
+        if (date > today) {
+          result.push(event);
+        }
+      });
+      response.json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      response.json(err);
+    });
+};
+
 module.exports.getEventByDestination = (request, response) => {
   let dests = request.body;
   Event.find()
@@ -67,8 +86,6 @@ module.exports.deleteEvent = (request, response) => {
     .then((res) => response.json(res))
     .catch((err) => response.json(err));
 };
-
-
 
 module.exports.updateEvent = async (request, response) => {
   const updatedevent = request.body;

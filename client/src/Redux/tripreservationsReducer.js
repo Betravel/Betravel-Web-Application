@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const getHotelReservations = (id) => {
+export const getTripReservations = (id) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/reservationHotel/getuser/" + id)
+      .get("http://localhost:8000/api/trip/getuser/" + id)
       .then((res) =>
-        dispatch(hotelreservationsActions.getreservations(res.data))
+        dispatch(tripreservationsActions.getreservations(res.data))
       );
   };
 };
 
-const initialHotelReservationsState = [];
+const initialTripReservationsState = [];
 
-const hotelreservationsSlice = createSlice({
-  name: "hotelreservations",
-  initialState: initialHotelReservationsState,
+const tripreservationsSlice = createSlice({
+  name: "tripreservations",
+  initialState: initialTripReservationsState,
   reducers: {
     getreservations(state, action) {
       let reservations = action.payload;
@@ -28,5 +28,5 @@ const hotelreservationsSlice = createSlice({
   },
 });
 
-export const hotelreservationsActions = hotelreservationsSlice.actions;
-export default hotelreservationsSlice;
+export const tripreservationsActions = tripreservationsSlice.actions;
+export default tripreservationsSlice;

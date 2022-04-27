@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { navbarActions } from "../Redux/navbarReducer";
 import { getAuth, logout } from "../Redux/authReducer";
@@ -11,6 +11,7 @@ function Navbar() {
 
   const changelogout = () => {
     dispatch(logout());
+    window.location.reload(false);
   };
 
   const changeBackground = () => {
@@ -26,8 +27,8 @@ function Navbar() {
   };
   useEffect(() => {
     dispatch(getAuth());
-    window.addEventListener("scroll", changeBackground);
   }, [dispatch]);
+  window.addEventListener("scroll", changeBackground);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light navbar-fixed-top "
@@ -139,10 +140,28 @@ function Navbar() {
                       </a>
                     </li>
                   )}
-
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
+                  {auth.user.type === "user" ? (
+                    <li>
+                      <Link
+                        to="/Reservations/History"
+                        className="dropdown-item"
+                      >
+                        Reservations
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  {auth.user.type === "user" ? (
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                  ) : (
+                    ""
+                  )}
                   <li>
                     <button className="dropdown-item" onClick={changelogout}>
                       Logout

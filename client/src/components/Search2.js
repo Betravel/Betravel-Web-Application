@@ -55,7 +55,10 @@ function Search2() {
 
   today = mm + "-" + dd + "-" + yyyy;
   return (
-    <div className="container" style={{ backgroundColor: "beige" }}>
+    <div
+      className="container"
+      style={{ backgroundColor: "beige", marginBottom: "20px  " }}
+    >
       <div className="row">
         <form onSubmit={submitHandler}>
           <br />

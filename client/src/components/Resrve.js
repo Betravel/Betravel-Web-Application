@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -20,7 +20,12 @@ import { navbarActions } from "../Redux/navbarReducer";
 import { getAuth } from "../Redux/authReducer";
 
 const steps = ["Select ", "Contact informations", "Confirm"];
-
+const pension = {
+  lpd: "Breakfast",
+  dp: "Half Board",
+  pc: "Full Board",
+  ai: "All Inclusif",
+};
 function Reserve() {
   const auth = useSelector((state) => state.auth);
   const rooms = useSelector((state) => state.hotel.rooms);
@@ -35,7 +40,7 @@ function Reserve() {
 
   useEffect(() => {
     dispatch(getAuth());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(navbarActions.updatenavbar(false));
@@ -70,7 +75,7 @@ function Reserve() {
       .post("http://localhost:8000/api/reservation/add", reservation)
       .then((res) => {
         axios
-          .post("http://localhost:8000/reservationdetails", {
+          .post("http://localhost:8000/reservationdetails/hotel", {
             email: auth.user.email,
             id: res.data._id,
           })
@@ -82,11 +87,6 @@ function Reserve() {
       .catch((err) => console.log(err));
   };
 
-  const [value, setValue] = useState("payment at the agency");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
   return (
     <div className="container-fluid" style={{ backgroundColor: "#E9FBF3" }}>
       <br />
@@ -107,11 +107,16 @@ function Reserve() {
       </div>{" "}
       <form onSubmit={onSubmitHandler}>
         <div className="row">
-          <div className="col-8">
+          {/* hotel info */}
+          <div className="col-lg-4 col-sm-12">
+            <RecapHotel />
+          </div>
+
+          {/*card personal info*/}
+          <div className="col-lg-8 col-sm-12">
             <br />
-            {/*card personal info*/}
-            <div class="card">
-              <div class="card-body">
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -132,7 +137,12 @@ function Reserve() {
                 </div>
                 <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="firstname"
                       label="First Name"
@@ -143,7 +153,12 @@ function Reserve() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="lastname"
                       label="Last Name"
@@ -155,9 +170,13 @@ function Reserve() {
                     />
                   </div>
                 </div>
-                <br />
                 <div className="row">
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="email"
                       label="Email"
@@ -168,7 +187,12 @@ function Reserve() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-6">
+                  <div
+                    className="col-lg-6 col-sm-12"
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  >
                     <TextField
                       id="phone"
                       label="Phone"
@@ -182,10 +206,10 @@ function Reserve() {
                 </div>
               </div>
             </div>
+            <br />
             {/*card rooms*/}
-            <div class="card">
-              <div class="card-body">
-                {" "}
+            <div className="card">
+              <div className="card-body">
                 <div
                   className="row"
                   style={{
@@ -205,7 +229,6 @@ function Reserve() {
                   </div>
                 </div>
                 <br />
-                <br />
                 {rooms.single.room.map((room, indexroom) => (
                   <div key={indexroom}>
                     <div className="row">
@@ -213,7 +236,9 @@ function Reserve() {
                         <h4>Single room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
@@ -222,10 +247,15 @@ function Reserve() {
                         return (
                           <div key={indexadulte}>
                             <div className="row">
-                              <div className="col-4">
+                              <div className="col-lg-4 col-sm-12">
                                 Adult {indexadulte + 1} :
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -244,7 +274,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last Name"
@@ -265,22 +300,24 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
                     )}
-                    <br />
                     {details.single[indexroom].enfant.map(
                       (enfant, indexenfant) => {
                         return (
                           <div key={indexenfant}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Enfant {indexenfant + 1}:{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Enfant {indexenfant + 1}:
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -299,7 +336,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -318,7 +360,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-2">
+                              <div
+                                className="col-lg-2 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <FormControl fullWidth>
                                   <InputLabel id="age">Age</InputLabel>
                                   <Select
@@ -353,8 +400,7 @@ function Reserve() {
                                     <MenuItem value={12}>12</MenuItem>
                                   </Select>
                                 </FormControl>
-                              </div>{" "}
-                              <br />
+                              </div>
                             </div>
                             <br />
                           </div>
@@ -363,7 +409,6 @@ function Reserve() {
                     )}
                   </div>
                 ))}
-                <br />
                 {rooms.double.room.map((room, indexroom) => (
                   <div key={indexroom}>
                     <div className="row">
@@ -371,21 +416,26 @@ function Reserve() {
                         <h4> Double room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
-
                     {details.double[indexroom].adulte.map(
                       (adulte, indexadulte) => {
                         return (
                           <div key={indexadulte}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Adult {indexadulte + 1} :{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Adult {indexadulte + 1} :
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -404,7 +454,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -425,22 +480,24 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
                     )}
-                    <br />
                     {details.double[indexroom].enfant.map(
                       (enfant, indexenfant) => {
                         return (
                           <div key={indexenfant}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Enfant {indexenfant + 1}:{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Enfant {indexenfant + 1}:
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -459,7 +516,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -478,7 +540,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-2">
+                              <div
+                                className="col-lg-2 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <FormControl fullWidth>
                                   <InputLabel id="age">Age</InputLabel>
                                   <Select
@@ -522,7 +589,6 @@ function Reserve() {
                     )}
                   </div>
                 ))}
-                <br />
                 {rooms.triple.room.map((room, indexroom) => (
                   <div key={indexroom}>
                     <div className="row">
@@ -530,21 +596,26 @@ function Reserve() {
                         <h4> Triple room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
-
                     {details.triple[indexroom].adulte.map(
                       (adulte, indexadulte) => {
                         return (
                           <div key={indexadulte}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Adult {indexadulte + 1} :{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Adult {indexadulte + 1} :
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -564,7 +635,12 @@ function Reserve() {
                                   readOnly
                                 />
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -585,22 +661,24 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
                     )}
-                    <br />
                     {details.triple[indexroom].enfant.map(
                       (enfant, indexenfant) => {
                         return (
                           <div key={indexenfant}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Enfant {indexenfant + 1}:{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Enfant {indexenfant + 1}:
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -619,7 +697,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -638,7 +721,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-2">
+                              <div
+                                className="col-lg-2 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <FormControl fullWidth>
                                   <InputLabel id="age">Age</InputLabel>
                                   <Select
@@ -676,14 +764,12 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
                     )}
                   </div>
                 ))}
-                <br />
                 {rooms.quadruple.room.map((room, indexroom) => (
                   <div key={indexroom}>
                     <div className="row">
@@ -691,21 +777,26 @@ function Reserve() {
                         <h4> Quadruple room {indexroom + 1} </h4>
                       </div>
                       <div className="col-4">
-                        <h6 style={{ textAlign: "left" }}>{room.pension}</h6>
+                        <h6 style={{ textAlign: "left" }}>
+                          {pension[room.pension]}
+                        </h6>
                       </div>
                     </div>
                     <br />
-
                     {details.quadruple[indexroom].adulte.map(
                       (adulte, indexadulte) => {
                         return (
                           <div key={indexadulte}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Adult {indexadulte + 1} :{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Adult {indexadulte + 1} :
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="First name"
@@ -724,7 +815,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-4">
+                              <div
+                                className="col-lg-4 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -745,22 +841,24 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
                     )}
-                    <br />
                     {details.quadruple[indexroom].enfant.map(
                       (enfant, indexenfant) => {
                         return (
                           <div key={indexenfant}>
                             <div className="row">
-                              <div className="col-4">
-                                {" "}
-                                Enfant {indexenfant + 1}:{" "}
+                              <div className="col-lg-4 col-sm-12">
+                                Enfant {indexenfant + 1}:
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -779,7 +877,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-3">
+                              <div
+                                className="col-lg-3 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <TextField
                                   variant="outlined"
                                   label="Last name"
@@ -798,7 +901,12 @@ function Reserve() {
                                   fullWidth
                                 />
                               </div>
-                              <div className="col-2">
+                              <div
+                                className="col-lg-2 col-sm-12"
+                                style={{
+                                  marginTop: "20px",
+                                }}
+                              >
                                 <FormControl fullWidth>
                                   <InputLabel id="age">Age</InputLabel>
                                   <Select
@@ -836,7 +944,6 @@ function Reserve() {
                               </div>
                             </div>
                             <br />
-                            <br />
                           </div>
                         );
                       }
@@ -846,12 +953,10 @@ function Reserve() {
               </div>
             </div>
           </div>
-          <div className="col-4">
-            <RecapHotel />
-          </div>
         </div>
-        <div class="card">
-          <div class="card-body">
+        <br />
+        <div className="card">
+          <div className="card-body">
             <div className="row">
               <div className="col-12">
                 <h2
@@ -875,8 +980,7 @@ function Reserve() {
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value}
-                  onChange={handleChange}
+                  value={reservation.paiement}
                 >
                   <FormControlLabel
                     value="payment at the agency"
@@ -888,6 +992,7 @@ function Reserve() {
             </div>
           </div>
         </div>
+        <br />
         <div className="row">
           <div className="Search__actions">
             <button type="submit">Confirm</button>
