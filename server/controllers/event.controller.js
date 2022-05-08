@@ -128,3 +128,33 @@ module.exports.updateEvent = async (request, response) => {
     })
     .catch((err) => response.json(err));
 };
+
+module.exports.getOverviewLocation = (request, response) => {
+  Event.find()
+    .then((events) => {
+      let result = { destinations: [], data: [] };
+      let listdestinations = new Set();
+      events.forEach((event) => {
+        listdestinations.add(event.location);
+      });
+      let destinations = [];
+      listdestinations.forEach((dest) => {
+        destinations.push(dest);
+      });
+      result.destinations = destinations;
+      let data = new Array(destinations.length);
+      for (let index = 0; index < destinations.length; index++) {
+        const element = destinations[index];
+        let i = 0;
+        events.forEach((event) => {
+          if (event.location === element) {
+            i++;
+          }
+        });
+        data[index] = i;
+      }
+      result.data = data;
+      response.json(result);
+    })
+    .catch((err) => response.json(err));
+};

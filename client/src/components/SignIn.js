@@ -167,6 +167,10 @@ function SignIn() {
                     <a href="/Restpass" style={{ color: "black" }}>
                       Forgot your password ?
                     </a>
+                    <br />
+                    <a href="/SignUp" style={{ color: "black" }}>
+                      Create new account
+                    </a>
                     <br /> <br />
                   </form>
                 </div>

@@ -238,3 +238,33 @@ module.exports.deleteHotel = (request, response) => {
     .then((res) => response.json(res))
     .catch((err) => response.json(err));
 };
+
+module.exports.getOverviewLocation = (request, response) => {
+  Hotel.find()
+    .then((hotels) => {
+      let result = { destinations: [], data: [] };
+      let listdestinations = new Set();
+      hotels.forEach((hotel) => {
+        listdestinations.add(hotel.location);
+      });
+      let destinations = [];
+      listdestinations.forEach((dest) => {
+        destinations.push(dest);
+      });
+      result.destinations = destinations;
+      let data = new Array(destinations.length);
+      for (let index = 0; index < destinations.length; index++) {
+        const element = destinations[index];
+        let i = 0;
+        hotels.forEach((hotel) => {
+          if (hotel.location === element) {
+            i++;
+          }
+        });
+        data[index] = i;
+      }
+      result.data = data;
+      response.json(result);
+    })
+    .catch((err) => response.json(err));
+};
