@@ -9,11 +9,19 @@ export const getUser = (id) => {
   };
 };
 
-export const getReservations = (id) => {
+export const getHotelReservations = (id) => {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:8000/api/reservation/getuser/" + id)
-      .then((res) => dispatch(userActions.getreservations(res.data)));
+      .get("http://localhost:8000/api/reservationHotel/getuser/" + id)
+      .then((res) => dispatch(userActions.gethotelreservations(res.data)));
+  };
+};
+
+export const getEventReservations = (id) => {
+  return async function (dispatch) {
+    return await axios
+      .get("http://localhost:8000/api/reservationEvent/getuser/" + id)
+      .then((res) => dispatch(userActions.geteventreservations(res.data)));
   };
 };
 
@@ -24,8 +32,11 @@ const initialUserState = {
   email: "",
   phone: "",
   createdat: "",
-  reservation: [],
-  nbReservations: 0,
+  confirmed: false,
+  hotelreservation: [],
+  eventreservation: [],
+  nbHotelReservations: 0,
+  nbEventReservations: 0,
 };
 
 const userSlice = createSlice({
@@ -39,12 +50,21 @@ const userSlice = createSlice({
       state.lastname = user.lastname;
       state.email = user.email;
       state.phone = user.phone;
+      state.confirmed = user.confirmed;
       state.createdat = user.createdAt;
     },
-    getreservations(state, action) {
+    gethotelreservations(state, action) {
       let reservations = action.payload;
-      state.reservation = reservations;
-      state.nbReservations = reservations.length;
+      state.hotelreservation = reservations;
+      state.nbHotelReservations = reservations.length;
+    },
+    geteventreservations(state, action) {
+      let reservations = action.payload;
+      state.eventreservation = reservations;
+      state.nbEventReservations = reservations.length;
+    },
+    updateuser(state, action) {
+      state[action.payload.type] = action.payload.value;
     },
   },
 });

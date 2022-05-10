@@ -4,6 +4,11 @@ module.exports = (app) => {
     "/api/reservationHotel/getuser/:id",
     ReservationHotelController.getReservation
   );
+  app.get("/api/reservationHotel/prices", ReservationHotelController.getPrices);
+  app.get(
+    "/api/reservationHotel/overview",
+    ReservationHotelController.getOverview
+  );
   app.get(
     "/api/reservationHotel/get/:id",
     ReservationHotelController.getReservationById
