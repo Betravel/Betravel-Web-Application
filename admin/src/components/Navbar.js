@@ -1,8 +1,5 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { hotelActions } from "../Redux/hotelReducer";
-import { eventActions } from "../Redux/eventReducer";
 import { useEffect } from "react";
 function Navbar() {
   useEffect(() => {
@@ -20,7 +17,6 @@ function Navbar() {
           (window.location.href = "http://localhost:3000/SignIn?path=home")
       );
   }, []);
-  const dispatch = useDispatch();
   const logout = () => {
     axios
       .get("http://localhost:8000/api/logout", {
@@ -31,12 +27,6 @@ function Navbar() {
         // window.location.reload(false);
       })
       .catch((err) => console.log(err));
-  };
-  const clearHotel = () => {
-    dispatch(hotelActions.clearhotel());
-  };
-  const clearEvent = () => {
-    dispatch(eventActions.clearevent());
   };
   return (
     <div>
@@ -61,51 +51,21 @@ function Navbar() {
         Users
       </Link>
       <hr />
-      <button
+      <Link
+        to="/Hotels"
         className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#hotels"
-        aria-expanded="false"
-        aria-controls="hotels"
         style={{ color: "white", fontSize: "25px" }}
       >
         Hotels
-      </button>
-      <div className="collapse" id="hotels">
-        <div className="card card-body">
-          <Link to="/Hotels" className="btn">
-            List Hotels
-          </Link>
-          <hr />
-          <Link to="/AddHotel" className="btn" onClick={clearHotel}>
-            Add Hotel
-          </Link>
-        </div>
-      </div>
+      </Link>
       <hr />
-      <button
+      <Link
+        to="/Events"
         className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#events"
-        aria-expanded="false"
-        aria-controls="events"
         style={{ color: "white", fontSize: "25px" }}
       >
         Events
-      </button>
-      <div className="collapse" id="events">
-        <div className="card card-body">
-          <Link to="/Events" className="btn">
-            List Events
-          </Link>
-          <hr />
-          <Link to="/AddEvent" className="btn" onClick={clearEvent}>
-            Add Event
-          </Link>
-        </div>
-      </div>
+      </Link>
       <hr />
       <button
         className="btn"

@@ -13,8 +13,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 
 function renameKey(obj, oldKey, newKey) {
   obj[newKey] = obj[oldKey];
@@ -23,8 +21,6 @@ function renameKey(obj, oldKey, newKey) {
 
 function ListCustomReservations() {
   const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("xl"));
 
   const handleClose = () => {
     setOpen(false);
@@ -43,8 +39,18 @@ function ListCustomReservations() {
       ),
     },
     { field: "typeDestination", headerName: "Type", width: "150" },
-    { field: "nuits", headerName: "Periode", width: "150" },
-    { field: "nbrPersonnes", headerName: "Persons", width: "150" },
+    {
+      field: "nuits",
+      headerName: "Periode",
+      width: "150",
+      renderCell: (params) => <h>{params.value + " nuit(s)"}</h>,
+    },
+    {
+      field: "nbrPersonnes",
+      headerName: "Persons",
+      width: "150",
+      renderCell: (params) => <h>{params.value + " personne(s)"}</h>,
+    },
     {
       field: "events",
       headerName: "Selected Events",
@@ -106,24 +112,18 @@ function ListCustomReservations() {
       .catch((err) => console.log(err));
   };
   return (
-    <div className="row" style={{ marginTop: "20px", marginBottom: "20px" }}>
-      <h1>List Custom-made's Reservations</h1>
-      <br />
-      <div style={{ height: window.innerHeight, width: "100%" }}>
-        <div style={{ height: window.innerHeight - 50, width: "100%" }}>
+    <div className="row" style={{ marginTop: "50px", marginBottom: "20px" }}>
+      <div className="col-12">
+        <h1>List Custom-made's Reservations</h1>
+        <br />
+        <div style={{ height: window.innerHeight - 150, width: "100%" }}>
           <DataGrid rows={data} columns={cols} />
         </div>
       </div>
+
       <div>
-        <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title">
-            {"Reservation's Details"}
-          </DialogTitle>
+        <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
+          <DialogTitle>Reservation's Details</DialogTitle>
           <DialogContent>
             <div className="row">
               <h4>Trip's details :</h4>
@@ -243,38 +243,38 @@ function ListCustomReservations() {
             </div>
             <br />
             <div className="row">
-              <TextField
-                name="username"
-                label="User's Name"
-                variant="outlined"
-                value={
-                  reservation.user.firstname + " " + reservation.user.lastname
-                }
-                fullWidth
-                readOnly
-              />
-            </div>
-            <br />
-            <div className="row">
-              <TextField
-                name="email"
-                label="User's Email"
-                variant="outlined"
-                value={reservation.user.email}
-                fullWidth
-                readOnly
-              />
-            </div>
-            <br />
-            <div className="row">
-              <TextField
-                name="phone"
-                label="User's Phone"
-                variant="outlined"
-                value={reservation.user.phone}
-                fullWidth
-                readOnly
-              />
+              <div className="col-4">
+                <TextField
+                  name="username"
+                  label="User's Name"
+                  variant="outlined"
+                  value={
+                    reservation.user.firstname + " " + reservation.user.lastname
+                  }
+                  fullWidth
+                  readOnly
+                />
+              </div>
+              <div className="col-4">
+                <TextField
+                  name="email"
+                  label="User's Email"
+                  variant="outlined"
+                  value={reservation.user.email}
+                  fullWidth
+                  readOnly
+                />
+              </div>
+              <div className="col-4">
+                <TextField
+                  name="phone"
+                  label="User's Phone"
+                  variant="outlined"
+                  value={reservation.user.phone}
+                  fullWidth
+                  readOnly
+                />
+              </div>
             </div>
           </DialogContent>
           <DialogActions>

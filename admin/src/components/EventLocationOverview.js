@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
-import { getOverviewHotelReservation } from "../Redux/reservationoverviewReducer";
+import { Doughnut } from "react-chartjs-2";
+import { getOverviewEventLocation } from "../Redux/locationReducer";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function HotelReservationsOverview() {
-  const overview = useSelector((state) => state.overview.hotel);
+function EventLocationOverview() {
+  const overview = useSelector((state) => state.location.event);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getOverviewHotelReservation());
+    dispatch(getOverviewEventLocation());
   }, [dispatch]);
   return (
     <div
@@ -22,12 +22,11 @@ function HotelReservationsOverview() {
       }}
     >
       <div className="card-body">
-        <h5 className="card-title">Hotels Reservations / Place</h5>
+        <h5 className="card-title">Events / Place</h5>
         <br />
-        <Pie data={overview} />
+        <Doughnut data={overview} />
       </div>
     </div>
   );
 }
-
-export default HotelReservationsOverview;
+export default EventLocationOverview;

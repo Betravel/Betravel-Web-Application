@@ -12,6 +12,7 @@ import ListEvents from "./components/ListEvents";
 import ListHotelReservations from "./components/ListHotelReservations";
 import ListEventReservations from "./components/ListEventReservations";
 import ListCustomReservations from "./components/ListCustomReservations";
+import "./css/Card.css";
 
 function App() {
   let height = window.innerHeight;

@@ -219,6 +219,17 @@ const hotelSlice = createSlice({
     },
     updatestatus(state, action) {
       state.status[action.payload.type] = action.payload.value;
+      if (
+        action.payload.type === "single" ||
+        action.payload.type === "double" ||
+        action.payload.type === "triple" ||
+        action.payload.type === "quadruple" ||
+        action.payload.type === "kids"
+      ) {
+        if (!state.price[action.payload.type]) {
+          state.price[action.payload.type] = {};
+        }
+      }
     },
     updateprice(state, action) {
       switch (action.payload.type) {

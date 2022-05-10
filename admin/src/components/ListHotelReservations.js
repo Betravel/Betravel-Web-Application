@@ -7,7 +7,15 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 import { getHotelReservation } from "../Redux/hotelreservationsReducer";
+import Typography from "@mui/material/Typography";
 
 function renameKey(obj, oldKey, newKey) {
   obj[newKey] = obj[oldKey];
@@ -18,24 +26,34 @@ function ListHotelReservations() {
   const reservation = useSelector((state) => state.hotelreservation);
   const dispatch = useDispatch();
   const cols = [
-    { field: "id", headerName: "ReservationID", width: "200" },
+    { field: "id", headerName: "ReservationID", width: "250" },
     {
       field: "hotel",
       headerName: "Hotel's Name",
-      width: "300",
+      width: "350",
       renderCell: (params) => <h>{params.value?.name}</h>,
     },
     {
       field: "user",
       headerName: "User's Name",
-      width: "150",
+      width: "250",
       renderCell: (params) => (
         <h>{params.value?.firstname + " " + params.value?.lastname}</h>
       ),
     },
-    { field: "nuits", headerName: "Nights", width: "150" },
-    { field: "price", headerName: "Price", width: "100" },
-    { field: "status", headerName: "State", width: "100" },
+    {
+      field: "nuits",
+      headerName: "Nights",
+      width: "150",
+      renderCell: (params) => <h>{params.value + " nuit(s)"}</h>,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      width: "170",
+      renderCell: (params) => <h>{params.value + " DT"}</h>,
+    },
+    { field: "status", headerName: "State", width: "150" },
     {
       field: "actions",
       type: "actions",
@@ -70,10 +88,15 @@ function ListHotelReservations() {
     (id) => () => {
       setTimeout(() => {
         dispatch(getHotelReservation(id));
+        setOpen(true);
       });
     },
     [dispatch]
   );
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const ConfirmEvent = () => {
     axios
@@ -94,117 +117,139 @@ function ListHotelReservations() {
   return (
     <div className="row" style={{ marginTop: "20px", marginBottom: "20px" }}>
       <div
-        className="col-9"
+        className="col-12"
         style={{ marginTop: "auto", marginBottom: "auto" }}
       >
         <h1>List Hotel's Reservations</h1>
         <br />
-        <div style={{ height: 1200, width: "100%" }}>
-          <div style={{ height: 1150, width: "100%" }}>
-            <DataGrid rows={data} columns={cols} />
-          </div>
+        <div style={{ height: window.innerHeight - 150, width: "100%" }}>
+          <DataGrid rows={data} columns={cols} />
         </div>
       </div>
-      <div className="col-3">
-        <h2>Reservation's Details</h2>
-        <div className="card">
-          <div style={{ backgroundColor: "#abc4b1" }}>
-            <img
-              src="https://img.icons8.com/ios-filled/150/ffffff/reservation.png"
-              alt=""
-            />
-          </div>
-          <div className="card-body">
+      <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
+        <DialogTitle>Reservation's Details</DialogTitle>
+        <DialogContent>
+          <div className="row">
             <h4>Hotel's details :</h4>
-            <br />
-            <TextField
-              name="name"
-              label="Hotel's Name"
-              variant="outlined"
-              value={reservation.hotel.name}
-              fullWidth
-              readOnly
-            />
-            <br />
-            <br />
-            <TextField
-              name="location"
-              label="Hotel's Location"
-              variant="outlined"
-              value={reservation.hotel.location}
-              fullWidth
-              readOnly
-            />
-            <br />
-            <br />
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-4">
+              <TextField
+                name="name"
+                label="Hotel's Name"
+                variant="outlined"
+                value={reservation.hotel.name}
+                fullWidth
+                readOnly
+              />
+            </div>
+            <div className="col-4" align="center">
+              <Typography component="legend">Rating</Typography>
+              <Rating
+                name="read-only"
+                value={reservation.hotel.rating}
+                readOnly
+              />
+            </div>
+            <div className="col-4">
+              <TextField
+                name="location"
+                label="Hotel's Location"
+                variant="outlined"
+                value={reservation.hotel.location}
+                fullWidth
+                readOnly
+              />
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-3" align="center">
+              <h4>{reservation.nuits} Nights reserved</h4>
+            </div>
+            <div className="col-3">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <DatePicker
+                  label="From Date"
+                  mask={"__/__/____"}
+                  fullWidth
+                  readOnly
+                  value={reservation.periode[0]}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-1">
+              <h5>To</h5>
+            </div>
+            <div className="col-3">
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <DatePicker
+                  label="To Date"
+                  mask={"__/__/____"}
+                  fullWidth
+                  readOnly
+                  value={reservation.periode[1]}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col" align="center">
+              <h4>Price : {reservation.price} DT</h4>
+            </div>
+          </div>
+          <br />
+          <div className="row">
             <h4>Reservation By :</h4>
-            <br />
-            <TextField
-              name="username"
-              label="User's Name"
-              variant="outlined"
-              value={
-                reservation.user.firstname + " " + reservation.user.lastname
-              }
-              fullWidth
-              readOnly
-            />
-            <br />
-            <br />
-            <TextField
-              name="email"
-              label="User's Email"
-              variant="outlined"
-              value={reservation.user.email}
-              fullWidth
-              readOnly
-            />
-            <br />
-            <br />
-            <TextField
-              name="phone"
-              label="User's Phone"
-              variant="outlined"
-              value={reservation.user.phone}
-              fullWidth
-              readOnly
-            />
-            <br />
-            <br />
-            <h4>{reservation.nuits} Nights reserved</h4>
-            <br />
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-            >
-              <DatePicker
-                label="From Date"
-                mask={"__/__/____"}
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-4">
+              <TextField
+                name="username"
+                label="User's Name"
+                variant="outlined"
+                value={
+                  reservation.user.firstname + " " + reservation.user.lastname
+                }
                 fullWidth
                 readOnly
-                value={reservation.periode[0]}
-                renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
-            <br />
-            <br />
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-            >
-              <DatePicker
-                label="To Date"
-                mask={"__/__/____"}
+            </div>
+            <div className="col-4">
+              <TextField
+                name="email"
+                label="User's Email"
+                variant="outlined"
+                value={reservation.user.email}
                 fullWidth
                 readOnly
-                value={reservation.periode[1]}
-                renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
-            <br />
-            <br />
+            </div>
+            <div className="col-4">
+              <TextField
+                name="phone"
+                label="User's Phone"
+                variant="outlined"
+                value={reservation.user.phone}
+                fullWidth
+                readOnly
+              />
+            </div>
+          </div>
+          <br />
+          <div className="row">
             <h4>Rooms'details</h4>
-            <br />
+          </div>
+          <br />
+          <div className="row">
             {reservation.details.single.length !== 0 ? (
               <div>
                 <h5>{reservation.details.single.length} Single Room(s)</h5>
@@ -399,9 +444,19 @@ function ListHotelReservations() {
             ) : (
               ""
             )}
-            <h4>Price : {reservation.price}</h4>
-            <br />
           </div>
+          <Box
+            noValidate
+            component="form"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              m: "auto",
+              width: "fit-content",
+            }}
+          ></Box>
+        </DialogContent>
+        <DialogActions>
           {reservation.status !== "canceled" ? (
             <div
               align="right"
@@ -427,8 +482,9 @@ function ListHotelReservations() {
           ) : (
             ""
           )}
-        </div>
-      </div>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
