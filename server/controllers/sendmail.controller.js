@@ -37,7 +37,7 @@ module.exports.AccountMails = (req, res) => {
         })
         .then((resultat) => {
           var mailOptions = {
-            from: "testb8835@gmail.com",
+            from: process.env.EMAIL_ACCOUNT,
             to: req.body.email,
             subject: topic,
             html: resultat,
@@ -66,7 +66,7 @@ module.exports.Contact = (req, res) => {
     },
   });
   var mailOptions = {
-    from: "testb8835@gmail.com",
+    from: process.env.EMAIL_ACCOUNT,
     to: req.body.email,
     subject: req.body.sjt,
     html: req.body.msg,
@@ -112,9 +112,8 @@ module.exports.HotelReservationDetails = (req, res) => {
           price: reservation.price,
         })
         .then((resultat) => {
-          console.log("okkkkkk");
           var mailOptions = {
-            from: "testb8835@gmail.com",
+            from: process.env.EMAIL_ACCOUNT,
             to: req.body.email,
             subject: "Reservation",
             html: resultat,
@@ -162,7 +161,7 @@ module.exports.EventReservationDetails = (req, res) => {
         .then((resultat) => {
           console.log("okkkkkk");
           var mailOptions = {
-            from: "testb8835@gmail.com",
+            from: process.env.EMAIL_ACCOUNT,
             to: req.body.email,
             subject: "Reservation",
             html: resultat,
